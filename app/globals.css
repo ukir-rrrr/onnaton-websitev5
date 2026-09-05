@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  /* Warm kinari / washi palette */
-  --color-paper: #ebe2d0;
-  --color-paper-raised: #e0d4bc;
+  /* White washi (shiro_01) — warm off-whites, not the old kinari beige */
+  --color-paper: #f5f3ef;
+  --color-paper-raised: #ebe8e1;
   --color-text: #1e1915;
   --color-text-muted: #443d36;
   --color-on-dark: #f2ede6;
@@ -14,15 +14,9 @@
   --color-gold-ink: #74581a; /* 和紙背景の上に置く文字・ラベル用（AA 4.5:1 以上） */
   --color-wipe: #a68c6e;
 
-  /* Photo washi (Gemini) — primary surface texture */
-  --washi-photo: url("/textures/washi-bg.jpg");
-  /* Higher = softer / less visible grain (v2 = 0.52, v3 = 0.75) */
-  --washi-texture-fade: 0.64;
-  --washi-photo-tint: linear-gradient(
-    rgba(235, 226, 208, var(--washi-texture-fade)),
-    rgba(235, 226, 208, var(--washi-texture-fade))
-  );
-  --washi-texture: var(--washi-photo-tint), var(--washi-photo);
+  /* Photo washi (shiro_01) — primary surface texture, no fade overlay */
+  --washi-photo: url("/textures/shiro_01.jpg");
+  --washi-texture: var(--washi-photo);
 
   /* Previous pure-CSS washi (backup — see git history before washi-bg.jpg):
      SVG feTurbulence noise + radial/repeating gradients. */
@@ -129,8 +123,8 @@ body {
   background-color: var(--color-paper-raised);
   background-image:
     linear-gradient(
-      rgba(224, 212, 188, 0.91),
-      rgba(224, 212, 188, 0.91)
+      color-mix(in srgb, var(--color-paper-raised) 52%, transparent),
+      color-mix(in srgb, var(--color-paper-raised) 52%, transparent)
     ),
     var(--washi-photo);
   background-size: cover;

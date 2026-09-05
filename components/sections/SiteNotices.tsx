@@ -10,7 +10,7 @@ export async function SiteNotices() {
   return (
     <section
       id="notices"
-      className="scroll-mt-24 relative w-full overflow-hidden border-y-2 border-gold/35 bg-gradient-to-b from-ink-raised via-ink-raised to-ink"
+      className="scroll-mt-24 relative w-full overflow-hidden border-y-2 border-gold/35 bg-ink-raised"
       aria-label={t(locale, copy.siteNotices.heading)}
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gold/20" aria-hidden />
