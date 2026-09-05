@@ -33,7 +33,7 @@ export function PageIntro({ phase, onFadeOutComplete }: PageIntroProps) {
             width={200}
             height={200}
             priority
-            className="h-auto w-[120px] object-contain sm:w-[160px] lg:w-[180px]"
+            className="h-auto w-[200px] object-contain sm:w-[240px] lg:w-[260px]"
           />
         </motion.div>
       )}

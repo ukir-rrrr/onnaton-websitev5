@@ -73,21 +73,21 @@ export function SiteNoticesBody({
           {notices.map((notice) => (
             <motion.li
               key={notice.sortOrder}
-              className="relative overflow-hidden rounded-md border border-gold/40 bg-white/30 px-5 py-5 shadow-[0_8px_28px_rgba(42,37,32,0.08)] backdrop-blur-[2px] sm:px-7 sm:py-6"
+              className="relative min-w-0 overflow-hidden rounded-md border border-gold/40 bg-white/30 px-5 py-5 shadow-[0_8px_28px_rgba(42,37,32,0.08)] backdrop-blur-[2px] sm:px-7 sm:py-6"
               variants={staggerItem(reduceMotion, 20)}
             >
               <span
                 className="absolute inset-y-3 left-0 w-1 rounded-full bg-gold/80"
                 aria-hidden
               />
-              <div className="space-y-4 pl-3 text-center font-serif-jp text-[17px] leading-[2.05] tracking-[0.04em] text-cream sm:pl-4 sm:text-[19px] sm:leading-[2.12]">
+              <div className="min-w-0 space-y-4 pl-3 text-center font-serif-jp text-[17px] leading-[2.05] tracking-[0.04em] text-cream sm:pl-4 sm:text-[19px] sm:leading-[2.12]">
                 {notice.bodyJa.trim() ? (
-                  <p className="font-medium">
-                    <MultilineText text={notice.bodyJa} />
+                  <p className="max-w-full break-all font-medium">
+                    <MultilineText text={notice.bodyJa} keepAll={false} />
                   </p>
                 ) : null}
                 {notice.bodyEn.trim() ? (
-                  <p className="text-[15px] leading-[1.95] text-cream/90 sm:text-[16px]">
+                  <p className="max-w-full break-words text-[15px] leading-[1.95] text-cream/90 sm:text-[16px]">
                     <MultilineText text={notice.bodyEn} keepAll={false} />
                   </p>
                 ) : null}
