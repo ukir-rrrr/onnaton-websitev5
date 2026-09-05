@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  /* Warm kinari / washi palette — paper colors match japanese-paper.jpg */
-  --color-paper: #f3f0ea;
-  --color-paper-raised: #e8e3d8;
+  /* Warm kinari / washi palette */
+  --color-paper: #ebe2d0;
+  --color-paper-raised: #e0d4bc;
   --color-text: #1e1915;
   --color-text-muted: #443d36;
   --color-on-dark: #f2ede6;
@@ -14,13 +14,13 @@
   --color-gold-ink: #74581a; /* 和紙背景の上に置く文字・ラベル用（AA 4.5:1 以上） */
   --color-wipe: #a68c6e;
 
-  /* Photo washi — primary surface texture */
-  --washi-photo: url("/images/japanese-paper.jpg");
-  /* Higher = softer / less visible grain (keep low so the fiber photo shows) */
-  --washi-texture-fade: 0.22;
+  /* Photo washi (Gemini) — primary surface texture */
+  --washi-photo: url("/textures/washi-bg.jpg");
+  /* Higher = softer / less visible grain (v2 = 0.52, v3 = 0.75) */
+  --washi-texture-fade: 0.64;
   --washi-photo-tint: linear-gradient(
-    rgba(243, 240, 234, var(--washi-texture-fade)),
-    rgba(243, 240, 234, var(--washi-texture-fade))
+    rgba(235, 226, 208, var(--washi-texture-fade)),
+    rgba(235, 226, 208, var(--washi-texture-fade))
   );
   --washi-texture: var(--washi-photo-tint), var(--washi-photo);
 
@@ -129,8 +129,8 @@ body {
   background-color: var(--color-paper-raised);
   background-image:
     linear-gradient(
-      rgba(232, 227, 216, 0.72),
-      rgba(232, 227, 216, 0.72)
+      rgba(224, 212, 188, 0.91),
+      rgba(224, 212, 188, 0.91)
     ),
     var(--washi-photo);
   background-size: cover;
