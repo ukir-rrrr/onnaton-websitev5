@@ -64,9 +64,8 @@ Cloudflare Workers 上では生の SMTP も事実上使えないため、送信�
 1. **Workers & Pages** で GitHub リポジトリ `onnaton-websitev2` を接続  
    またはローカルから `npm run deploy`（要 `wrangler login`）
 2. **Workers Builds（Git 連携）の設定**
-   - **Build command:** `npx opennextjs-cloudflare build`（`npm run build` ではない）
-   - **Deploy command:** `npx wrangler versions upload`
-   - OpenNext は内部で `npm run build`（= `next build`）を呼ぶため、`npm run build` を OpenNext にすると無限ループになります
+   - **Build command:** `npm run build`（中で `opennextjs-cloudflare build` → `npx next build`）
+   - **Deploy command:** `npx wrangler deploy`
    - ローカルから一発デプロイ: `npm run deploy`（要 `wrangler login`）
 3. **Settings → Variables and secrets** に `.env.example` と同じキーを **Production** 用に設定:
    - **平文（Text）**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SITE_SLUG`, `RESEND_FROM`, `RESEND_OWNER_TO`, `RESEND_REPLY_TO`（任意）
