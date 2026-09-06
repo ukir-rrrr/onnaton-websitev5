@@ -1,5 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Worker name in the Cloudflare dashboard.
   "name": "onnaton-websitev5",
   // Dashboard で設定した平文の環境変数を、wrangler deploy 時に削除しない
   "keep_vars": true,
