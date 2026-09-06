@@ -46,16 +46,35 @@ export function AdminNoticesClient({ notices, formKey }: AdminNoticesClientProps
         本文があるものだけトップページに出ます。表示期限は日本標準時の日付です。
       </p>
 
-      {saveState.error ? (
-        <p
-          className="rounded border border-red-800/35 bg-red-50 px-4 py-3 text-sm font-medium text-red-900"
-          role="alert"
-        >
-          {saveState.error}
-        </p>
-      ) : null}
-
       <form key={formKey} action={saveAction} className="space-y-8">
+        {saveState.error ? (
+          <p
+            className="rounded border border-red-800/35 bg-red-50 px-4 py-3 text-sm font-medium text-red-900"
+            role="alert"
+          >
+            {saveState.error}
+          </p>
+        ) : null}
+
+        <div className="flex flex-wrap items-center gap-4">
+          <button
+            type="submit"
+            disabled={savePending}
+            className="rounded bg-gold px-6 py-3 text-sm font-medium tracking-[0.08em] text-[#2a2520] transition hover:bg-gold/90 disabled:opacity-60"
+          >
+            {savePending ? "保存中…" : "保存する"}
+          </button>
+          {saveState.saved ? (
+            <p
+              className="text-sm font-medium text-[#2a2520]"
+              role="status"
+              aria-live="polite"
+            >
+              保存しました
+            </p>
+          ) : null}
+        </div>
+
         {notices.map((notice) => (
           <fieldset key={notice.id} className={adminFieldsetClass}>
             <legend className={adminLegendClass}>
@@ -97,25 +116,6 @@ export function AdminNoticesClient({ notices, formKey }: AdminNoticesClientProps
             </label>
           </fieldset>
         ))}
-
-        <div className="flex flex-wrap items-center gap-4">
-          <button
-            type="submit"
-            disabled={savePending}
-            className="rounded bg-gold px-6 py-3 text-sm font-medium tracking-[0.08em] text-[#2a2520] transition hover:bg-gold/90 disabled:opacity-60"
-          >
-            {savePending ? "保存中…" : "保存する"}
-          </button>
-          {saveState.saved ? (
-            <p
-              className="text-sm font-medium text-[#2a2520]"
-              role="status"
-              aria-live="polite"
-            >
-              保存しました
-            </p>
-          ) : null}
-        </div>
       </form>
     </div>
   );
