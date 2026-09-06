@@ -7,7 +7,9 @@ import {
   isReservationGuestId,
   isReservationSeatingId,
   isReservationTimeSlot,
+  toDateOverrides,
 } from "@/lib/content/reservation";
+import { getReservationDateOverrideLists } from "@/lib/supabase/date-overrides";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { copy } from "@/lib/i18n/copy";
 import { t, type Localized } from "@/lib/i18n/types";
@@ -80,7 +82,10 @@ export async function submitReservation(
   }
   if (!looksLikeEmail(email)) return err(locale, copy.form.errorEmail);
   if (!looksLikePhone(phone)) return err(locale, copy.form.errorPhone);
-  if (!isBookableDate(date)) return err(locale, copy.form.errorDate);
+  const dateOverrides = toDateOverrides(await getReservationDateOverrideLists());
+  if (!isBookableDate(date, new Date(), dateOverrides)) {
+    return err(locale, copy.form.errorDate);
+  }
   if (!isReservationTimeSlot(time)) return err(locale, copy.form.errorTime);
   if (!isReservationGuestId(guests)) return err(locale, copy.form.errorRequired);
   if (!isReservationCourseId(courseId)) return err(locale, copy.form.errorCourse);

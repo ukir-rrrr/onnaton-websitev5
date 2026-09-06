@@ -8,7 +8,11 @@ import {
   type ChangeEventHandler,
 } from "react";
 import { CalendarDays } from "lucide-react";
-import { isClosedDate } from "@/lib/content/reservation";
+import {
+  emptyDateOverrideLists,
+  makeIsClosedDate,
+  type DateOverrideLists,
+} from "@/lib/content/reservation";
 import { parseYmd } from "@/lib/date/calendar";
 import {
   datePickerLabels,
@@ -32,6 +36,7 @@ type DateFieldProps = {
   className?: string;
   /** @deprecated Native lang is unused with the custom picker. */
   lang?: string;
+  overrides?: DateOverrideLists;
 };
 
 function initialView(value: string, min: string) {
@@ -51,6 +56,7 @@ export function DateField({
   required,
   disabled,
   className,
+  overrides = emptyDateOverrideLists,
 }: DateFieldProps) {
   const locale = useLocale();
   const labels = datePickerLabels(locale);
@@ -60,6 +66,7 @@ export function DateField({
   const [open, setOpen] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [view, setView] = useState(() => initialView(value, min));
+  const isDisabled = useMemo(() => makeIsClosedDate(overrides), [overrides]);
 
   const displayValue = useMemo(
     () => (value ? formatPickerDisplayDate(locale, value) : ""),
@@ -158,7 +165,7 @@ export function DateField({
         onClear={() => emitChange("")}
         min={min}
         max={max}
-        isDisabled={isClosedDate}
+        isDisabled={isDisabled}
         anchorRef={shellRef}
       />
     </div>

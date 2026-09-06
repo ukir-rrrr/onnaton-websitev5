@@ -11,6 +11,7 @@ import { getLocale } from "@/lib/i18n/getLocale";
 import { copy } from "@/lib/i18n/copy";
 import { t } from "@/lib/i18n/types";
 import { isReservationCourseId } from "@/lib/content/reservation";
+import { getReservationDateOverrideLists } from "@/lib/supabase/date-overrides";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -31,6 +32,7 @@ export default async function ReservePage({
   }
   const { course } = await searchParams;
   const initialCourse = course && isReservationCourseId(course) ? course : "";
+  const overrides = await getReservationDateOverrideLists();
 
   return (
     <div className="relative w-full overflow-x-clip bg-ink text-cream">
@@ -84,7 +86,7 @@ export default async function ReservePage({
             </aside>
 
             <div className="border border-cream/10 bg-ink-raised px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-              <ReservationForm initialCourse={initialCourse} />
+              <ReservationForm initialCourse={initialCourse} overrides={overrides} />
             </div>
           </div>
         </section>

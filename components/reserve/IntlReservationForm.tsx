@@ -11,9 +11,12 @@ import {
   type IntlReservationState,
 } from "@/lib/reserve/intl-form";
 import {
+  emptyDateOverrideLists,
   isClosedDate,
   maxBookableDate,
   minBookableDate,
+  toDateOverrides,
+  type DateOverrideLists,
 } from "@/lib/content/reservation";
 import { countryDialCodes } from "@/lib/content/countryCodes";
 import { referralSourceIds } from "@/lib/content/referralSources";
@@ -38,25 +41,40 @@ const dateFieldNames: Record<DateFieldKey, string> = {
   datePreference3: "date_preference_3",
 };
 
-function closedDateHints(values: IntlReservationFormValues): Record<DateFieldKey, boolean> {
+function closedDateHints(
+  values: IntlReservationFormValues,
+  overrides: DateOverrideLists,
+): Record<DateFieldKey, boolean> {
+  const map = toDateOverrides(overrides);
   return {
-    datePreference1: Boolean(values.datePreference1 && isClosedDate(values.datePreference1)),
-    datePreference2: Boolean(values.datePreference2 && isClosedDate(values.datePreference2)),
-    datePreference3: Boolean(values.datePreference3 && isClosedDate(values.datePreference3)),
+    datePreference1: Boolean(values.datePreference1 && isClosedDate(values.datePreference1, map)),
+    datePreference2: Boolean(values.datePreference2 && isClosedDate(values.datePreference2, map)),
+    datePreference3: Boolean(values.datePreference3 && isClosedDate(values.datePreference3, map)),
   };
 }
 
-export function IntlReservationForm() {
+export function IntlReservationForm({
+  overrides = emptyDateOverrideLists,
+}: {
+  overrides?: DateOverrideLists;
+}) {
   const [formKey, setFormKey] = useState(0);
   return (
     <IntlReservationFormInner
       key={formKey}
+      overrides={overrides}
       onReset={() => setFormKey((n) => n + 1)}
     />
   );
 }
 
-function IntlReservationFormInner({ onReset }: { onReset: () => void }) {
+function IntlReservationFormInner({
+  overrides,
+  onReset,
+}: {
+  overrides: DateOverrideLists;
+  onReset: () => void;
+}) {
   const { t, locale } = useT();
   const [state, formAction, pending] = useActionState(
     submitIntlReservation,
@@ -66,7 +84,7 @@ function IntlReservationFormInner({ onReset }: { onReset: () => void }) {
 
   const minDate = useMemo(() => minBookableDate(), []);
   const maxDate = useMemo(() => maxBookableDate(), []);
-  const dateHints = useMemo(() => closedDateHints(fields), [fields]);
+  const dateHints = useMemo(() => closedDateHints(fields, overrides), [fields, overrides]);
 
   const setField = <K extends keyof IntlReservationFormValues>(
     key: K,
@@ -248,6 +266,7 @@ function IntlReservationFormInner({ onReset }: { onReset: () => void }) {
                 min={minDate}
                 max={maxDate}
                 value={fields[key]}
+                overrides={overrides}
                 onChange={(event) => setField(key, event.target.value)}
               />
               {dateHints[key] ? (

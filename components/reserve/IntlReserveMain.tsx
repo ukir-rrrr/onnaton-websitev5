@@ -7,8 +7,15 @@ import { ReserveButton } from "@/components/ui/ReserveButton";
 import { copy } from "@/lib/i18n/copy";
 import { useT } from "@/components/i18n/LocaleProvider";
 import type { ReservationPolicy } from "@/lib/content/reservationPolicy";
+import type { DateOverrideLists } from "@/lib/content/reservation";
 
-export function IntlReserveMain({ policy }: { policy: ReservationPolicy }) {
+export function IntlReserveMain({
+  policy,
+  overrides,
+}: {
+  policy: ReservationPolicy;
+  overrides: DateOverrideLists;
+}) {
   const { t, isJa } = useT();
   const [showOverseasForm, setShowOverseasForm] = useState(false);
 
@@ -94,7 +101,7 @@ export function IntlReserveMain({ policy }: { policy: ReservationPolicy }) {
       </div>
 
       <div className="min-w-0 overflow-x-clip border border-cream/10 bg-ink-raised px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-        <IntlReservationForm />
+        <IntlReservationForm overrides={overrides} />
       </div>
     </div>
   );

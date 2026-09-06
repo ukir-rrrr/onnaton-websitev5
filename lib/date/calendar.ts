@@ -74,3 +74,20 @@ export function addMonths(year: number, month: number, delta: number): { year: n
   const d = new Date(Date.UTC(year, month - 1 + delta, 1));
   return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1 };
 }
+
+export function monthsBetween(minYmd: string, maxYmd: string): { year: number; month: number }[] {
+  const min = parseYmd(minYmd);
+  const max = parseYmd(maxYmd);
+  if (!min || !max) return [];
+
+  const months: { year: number; month: number }[] = [];
+  let year = min.year;
+  let month = min.month;
+  while (year * 100 + month <= max.year * 100 + max.month) {
+    months.push({ year, month });
+    const next = addMonths(year, month, 1);
+    year = next.year;
+    month = next.month;
+  }
+  return months;
+}

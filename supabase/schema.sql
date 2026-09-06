@@ -48,9 +48,20 @@ create table if not exists public.reservation_requests (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.reservation_date_overrides (
+  id uuid primary key default gen_random_uuid(),
+  site_id uuid not null references public.sites (id) on delete cascade,
+  date date not null,
+  status text not null check (status in ('open', 'closed')),
+  updated_at timestamptz not null default now(),
+  unique (site_id, date)
+);
+
 create index if not exists notices_site_id_idx on public.notices (site_id);
 create index if not exists reservation_requests_site_id_idx on public.reservation_requests (site_id);
 create index if not exists reservation_requests_created_at_idx on public.reservation_requests (created_at desc);
+create index if not exists reservation_date_overrides_site_date_idx
+  on public.reservation_date_overrides (site_id, date);
 
 -- Rate limiting (service role only; no public access)
 create table if not exists public.rate_limits (
@@ -80,6 +91,7 @@ on conflict (site_id, sort_order) do nothing;
 alter table public.sites enable row level security;
 alter table public.notices enable row level security;
 alter table public.reservation_requests enable row level security;
+alter table public.reservation_date_overrides enable row level security;
 
 create policy "Public read sites"
   on public.sites for select

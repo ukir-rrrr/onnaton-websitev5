@@ -10,6 +10,7 @@ import { getLocale } from "@/lib/i18n/getLocale";
 import { copy } from "@/lib/i18n/copy";
 import { t } from "@/lib/i18n/types";
 import { splitReservationPolicy } from "@/lib/content/reservationPolicy";
+import { getReservationDateOverrideLists } from "@/lib/supabase/date-overrides";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -22,6 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function IntlReservePage() {
   const locale = await getLocale();
   const policy = splitReservationPolicy(t(locale, copy.intlForm.policyItems));
+  const overrides = await getReservationDateOverrideLists();
 
   return (
     <div className="relative w-full overflow-x-clip bg-ink text-cream">
@@ -58,7 +60,7 @@ export default async function IntlReservePage() {
         <SiteNotices />
 
         <section className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14 lg:py-24">
-          <IntlReserveMain policy={policy} />
+          <IntlReserveMain policy={policy} overrides={overrides} />
         </section>
       </main>
 

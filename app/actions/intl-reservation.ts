@@ -2,7 +2,8 @@
 
 import { notifyOwnerIntlReservation } from "@/lib/email/ownerNotification";
 import { sendCustomerAutoReply } from "@/lib/email/customerAutoReply";
-import { isBookableDate } from "@/lib/content/reservation";
+import { isBookableDate, toDateOverrides } from "@/lib/content/reservation";
+import { getReservationDateOverrideLists } from "@/lib/supabase/date-overrides";
 import { findCountryDialCode } from "@/lib/content/countryCodes";
 import { isReferralSourceId } from "@/lib/content/referralSources";
 import {
@@ -134,9 +135,16 @@ export async function submitIntlReservation(
   if (phoneNational.length < 6 || phoneNational.length > 15) {
     return err(locale, copy.intlForm.errorPhone, formData);
   }
-  if (!isBookableDate(date1)) return err(locale, copy.intlForm.errorDate, formData);
-  if (date2 && !isBookableDate(date2)) return err(locale, copy.intlForm.errorDate, formData);
-  if (date3 && !isBookableDate(date3)) return err(locale, copy.intlForm.errorDate, formData);
+  const dateOverrides = toDateOverrides(await getReservationDateOverrideLists());
+  if (!isBookableDate(date1, new Date(), dateOverrides)) {
+    return err(locale, copy.intlForm.errorDate, formData);
+  }
+  if (date2 && !isBookableDate(date2, new Date(), dateOverrides)) {
+    return err(locale, copy.intlForm.errorDate, formData);
+  }
+  if (date3 && !isBookableDate(date3, new Date(), dateOverrides)) {
+    return err(locale, copy.intlForm.errorDate, formData);
+  }
 
   const dates = [date1, date2, date3].filter(Boolean) as string[];
   if (new Set(dates).size !== dates.length) {

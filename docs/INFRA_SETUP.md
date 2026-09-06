@@ -6,7 +6,7 @@
 ## 1. Supabase
 
 1. **SQL Editor** で `supabase/schema.sql` の内容を実行  
-   既存プロジェクトは `supabase/migrations/20260829_security_rate_limits.sql` も追加実行（レート制限テーブル + 予約の anon INSERT 削除）
+   既存プロジェクトは、未適用の `supabase/migrations/` を追加実行（レート制限、予約カラム追加、予約日の臨時営業／休業）
 2. **Settings → API** からコピー:
    - Project URL → `NEXT_PUBLIC_SUPABASE_URL`
    - anon public → `NEXT_PUBLIC_SUPABASE_ANON_KEY`

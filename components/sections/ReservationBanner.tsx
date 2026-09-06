@@ -26,7 +26,7 @@ export function ReservationBanner() {
   };
 
   return (
-    <section className="relative w-full min-w-0 overflow-x-clip border-y border-cream/10 bg-ink-raised">
+    <section className="relative w-full min-w-0 overflow-x-clip overflow-y-clip border-y border-cream/10 bg-ink-raised">
       <div className="relative min-w-0 px-6 py-16 sm:px-10 sm:py-20 lg:px-14 lg:py-24">
         <motion.div
           className="mb-10 flex w-full min-w-0 max-w-full flex-col items-center gap-4 sm:mb-12 lg:mb-14"

@@ -27,6 +27,37 @@ export const reservationGuestIds = [
 const closedWeekdays = new Set([2, 3]);
 
 export const reservationMaxAdvanceDays = 30;
+/** How far ahead the owner can mark extra open / closed days. */
+export const reservationOverrideHorizonDays = 60;
+
+export type DateOverrideLists = {
+  open: readonly string[];
+  closed: readonly string[];
+};
+
+export type DateOverrides = {
+  open: ReadonlySet<string>;
+  closed: ReadonlySet<string>;
+};
+
+export const emptyDateOverrideLists: DateOverrideLists = {
+  open: [],
+  closed: [],
+};
+
+export function toDateOverrides(
+  lists: DateOverrideLists = emptyDateOverrideLists,
+): DateOverrides {
+  return {
+    open: new Set(lists.open),
+    closed: new Set(lists.closed),
+  };
+}
+
+export function makeIsClosedDate(lists: DateOverrideLists = emptyDateOverrideLists) {
+  const overrides = toDateOverrides(lists);
+  return (ymd: string) => isClosedDate(ymd, overrides);
+}
 
 export type ReservationCourseId = (typeof reservationCourseIds)[number];
 export type ReservationSeatingId = (typeof reservationSeatingIds)[number];
@@ -68,8 +99,17 @@ export function weekdayJst(ymd: string): number {
   return new Date(`${ymd}T12:00:00+09:00`).getUTCDay();
 }
 
-export function isClosedDate(ymd: string): boolean {
+export function isRegularClosedDate(ymd: string): boolean {
   return closedWeekdays.has(weekdayJst(ymd));
+}
+
+export function isClosedDate(
+  ymd: string,
+  overrides: DateOverrides = toDateOverrides(),
+): boolean {
+  if (overrides.open.has(ymd)) return false;
+  if (overrides.closed.has(ymd)) return true;
+  return isRegularClosedDate(ymd);
 }
 
 export function minBookableDate(now = new Date()): string {
@@ -80,8 +120,16 @@ export function maxBookableDate(now = new Date()): string {
   return addCalendarDays(tokyoTodayYmd(now), reservationMaxAdvanceDays);
 }
 
-export function isBookableDate(ymd: string, now = new Date()): boolean {
+export function maxOverrideDate(now = new Date()): string {
+  return addCalendarDays(tokyoTodayYmd(now), reservationOverrideHorizonDays);
+}
+
+export function isBookableDate(
+  ymd: string,
+  now = new Date(),
+  overrides: DateOverrides = toDateOverrides(),
+): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return false;
-  if (isClosedDate(ymd)) return false;
+  if (isClosedDate(ymd, overrides)) return false;
   return ymd >= minBookableDate(now) && ymd <= maxBookableDate(now);
 }

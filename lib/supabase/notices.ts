@@ -23,12 +23,10 @@ function todayJst(): string {
 }
 
 function isVisible(row: {
-  enabled: boolean;
   body_en: string;
   body_ja: string;
   visible_until: string | null;
 }): boolean {
-  if (!row.enabled) return false;
   if (!row.body_en.trim() && !row.body_ja.trim()) return false;
   if (row.visible_until && row.visible_until < todayJst()) return false;
   return true;

@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import {
-  logoutAdmin,
   saveNotices,
   type AdminNoticesState,
 } from "@/app/actions/admin-notices";
@@ -39,24 +38,13 @@ export function AdminNoticesClient({ notices, formKey }: AdminNoticesClientProps
       <div className="rounded border border-[#a68c6e]/35 bg-white/40 px-4 py-3">
         <p className={`${adminMutedClass} leading-relaxed`}>
           <span className="font-medium text-[#2a2520]">編集のしかた：</span>
-          お知らせ1〜3は固定枠です。開くと 保存済みの内容が表示されます。文言を変えて「保存する」を押すと上書き更新されます。非表示にするにはチェックを外すか、本文を空にして保存してください。
+          お知らせ1〜3は固定枠です。開くと 保存済みの内容が表示されます。文言を変えて「保存する」を押すと上書き更新されます。本文があるものはトップに出ます。消すときは本文を空にするか、表示期限を過ぎてください。
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <p className={adminMutedClass}>
-          表示ONかつ本文ありのものだけトップページに出ます。表示期限は 日本標準時
-          の日付です。
-        </p>
-        <form action={logoutAdmin}>
-          <button
-            type="submit"
-            className="rounded border border-[#a68c6e]/55 bg-white/70 px-4 py-2 text-sm font-medium text-[#2a2520] transition hover:border-gold hover:bg-white"
-          >
-            ログアウト
-          </button>
-        </form>
-      </div>
+      <p className={adminMutedClass}>
+        本文があるものだけトップページに出ます。表示期限は日本標準時の日付です。
+      </p>
 
       {saveState.error ? (
         <p
@@ -73,16 +61,6 @@ export function AdminNoticesClient({ notices, formKey }: AdminNoticesClientProps
             <legend className={adminLegendClass}>
               お知らせ {notice.sortOrder + 1}
             </legend>
-
-            <label className="flex items-center gap-3 text-sm font-medium text-[#2a2520]">
-              <input
-                type="checkbox"
-                name={`enabled_${notice.sortOrder}`}
-                defaultChecked={notice.enabled}
-                className="size-4 accent-gold"
-              />
-              トップページに表示
-            </label>
 
             <label className="block space-y-2">
               <span className={adminLabelClass}>日本語</span>

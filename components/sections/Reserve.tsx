@@ -46,7 +46,7 @@ function PolicyCard({
   return (
     <motion.article
       id={id}
-      className="scroll-mt-24 w-full min-w-0 overflow-x-clip rounded-sm border border-cream/10 bg-ink-raised px-5 py-10 sm:px-12 sm:py-14"
+      className="scroll-mt-24 w-full min-w-0 overflow-x-clip overflow-y-clip rounded-sm border border-cream/10 bg-ink-raised px-5 py-10 sm:px-12 sm:py-14"
       variants={staggerItem(reduceMotion, 32)}
     >
       <h3 className="font-serif-jp mb-6 max-w-full break-words text-center text-[18px] font-normal leading-[1.75] tracking-[0.04em] text-cream sm:mb-8 sm:text-[28px] sm:leading-[1.6] sm:tracking-[0.12em] xl:text-[30px]">
@@ -104,7 +104,7 @@ export function Reserve() {
   ];
 
   return (
-    <section id="reserve" className="scroll-mt-24 min-w-0 overflow-x-clip">
+    <section id="reserve" className="scroll-mt-24 min-w-0 overflow-x-clip overflow-y-clip">
       <div className="relative w-full min-w-0 sm:min-h-[560px] xl:aspect-[19/10] xl:max-h-[min(90vh,820px)]">
         <motion.div className="absolute inset-0" {...revealScale(reduceMotion, 0, 1.06)}>
           <Image
@@ -118,7 +118,7 @@ export function Reserve() {
         </motion.div>
         <div className="absolute inset-0 bg-black/65" />
 
-        <div className="relative z-10 flex w-full min-w-0 flex-col items-center px-6 py-20 text-center sm:px-10 sm:py-16 md:py-20 lg:px-14 xl:absolute xl:inset-0 xl:justify-center xl:overflow-y-auto xl:py-16">
+        <div className="relative z-10 flex w-full min-w-0 flex-col items-center px-6 py-20 text-center sm:px-10 sm:py-16 md:py-20 lg:px-14 xl:absolute xl:inset-0 xl:justify-center xl:overflow-visible xl:py-16">
           <Reveal variant="fadeUp" delay={0.08} amount={0.2} className="mb-8 w-full min-w-0 max-w-full">
             <SectionEyebrow
               eyebrow="RESERVATION"
@@ -160,7 +160,7 @@ export function Reserve() {
         </div>
       </div>
 
-      <div className="min-w-0 overflow-x-clip px-6 py-16 sm:px-10 sm:py-20 lg:px-14 lg:py-24">
+      <div className="min-w-0 overflow-x-clip overflow-y-clip px-6 py-16 sm:px-10 sm:py-20 lg:px-14 lg:py-24">
         <motion.div
           className="mx-auto flex w-full min-w-0 max-w-[42rem] flex-col gap-8 sm:gap-10 xl:max-w-[46rem]"
           initial="hidden"

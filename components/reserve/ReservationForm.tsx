@@ -5,12 +5,15 @@ import Link from "next/link";
 import { submitReservation, type ReservationState } from "@/app/actions/reservation";
 import { courseMenus } from "@/lib/content/executiveCourse";
 import {
+  emptyDateOverrideLists,
   isClosedDate,
   isReservationCourseId,
   maxBookableDate,
   minBookableDate,
   reservationGuestIds,
   reservationTimeSlots,
+  toDateOverrides,
+  type DateOverrideLists,
 } from "@/lib/content/reservation";
 import { MultilineText } from "@/components/i18n/MultilineText";
 import { DateField } from "@/components/ui/DateField";
@@ -26,12 +29,19 @@ const fieldClass =
 const labelClass =
   "mb-2 block text-[11px] tracking-[0.18em] text-gold-ink sm:text-[12px]";
 
-export function ReservationForm({ initialCourse = "" }: { initialCourse?: string }) {
+export function ReservationForm({
+  initialCourse = "",
+  overrides = emptyDateOverrideLists,
+}: {
+  initialCourse?: string;
+  overrides?: DateOverrideLists;
+}) {
   const [formKey, setFormKey] = useState(0);
   return (
     <ReservationFormInner
       key={formKey}
       initialCourse={initialCourse}
+      overrides={overrides}
       onReset={() => setFormKey((n) => n + 1)}
     />
   );
@@ -39,9 +49,11 @@ export function ReservationForm({ initialCourse = "" }: { initialCourse?: string
 
 function ReservationFormInner({
   initialCourse = "",
+  overrides,
   onReset,
 }: {
   initialCourse?: string;
+  overrides: DateOverrideLists;
   onReset: () => void;
 }) {
   const { t, trName, locale, isJa } = useT();
@@ -55,6 +67,7 @@ function ReservationFormInner({
 
   const minDate = useMemo(() => minBookableDate(), []);
   const maxDate = useMemo(() => maxBookableDate(), []);
+  const dateOverrides = useMemo(() => toDateOverrides(overrides), [overrides]);
   const defaultCourse = isReservationCourseId(initialCourse)
     ? initialCourse
     : "";
@@ -188,9 +201,10 @@ function ReservationFormInner({
               min={minDate}
               max={maxDate}
               value={dateValue}
+              overrides={overrides}
               onChange={(event) => {
                 const next = event.target.value;
-                if (next && isClosedDate(next)) {
+                if (next && isClosedDate(next, dateOverrides)) {
                   setDateValue("");
                   setDateHint(true);
                   return;

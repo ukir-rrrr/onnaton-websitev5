@@ -16,6 +16,7 @@ type AdminLoginFormProps = {
   error?: string;
   retryAfterSeconds?: number;
   passwordConfigured: boolean;
+  next?: "/admin/notices" | "/admin/calendar";
 };
 
 function formatLockMessage(retryAfterSeconds?: number): string {
@@ -30,6 +31,7 @@ export function AdminLoginForm({
   error,
   retryAfterSeconds,
   passwordConfigured,
+  next = "/admin/notices",
 }: AdminLoginFormProps) {
   const message =
     error === "locked"
@@ -46,6 +48,7 @@ export function AdminLoginForm({
         </p>
       ) : null}
       <form action={loginAdminForm} className="space-y-4">
+        <input type="hidden" name="next" value={next} />
         <label className="block space-y-2" htmlFor="admin-password">
           <span className={adminLabelClass}>パスワード</span>
           <PasswordInput id="admin-password" disabled={error === "locked"} />
