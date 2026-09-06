@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "onnaton-websitev",
+  "name": "onnaton-websitev5",
   // Dashboard で設定した平文の環境変数を、wrangler deploy 時に削除しない
   "keep_vars": true,
   // Custom worker adds a scheduled handler for Supabase keep-alive (see cloudflare-worker.ts).
@@ -21,7 +21,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "onnaton-websitev"
+      "service": "onnaton-websitev5"
     }
   ],
   "images": {
