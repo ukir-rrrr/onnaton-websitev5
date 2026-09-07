@@ -227,7 +227,15 @@ export function Hero() {
                   : "text-[14px] sm:text-[15px] sm:leading-[2.1]"
               }`}
             >
-              <MultilineText text={t(copy.hero.body)} keepAll={locale !== "en"} />
+              <span className="sm:hidden">
+                <MultilineText
+                  text={t(locale === "ja" ? copy.hero.bodyMobile : copy.hero.body)}
+                  keepAll={locale !== "en"}
+                />
+              </span>
+              <span className="hidden sm:inline">
+                <MultilineText text={t(copy.hero.body)} keepAll={locale !== "en"} />
+              </span>
             </p>
 
             <ReserveButton

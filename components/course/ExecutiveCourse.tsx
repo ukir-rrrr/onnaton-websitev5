@@ -5,6 +5,7 @@ import {
   type CourseMenuData,
 } from "@/lib/content/executiveCourse";
 import { ReserveButton } from "@/components/ui/ReserveButton";
+import { MultilineText } from "@/components/i18n/MultilineText";
 import { copy } from "@/lib/i18n/copy";
 import { useT } from "@/components/i18n/LocaleProvider";
 import {
@@ -34,7 +35,7 @@ const dishNameClass =
   "text-[15px] leading-[1.7] tracking-[0.06em] text-cream sm:text-[16px]";
 
 const dishNameTategakiClass =
-  "text-[17px] text-cream min-[1440px]:text-[19px] min-[1536px]:text-[21px]";
+  "text-[17px] font-normal text-cream min-[1440px]:text-[19px] min-[1536px]:text-[21px]";
 
 const horizontalTextStyle = {
   writingMode: "horizontal-tb",
@@ -109,6 +110,7 @@ export function CourseDetail({
   const c = course;
   const { t, tr, trName, isJa, locale } = useT();
   const Heading = headingAs;
+  const hasSet = c.dishes.some((dish) => dish.inSet);
 
   return (
     <article
@@ -121,7 +123,7 @@ export function CourseDetail({
           <header className="mb-8 border-b border-cream/10 pb-6 text-center sm:mb-10 sm:pb-8">
             <Heading className="font-serif-jp mb-3 text-[26px] font-normal tracking-[0.2em] text-cream sm:text-[30px]">
               <span className="block">{trName(c.name)}</span>
-              {c.nameTategakiRest ? (
+              {isJa && c.nameTategakiRest ? (
                 <span className="mt-2 block text-[20px] tracking-[0.12em] text-cream/90 sm:text-[22px]">
                   {tr(c.nameTategakiRest)}
                 </span>
@@ -137,90 +139,120 @@ export function CourseDetail({
                 {tr(c.subtitle)}
               </p>
             ) : null}
-            {c.priceLabel ? (
-              <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
-                {tr(c.priceLabel)}
+            {c.priceInquiry ? (
+              <p className="font-serif-jp mt-2 text-[16px] leading-[1.9] tracking-[0.08em] text-cream sm:text-[18px]">
+                {t(copy.coursePage.priceInquiry)}
               </p>
-            ) : null}
-            <p className="font-serif-jp text-[22px] tracking-[0.08em] text-cream sm:text-[26px]">
-              {isJa ? (
-                <>
-                  <span className="md:hidden">{c.priceMainMobile}</span>
-                  <span className="hidden md:inline">{c.priceMain}</span>
-                </>
-              ) : (
-                formatCoursePriceMain(locale, c.priceMainMobile)
-              )}
-            </p>
-            <p className="mt-1 text-[13px] tracking-[0.08em] text-cream/92 sm:text-[14px]">
-              {isJa ? (
-                <>
-                  <span className="md:hidden">{c.priceTaxNoteMobile}</span>
-                  <span className="hidden md:inline">{c.priceTaxNote}</span>
-                </>
-              ) : (
-                formatCoursePriceTax(locale, c.priceTaxNoteMobile)
-              )}
-            </p>
-            {c.altPrice ? (
-              <div className="mt-4">
-                <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
-                  {tr(c.altPrice.label)}
-                </p>
-                <p className="font-serif-jp text-[20px] tracking-[0.08em] text-cream sm:text-[24px]">
+            ) : (
+              <>
+                {c.altPrice ? (
+                  <div className="mb-4">
+                    <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
+                      {tr(c.altPrice.label)}
+                    </p>
+                    <p className="font-serif-jp text-[20px] tracking-[0.08em] text-cream sm:text-[24px]">
+                      {isJa ? (
+                        <>
+                          <span className="md:hidden">{c.altPrice.mainMobile}</span>
+                          <span className="hidden md:inline">{c.altPrice.main}</span>
+                        </>
+                      ) : (
+                        formatCoursePriceMain(locale, c.altPrice.mainMobile)
+                      )}
+                    </p>
+                    <p className="mt-1 text-[13px] tracking-[0.08em] text-cream/92 sm:text-[14px]">
+                      {isJa ? (
+                        <>
+                          <span className="md:hidden">{c.altPrice.taxNoteMobile}</span>
+                          <span className="hidden md:inline">{c.altPrice.taxNote}</span>
+                        </>
+                      ) : (
+                        formatCoursePriceTax(locale, c.altPrice.taxNoteMobile)
+                      )}
+                    </p>
+                  </div>
+                ) : null}
+                {c.priceLabel ? (
+                  <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
+                    {tr(c.priceLabel)}
+                  </p>
+                ) : null}
+                <p className="font-serif-jp text-[22px] tracking-[0.08em] text-cream sm:text-[26px]">
                   {isJa ? (
                     <>
-                      <span className="md:hidden">{c.altPrice.mainMobile}</span>
-                      <span className="hidden md:inline">{c.altPrice.main}</span>
+                      <span className="md:hidden">{c.priceMainMobile}</span>
+                      <span className="hidden md:inline">{c.priceMain}</span>
                     </>
                   ) : (
-                    formatCoursePriceMain(locale, c.altPrice.mainMobile)
+                    formatCoursePriceMain(locale, c.priceMainMobile)
                   )}
                 </p>
                 <p className="mt-1 text-[13px] tracking-[0.08em] text-cream/92 sm:text-[14px]">
                   {isJa ? (
                     <>
-                      <span className="md:hidden">{c.altPrice.taxNoteMobile}</span>
-                      <span className="hidden md:inline">{c.altPrice.taxNote}</span>
+                      <span className="md:hidden">{c.priceTaxNoteMobile}</span>
+                      <span className="hidden md:inline">{c.priceTaxNote}</span>
                     </>
                   ) : (
-                    formatCoursePriceTax(locale, c.altPrice.taxNoteMobile)
+                    formatCoursePriceTax(locale, c.priceTaxNoteMobile)
                   )}
                 </p>
-              </div>
-            ) : null}
+              </>
+            )}
           </header>
+
+          {c.leftNote ? (
+            <p className="mx-auto mb-6 max-w-2xl text-center text-[13px] leading-[1.9] tracking-[0.04em] text-cream/80 sm:text-[14px]">
+              <MultilineText text={tr(c.leftNote)} keepAll={false} />
+            </p>
+          ) : null}
 
           <ul className="font-serif-jp mx-auto max-w-3xl divide-y divide-cream/10">
             {c.dishes.map((dish) => (
               <li
                 key={`${dish.name}-${dish.note ?? ""}`}
-                className="py-3.5 text-center sm:py-4"
+                className="py-3.5 sm:py-4"
               >
-                {dish.nameMobileLines ? (
-                  <>
-                    <p className="text-[15px] leading-[1.7] tracking-[0.06em] text-cream md:hidden sm:text-[16px]">
-                      <span className="block">{tr(dish.nameMobileLines[0])}</span>
-                      <span className="block">{tr(dish.nameMobileLines[1])}</span>
-                    </p>
-                    <p className="hidden text-[15px] leading-[1.7] tracking-[0.06em] text-cream md:block sm:text-[16px]">
-                      {trName(dish.name)}
-                    </p>
-                    {dish.note ? (
-                      <p className={`${dishNameClass} mt-1`}>{tr(dish.note)}</p>
-                    ) : null}
-                  </>
-                ) : (
-                  <>
-                    <p className={dishNameClass}>{trName(dish.name)}</p>
-                    {dish.note ? (
-                      <p className={`${dishNameClass} mt-1`}>{tr(dish.note)}</p>
-                    ) : null}
-                  </>
-                )}
+                <div className="flex items-baseline justify-center gap-1.5">
+                  <span
+                    aria-hidden
+                    className="w-4 shrink-0 text-right text-[13px] leading-[1.7] text-gold sm:text-[14px]"
+                  >
+                    {dish.inSet ? "※" : ""}
+                  </span>
+                  <div className="min-w-0 text-center">
+                    {dish.nameMobileLines ? (
+                      <>
+                        <p className="text-[15px] leading-[1.7] tracking-[0.06em] text-cream md:hidden sm:text-[16px]">
+                          <span className="block">{tr(dish.nameMobileLines[0])}</span>
+                          <span className="block">{tr(dish.nameMobileLines[1])}</span>
+                        </p>
+                        <p className="hidden text-[15px] leading-[1.7] tracking-[0.06em] text-cream md:block sm:text-[16px]">
+                          {trName(dish.name)}
+                        </p>
+                        {dish.note ? (
+                          <p className={`${dishNameClass} mt-1`}>{tr(dish.note)}</p>
+                        ) : null}
+                      </>
+                    ) : (
+                      <>
+                        <p className={dishNameClass}>{trName(dish.name)}</p>
+                        {dish.note ? (
+                          <p className={`${dishNameClass} mt-1`}>{tr(dish.note)}</p>
+                        ) : null}
+                      </>
+                    )}
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
+
+          {hasSet ? (
+            <p className="mx-auto mt-6 max-w-2xl text-center text-[13px] leading-[1.8] tracking-[0.04em] text-cream/80 sm:text-[14px]">
+              {t(copy.coursePage.setNote)}
+            </p>
+          ) : null}
         </div>
 
         {/* Desktop: tategaki columns (Japanese only) */}
@@ -270,56 +302,101 @@ export function CourseDetail({
                 className="shrink-0 leading-[1.45] min-[1440px]:leading-[1.5]"
                 style={verticalTextStyle}
               >
-                {c.priceLabel ? (
+                {c.priceInquiry ? (
+                  <span className="text-[18px] tracking-[0.1em] text-cream min-[1440px]:text-[20px]">
+                    {t(copy.coursePage.priceInquiry)}
+                  </span>
+                ) : (
                   <>
-                    <span className="text-[13px] tracking-[0.1em] text-cream/90 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
-                      {tr(c.priceLabel)}
-                    </span>
-                    <br />
-                  </>
-                ) : null}
-                <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[30px] min-[1440px]:tracking-[0.1em]">
-                  {c.priceMain}
-                </span>
-                <br />
-                <span className="text-[13px] tracking-[0.1em] text-cream/95 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
-                  {c.priceTaxNote}
-                </span>
-                {c.altPrice ? (
-                  <>
-                    <br />
-                    <span className="text-[13px] tracking-[0.1em] text-cream/90 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
-                      {tr(c.altPrice.label)}
-                    </span>
-                    <br />
-                    <span className="text-[22px] tracking-[0.08em] text-cream min-[1440px]:text-[26px] min-[1440px]:tracking-[0.1em]">
-                      {c.altPrice.main}
+                    {c.altPrice ? (
+                      <>
+                        <span className="text-[13px] tracking-[0.1em] text-cream/90 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
+                          {tr(c.altPrice.label)}
+                        </span>
+                        <br />
+                        <span className="text-[22px] tracking-[0.08em] text-cream min-[1440px]:text-[26px] min-[1440px]:tracking-[0.1em]">
+                          {c.altPrice.main}
+                        </span>
+                        <br />
+                        <span className="text-[13px] tracking-[0.1em] text-cream/95 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
+                          {c.altPrice.taxNote}
+                        </span>
+                        <br />
+                      </>
+                    ) : null}
+                    {c.priceLabel ? (
+                      <>
+                        <span className="text-[13px] tracking-[0.1em] text-cream/90 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
+                          {tr(c.priceLabel)}
+                        </span>
+                        <br />
+                      </>
+                    ) : null}
+                    <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[30px] min-[1440px]:tracking-[0.1em]">
+                      {c.priceMain}
                     </span>
                     <br />
                     <span className="text-[13px] tracking-[0.1em] text-cream/95 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
-                      {c.altPrice.taxNote}
+                      {c.priceTaxNote}
                     </span>
                   </>
-                ) : null}
+                )}
               </p>
 
               {c.dishes.map((dish) => (
-                <p
+                <div
                   key={`${dish.name}-${dish.note ?? ""}`}
-                  className="shrink-0 leading-[1.85] tracking-[0.14em] min-[1440px]:leading-[2] min-[1440px]:tracking-[0.18em]"
+                  className="flex shrink-0 flex-col items-center"
+                >
+                  <span
+                    aria-hidden
+                    className="mb-1.5 h-5 text-[15px] leading-none text-gold min-[1440px]:h-6 min-[1440px]:text-[17px]"
+                  >
+                    {dish.inSet ? "※" : ""}
+                  </span>
+                  <p
+                    className="leading-[1.85] tracking-[0.14em] min-[1440px]:leading-[2] min-[1440px]:tracking-[0.18em]"
+                    style={verticalTextStyle}
+                  >
+                    <span className={dishNameTategakiClass}>
+                      {trName(dish.name)}
+                    </span>
+                    {dish.note ? (
+                      <span className={dishNameTategakiClass}>
+                        {"　"}
+                        {tr(dish.note)}
+                      </span>
+                    ) : null}
+                  </p>
+                </div>
+              ))}
+
+              {hasSet ? (
+                <p
+                  className="shrink-0 self-start pl-2 leading-[1.85] tracking-[0.14em] text-cream/80 min-[1440px]:pl-4 min-[1440px]:leading-[2]"
                   style={verticalTextStyle}
                 >
-                  <span className={dishNameTategakiClass}>
-                    {trName(dish.name)}
+                  <span className="text-[14px] min-[1440px]:text-[16px]">
+                    {t(copy.coursePage.setNote)}
                   </span>
-                  {dish.note ? (
-                    <span className={dishNameTategakiClass}>
-                      {"　"}
-                      {tr(dish.note)}
-                    </span>
-                  ) : null}
                 </p>
-              ))}
+              ) : c.leftNote ? (
+                <div className="flex shrink-0 flex-row-reverse items-start gap-1 self-start pl-2 min-[1440px]:pl-4">
+                  {tr(c.leftNote)
+                    .split("\n")
+                    .map((line, i) => (
+                      <p
+                        key={i}
+                        className="leading-[1.9] tracking-[0.1em] text-cream/80 min-[1440px]:leading-[2]"
+                        style={verticalTextStyle}
+                      >
+                        <span className="text-[14px] min-[1440px]:text-[16px]">
+                          {line}
+                        </span>
+                      </p>
+                    ))}
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
