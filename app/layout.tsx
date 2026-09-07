@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Serif_JP, Yuji_Syuku } from "next/font/google";
+import { Noto_Serif_JP } from "next/font/google";
 import "./globals.css";
 import { getLocale } from "@/lib/i18n/getLocale";
 import { htmlLang } from "@/lib/i18n/config";
@@ -15,14 +15,6 @@ const notoSerifJp = Noto_Serif_JP({
   variable: "--font-noto-serif-jp",
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
-});
-
-/** 達筆-style brush for the course menu page (由字粛). */
-const yujiSyuku = Yuji_Syuku({
-  variable: "--font-yuji-syuku",
-  subsets: ["latin"],
-  weight: "400",
   display: "swap",
 });
 
@@ -49,7 +41,7 @@ export default async function RootLayout({
   return (
     <html
       lang={htmlLang[locale]}
-      className={`${notoSerifJp.variable} ${yujiSyuku.variable}`}
+      className={notoSerifJp.variable}
     >
       <body>
         <div className="washi-backdrop" aria-hidden />

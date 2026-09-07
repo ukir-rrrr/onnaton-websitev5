@@ -124,6 +124,7 @@ const approxG200 = "≒　２００ｇ";
 export const executiveCourse: CourseMenuData = {
   id: "executive",
   name: "エグゼクティブ S",
+  nameTategakiLead: "エグゼクティブ Ｓ",
   priceLabel: "コースお一人様",
   priceMain: "一一、五〇〇円",
   priceTaxNote: "（税込 一二、六五〇円）",

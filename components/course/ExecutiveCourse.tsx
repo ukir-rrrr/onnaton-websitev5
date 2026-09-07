@@ -42,6 +42,12 @@ const horizontalTextStyle = {
   textOrientation: "mixed",
 } as const;
 
+/** Upright Latin (e.g. "S") so it does not lie on its side in tategaki. */
+const verticalUprightDisplayStyle = {
+  ...verticalDisplayStyle,
+  textOrientation: "upright",
+} as const;
+
 function CourseBadge({
   label,
   tail,
@@ -115,9 +121,9 @@ export function CourseDetail({
   return (
     <article
       id={id}
-      className="scroll-mt-24 w-full overflow-x-clip border-b border-cream/8 bg-ink py-14 sm:py-20 lg:py-28"
+      className="scroll-mt-24 w-full overflow-x-clip overflow-y-clip border-b border-cream/8 bg-ink py-14 sm:py-20 lg:py-28"
     >
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-12 xl:max-w-[1400px] xl:px-16">
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-12 xl:max-w-none xl:px-4 min-[1600px]:px-8">
         {/* Mobile / tablet: yokogaki */}
         <div className={isJa ? "xl:hidden" : ""}>
           <header className="mb-8 border-b border-cream/10 pb-6 text-center sm:mb-10 sm:pb-8">
@@ -256,9 +262,9 @@ export function CourseDetail({
         </div>
 
         {/* Desktop: tategaki columns (Japanese only) */}
-        <div className={`hidden min-w-0 xl:overflow-x-clip ${isJa ? "xl:block" : ""}`}>
-          <div className="flex w-full justify-center px-2 sm:px-4">
-            <div className="font-serif-jp flex flex-row-reverse items-start gap-3 text-cream min-[1440px]:gap-6 min-[1536px]:gap-8">
+        <div className={`hidden min-w-0 ${isJa ? "xl:block" : ""}`}>
+          <div className="flex w-full justify-center">
+            <div className="font-serif-jp flex flex-row-reverse items-start gap-2 pt-8 text-cream min-[1440px]:gap-3 min-[1440px]:pt-10 min-[1600px]:gap-5 min-[1800px]:gap-7">
               {c.badge ? (
                 <div className="flex w-12 shrink-0 items-center justify-center bg-gold py-8 min-[1440px]:w-14 min-[1440px]:py-10 min-[1536px]:py-12">
                   <CourseBadgeTategaki label={c.badge} tail={c.badgeTail} />
@@ -283,7 +289,11 @@ export function CourseDetail({
               ) : (
                 <Heading
                   className="shrink-0 text-[30px] font-normal tracking-[0.32em] text-cream min-[1440px]:text-[36px] min-[1440px]:tracking-[0.4em]"
-                  style={verticalDisplayStyle}
+                  style={
+                    c.id === "executive"
+                      ? verticalUprightDisplayStyle
+                      : verticalDisplayStyle
+                  }
                 >
                   {c.nameTategakiLead ? trName(c.nameTategakiLead) : trName(c.name)}
                 </Heading>
@@ -346,14 +356,16 @@ export function CourseDetail({
               {c.dishes.map((dish) => (
                 <div
                   key={`${dish.name}-${dish.note ?? ""}`}
-                  className="flex shrink-0 flex-col items-center"
+                  className="relative flex shrink-0 flex-col items-center"
                 >
-                  <span
-                    aria-hidden
-                    className="mb-1.5 h-5 text-[15px] leading-none text-gold min-[1440px]:h-6 min-[1440px]:text-[17px]"
-                  >
-                    {dish.inSet ? "※" : ""}
-                  </span>
+                  {dish.inSet ? (
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[1.2em] text-[15px] leading-none text-gold min-[1440px]:-translate-y-[1.3em] min-[1440px]:text-[17px]"
+                    >
+                      ※
+                    </span>
+                  ) : null}
                   <p
                     className="leading-[1.85] tracking-[0.14em] min-[1440px]:leading-[2] min-[1440px]:tracking-[0.18em]"
                     style={verticalTextStyle}
