@@ -10,7 +10,7 @@ import { useT } from "@/components/i18n/LocaleProvider";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function About() {
-  const { t } = useT();
+  const { t, isJa } = useT();
   const reduceMotion = useReducedMotion() === true;
 
   const fadeUp = (delay = 0) =>
@@ -169,7 +169,16 @@ export function About() {
             className="font-serif-jp mb-10 min-w-0 max-w-full break-words text-[20px] font-medium leading-[2] tracking-[0.04em] text-cream max-sm:text-pretty sm:mb-12 sm:text-[28px] sm:leading-[2.05] xl:text-[32px]"
             {...fadeUp(0.16)}
           >
-            <span className="sm:hidden">{t(copy.about.leadBody)}</span>
+            <span className="sm:hidden">
+              {isJa ? (
+                <MultilineText
+                  text={t(copy.about.leadBodyMobile)}
+                  alwaysNowrapLastLine
+                />
+              ) : (
+                t(copy.about.leadBody)
+              )}
+            </span>
             <span className="hidden text-pretty sm:inline">{t(copy.about.leadBody)}</span>
           </motion.p>
 

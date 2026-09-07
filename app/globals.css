@@ -180,12 +180,56 @@ body {
   color: var(--color-on-dark);
 }
 
-/* Course menu page — unified 達筆 typography (Yuji Syuku). */
+/* Course menu page — brush typography. Switch: lib/content/courseMenuFont.ts */
+[data-course-brush="kouzan-mouhitsu"] {
+  --font-brush-jp: var(--font-kouzan-mouhitsu), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-kouzan-mouhitsu), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
+[data-course-brush="aoyagi-kouzan"] {
+  --font-brush-jp: var(--font-aoyagi-kouzan), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-aoyagi-kouzan), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
+[data-course-brush="yuji-mai"] {
+  --font-brush-jp: var(--font-yuji-mai), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-yuji-mai), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
+[data-course-brush="hina-mincho"] {
+  --font-brush-jp: var(--font-hina-mincho), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-hina-mincho), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
+[data-course-brush="zen-kurenaido"] {
+  --font-brush-jp: var(--font-zen-kurenaido), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-zen-kurenaido), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
+[data-course-brush="yuji-syuku"] {
+  --font-brush-jp: var(--font-yuji-syuku), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-yuji-syuku), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
 main.font-brush-jp,
 main.font-brush-jp .font-serif-jp,
 main.font-brush-jp .font-sans-jp,
 main.font-brush-jp .font-display-jp {
   font-family: var(--font-brush-jp);
+  font-weight: 400;
+  font-synthesis: none;
   letter-spacing: 0.05em;
 }
 

@@ -13,6 +13,8 @@ export const siteConfig = {
   // nameReading: "おんなとん",
   nameRomaji: "ONNATON",
   formalName: "沖縄しゃぶしゃぶ恩納豚 那覇｜あぐー豚×特選石垣牛",
+  /** JA phone-only: break after `｜`. sm+ keeps one line. */
+  formalNameMobile: "沖縄しゃぶしゃぶ恩納豚 那覇｜\nあぐー豚×特選石垣牛",
   reservationPhoneDisplay: "090-3650-0710",
   reservationPhoneHref: "tel:09036500710",
   instagramUrl: "https://www.instagram.com/onnaton_okinawa/",

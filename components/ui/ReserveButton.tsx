@@ -171,8 +171,11 @@ export function ReserveButton({
                     — — —
                   </p>
                 )}
-                <p className="mb-6 text-[13px] leading-[1.8] tracking-[0.04em] text-cream/82">
+                <p className="mb-2 text-[13px] leading-[1.8] tracking-[0.04em] text-cream/82">
                   {t(copy.reserve.hours)}
+                </p>
+                <p className="mb-6 text-[12px] leading-[1.8] tracking-[0.04em] text-cream/70">
+                  <MultilineText text={t(copy.reserve.hoursNote)} keepAll={false} />
                 </p>
 
                 <div className="flex flex-col gap-3">

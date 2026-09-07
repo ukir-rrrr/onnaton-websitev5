@@ -15,6 +15,8 @@ export interface ExecutiveDish {
   note?: string;
   /** Phone-only line breaks (md+ / tategaki keep `name` + `note`) */
   nameMobileLines?: readonly [string, string];
+  /** Marked with ※ — part of the "set" portion of the course. */
+  inSet?: boolean;
 }
 
 export interface CourseAltPrice {
@@ -48,6 +50,10 @@ export interface CourseMenuData {
   priceMainMobile: string;
   priceTaxNoteMobile: string;
   altPrice?: CourseAltPrice;
+  /** Hide all prices and show the "inquire" copy instead (chateaubriand). */
+  priceInquiry?: boolean;
+  /** Leftmost vertical note (e.g. chateaubriand rare-cut caveat). Phrase key. */
+  leftNote?: string;
   slides: readonly { src: string; alt: string }[];
   dishes: readonly ExecutiveDish[];
 }
@@ -117,62 +123,79 @@ const approxG200 = "≒　２００ｇ";
 
 export const executiveCourse: CourseMenuData = {
   id: "executive",
-  name: "エグゼクティブコース",
-  priceLabel: "お一人様",
-  priceMain: "一〇、五〇〇円",
-  priceTaxNote: "（税込 一一、五五〇円）",
-  priceMainMobile: "10,500円",
-  priceTaxNoteMobile: "（税込 11,550円）",
+  name: "エグゼクティブ S",
+  nameTategakiLead: "エグゼクティブ Ｓ",
+  priceLabel: "コースお一人様",
+  priceMain: "一一、五〇〇円",
+  priceTaxNote: "（税込 一二、六五〇円）",
+  priceMainMobile: "11,500円",
+  priceTaxNoteMobile: "（税込 12,650円）",
+  altPrice: {
+    label: "セットお一人様",
+    main: "一〇、五〇〇円",
+    taxNote: "（税込 一一、五五〇円）",
+    mainMobile: "10,500円",
+    taxNoteMobile: "（税込 11,550円）",
+  },
   slides: executiveSlides,
   dishes: [
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
     { name: "久米島産海ぶどう", note: umiNote },
-    { name: "紅しゃぶスープ" },
+    { name: "紅しゃぶスープ", inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
       nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      inSet: true,
     },
-    { name: "あぐー豚", note: approxG100 },
-    { name: "お野菜" },
-    { name: "手ごねのあぐーつくね" },
-    { name: "目の前で焼き上げる焼きチーズリゾット" },
+    { name: "あぐー豚", note: approxG100, inSet: true },
+    { name: "お野菜", inSet: true },
+    { name: "手ごねのあぐーつくね", inSet: true },
+    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
     { name: "バニラアイスクリーム" },
   ],
 };
 
 export const hanaCourse: CourseMenuData = {
   id: "hana",
-  name: "エグゼクティブコース　華-hana-",
+  name: "エグゼクティブ 華 -hana-",
   subtitle: "エグゼクティブコースよりあぐー豚１００ｇ増量コース",
-  priceLabel: "お一人様",
-  priceMain: "一二、〇〇〇円",
-  priceTaxNote: "（税込 一三、二〇〇円）",
-  priceMainMobile: "12,000円",
-  priceTaxNoteMobile: "（税込 13,200円）",
+  priceLabel: "コースお一人様",
+  priceMain: "一二、五〇〇円",
+  priceTaxNote: "（税込 一三、七五〇円）",
+  priceMainMobile: "12,500円",
+  priceTaxNoteMobile: "（税込 13,750円）",
+  altPrice: {
+    label: "セットお一人様",
+    main: "一一、五〇〇円",
+    taxNote: "（税込 一二、六五〇円）",
+    mainMobile: "11,500円",
+    taxNoteMobile: "（税込 12,650円）",
+  },
   slides: executiveSlides,
   dishes: [
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
     { name: "久米島産海ぶどう", note: umiNote },
-    { name: "紅しゃぶスープ" },
+    { name: "紅しゃぶスープ", inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
       nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      inSet: true,
     },
-    { name: "あぐー豚", note: approxG200 },
-    { name: "お野菜" },
-    { name: "手ごねのあぐーつくね" },
-    { name: "目の前で焼き上げる焼きチーズリゾット" },
+    { name: "あぐー豚", note: approxG200, inSet: true },
+    { name: "お野菜", inSet: true },
+    { name: "手ごねのあぐーつくね", inSet: true },
+    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
     { name: "バニラアイス" },
   ],
 };
 
 export const kiwamiCourse: CourseMenuData = {
   id: "kiwami",
-  name: "エグゼクティブ　極-kiwami-",
+  name: "エグゼクティブ 極 -kiwami-",
   badge: "初めての方におすすめコース",
   priceLabel: "コースお一人様",
   priceMain: "一四、八〇〇円",
@@ -191,33 +214,36 @@ export const kiwamiCourse: CourseMenuData = {
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
     { name: "久米島産海ぶどう", note: umiNote },
-    { name: "紅しゃぶスープ" },
+    { name: "紅しゃぶスープ", inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: g50,
       nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      inSet: true,
     },
     {
       name: `${wagyuPrefix}　山城牛（Ａ５ランク）`,
       note: g50,
       nameMobileLines: [wagyuPrefix, "山城牛（Ａ５ランク）"],
+      inSet: true,
     },
     {
       name: `${wagyuPrefix}　特選石垣牛（Ａ５ランク）`,
       note: g50,
       nameMobileLines: [wagyuPrefix, "特選石垣牛（Ａ５ランク）"],
+      inSet: true,
     },
-    { name: "あぐー豚", note: g100 },
-    { name: "お野菜" },
-    { name: "手ごねのあぐーつくね" },
-    { name: "目の前で焼き上げる焼きチーズリゾット" },
+    { name: "あぐー豚", note: g100, inSet: true },
+    { name: "お野菜", inSet: true },
+    { name: "手ごねのあぐーつくね", inSet: true },
+    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
     { name: "沖縄県産黒蜜きな粉バニラアイスクリーム" },
   ],
 };
 
 export const kouCourse: CourseMenuData = {
   id: "kou",
-  name: "エグゼクティブ　煌-kou-",
+  name: "エグゼクティブ 煌 -kou-",
   badge: "ご常連様一番人気",
   priceLabel: "コースお一人様",
   priceMain: "一八、五〇〇円",
@@ -240,35 +266,41 @@ export const kouCourse: CourseMenuData = {
       name: `${wagyuPrefix}　特選石垣牛（Ａ５ランク）`,
       note: approxG100,
       nameMobileLines: [wagyuPrefix, "特選石垣牛（Ａ５ランク）"],
+      inSet: true,
     },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
       nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      inSet: true,
     },
     {
       name: `${wagyuPrefix}　山城牛（Ａ５ランク）`,
       note: approxG50,
       nameMobileLines: [wagyuPrefix, "山城牛（Ａ５ランク）"],
+      inSet: true,
     },
-    { name: "あぐー豚", note: approxG50 },
-    { name: "紅しゃぶスープ" },
-    { name: "お野菜" },
-    { name: "手ごねのあぐーつくね" },
-    { name: "目の前で焼き上げる焼きチーズリゾット" },
+    { name: "あぐー豚", note: approxG50, inSet: true },
+    { name: "紅しゃぶスープ", inSet: true },
+    { name: "お野菜", inSet: true },
+    { name: "手ごねのあぐーつくね", inSet: true },
+    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
     { name: "沖縄県産黒蜜きな粉バニラアイスクリーム" },
   ],
 };
 
 export const chateaubriandCourse: CourseMenuData = {
   id: "chateaubriand",
-  name: "エグゼクティブ極",
-  nameTategakiRest: "（with シャトーブリアン）",
-  priceLabel: "コースお一人様",
-  priceMain: "二五、八〇〇円",
-  priceTaxNote: "（税込 二八、三八〇円）",
-  priceMainMobile: "25,800円",
-  priceTaxNoteMobile: "（税込 28,380円）",
+  name: "エグゼクティブ［極］",
+  nameTategakiRest: "with シャトーブリアン",
+  badge: "ご常連さま二番人気",
+  priceInquiry: true,
+  leftNote:
+    "シャトーブリアンは非常に希少な部位のため、ご用意できない場合がございます。\nその際は、最高級フィレ肉をご提供いたします。",
+  priceMain: "",
+  priceTaxNote: "",
+  priceMainMobile: "",
+  priceTaxNoteMobile: "",
   slides: chateaubriandSlides,
   dishes: [
     { name: "沖縄県産もずく" },
