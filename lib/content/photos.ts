@@ -56,7 +56,7 @@ export const photos = {
   scene01: "/images/scene_01.jpg",
   scene02: "/images/scene_02.jpg",
   scene03: "/images/scene_03.jpg",
-  scene04: "/images/scene_04.jpg",
+  scene04: "/images/scene_04v2.jpg",
 
 
   /** ご予約について */

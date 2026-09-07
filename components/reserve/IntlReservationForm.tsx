@@ -31,7 +31,7 @@ const fieldClass =
   "w-full rounded-sm border border-cream/18 bg-ink-raised px-4 py-3.5 text-[15px] text-cream placeholder:text-cream/30 outline-none transition-colors [color-scheme:light] focus:border-gold";
 
 const labelClass =
-  "mb-2 block text-[11px] tracking-[0.18em] text-gold-ink sm:text-[12px]";
+  "mb-2 block text-[13px] tracking-[0.18em] text-gold-ink sm:text-[14px]";
 
 type DateFieldKey = "datePreference1" | "datePreference2" | "datePreference3";
 
