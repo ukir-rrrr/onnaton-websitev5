@@ -293,7 +293,7 @@ export const chateaubriandCourse: CourseMenuData = {
   id: "chateaubriand",
   name: "エグゼクティブ［極］",
   nameTategakiRest: "with シャトーブリアン",
-  badge: "ご常連さま二番人気",
+  badge: "ご常連様二番人気",
   priceInquiry: true,
   leftNote:
     "シャトーブリアンは非常に希少な部位のため、ご用意できない場合がございます。\nその際は、最高級フィレ肉をご提供いたします。",

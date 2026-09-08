@@ -210,8 +210,8 @@ const phrases: Record<string, Localized> = {
       "Executive「Omakase」特別版",
       "Executive「Omakase」特別版",
     ),
-  "ご常連さま二番人気": L(
-      "ご常連さま二番人気",
+  "ご常連様二番人気": L(
+      "ご常連様二番人気",
       "Second most popular with regulars",
       "단골 손님께 두 번째로 인기",
       "熟客第二愛",

@@ -175,7 +175,12 @@ export function ReserveButton({
                   {t(copy.reserve.hours)}
                 </p>
                 <p className="mb-6 text-[12px] leading-[1.8] tracking-[0.04em] text-cream/70">
-                  <MultilineText text={t(copy.reserve.hoursNote)} keepAll={false} />
+                  <span className="sm:hidden">
+                    <MultilineText text={t(copy.reserve.hoursNoteMobile)} keepAll={false} />
+                  </span>
+                  <span className="hidden sm:inline">
+                    <MultilineText text={t(copy.reserve.hoursNote)} keepAll={false} />
+                  </span>
                 </p>
 
                 <div className="flex flex-col gap-3">

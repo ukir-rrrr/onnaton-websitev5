@@ -100,6 +100,19 @@ function CourseBadgeTategaki({
   );
 }
 
+/** Render setNote so a leading ※ matches the gold dish marks; body color unchanged. */
+function SetNoteText({ text }: { text: string }) {
+  if (text.startsWith("※")) {
+    return (
+      <>
+        <span className="text-gold">※</span>
+        {text.slice(1)}
+      </>
+    );
+  }
+  return <>{text}</>;
+}
+
 export function CourseDetail({
   course,
   headingAs = "h2",
@@ -156,7 +169,7 @@ export function CourseDetail({
                     <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
                       {tr(c.altPrice.label)}
                     </p>
-                    <p className="font-serif-jp text-[20px] tracking-[0.08em] text-cream sm:text-[24px]">
+                    <p className="font-serif-jp text-[22px] tracking-[0.08em] text-cream sm:text-[26px]">
                       {isJa ? (
                         <>
                           <span className="md:hidden">{c.altPrice.mainMobile}</span>
@@ -256,7 +269,7 @@ export function CourseDetail({
 
           {hasSet ? (
             <p className="mx-auto mt-6 max-w-2xl text-center text-[13px] leading-[1.8] tracking-[0.04em] text-cream/80 sm:text-[14px]">
-              {t(copy.coursePage.setNote)}
+              <SetNoteText text={t(copy.coursePage.setNote)} />
             </p>
           ) : null}
         </div>
@@ -264,7 +277,7 @@ export function CourseDetail({
         {/* Desktop: tategaki columns (Japanese only) */}
         <div className={`hidden min-w-0 ${isJa ? "xl:block" : ""}`}>
           <div className="flex w-full justify-center">
-            <div className="font-serif-jp flex flex-row-reverse items-start gap-2 pt-8 text-cream min-[1440px]:gap-3 min-[1440px]:pt-10 min-[1600px]:gap-5 min-[1800px]:gap-7">
+            <div className="font-serif-jp flex flex-row-reverse items-start gap-2 pt-8 text-cream min-[1440px]:gap-3 min-[1440px]:pr-3 min-[1440px]:pt-10 min-[1600px]:gap-5 min-[1600px]:pr-6 min-[1800px]:gap-7 min-[1800px]:pr-10">
               {c.badge ? (
                 <div className="flex w-12 shrink-0 items-center justify-center bg-gold py-8 min-[1440px]:w-14 min-[1440px]:py-10 min-[1536px]:py-12">
                   <CourseBadgeTategaki label={c.badge} tail={c.badgeTail} />
@@ -309,7 +322,7 @@ export function CourseDetail({
               ) : null}
 
               <p
-                className="shrink-0 leading-[1.45] min-[1440px]:leading-[1.5]"
+                className="ml-6 shrink-0 leading-[1.45] min-[1440px]:ml-10 min-[1440px]:leading-[1.5] min-[1600px]:ml-14 min-[1800px]:ml-20"
                 style={verticalTextStyle}
               >
                 {c.priceInquiry ? (
@@ -324,7 +337,7 @@ export function CourseDetail({
                           {tr(c.altPrice.label)}
                         </span>
                         <br />
-                        <span className="text-[22px] tracking-[0.08em] text-cream min-[1440px]:text-[26px] min-[1440px]:tracking-[0.1em]">
+                        <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[30px] min-[1440px]:tracking-[0.1em]">
                           {c.altPrice.main}
                         </span>
                         <br />
@@ -356,7 +369,7 @@ export function CourseDetail({
               {c.dishes.map((dish) => (
                 <div
                   key={`${dish.name}-${dish.note ?? ""}`}
-                  className="relative flex shrink-0 flex-col items-center"
+                  className="relative flex shrink-0 flex-col items-center min-[1600px]:ml-1 min-[1800px]:ml-2"
                 >
                   {dish.inSet ? (
                     <span
@@ -389,7 +402,7 @@ export function CourseDetail({
                   style={verticalTextStyle}
                 >
                   <span className="text-[14px] min-[1440px]:text-[16px]">
-                    {t(copy.coursePage.setNote)}
+                    <SetNoteText text={t(copy.coursePage.setNote)} />
                   </span>
                 </p>
               ) : c.leftNote ? (
