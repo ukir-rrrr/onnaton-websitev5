@@ -169,7 +169,7 @@ export function CourseDetail({
                     <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
                       {tr(c.altPrice.label)}
                     </p>
-                    <p className="font-serif-jp text-[20px] tracking-[0.08em] text-cream sm:text-[24px]">
+                    <p className="font-serif-jp text-[22px] tracking-[0.08em] text-cream sm:text-[26px]">
                       {isJa ? (
                         <>
                           <span className="md:hidden">{c.altPrice.mainMobile}</span>
@@ -322,7 +322,7 @@ export function CourseDetail({
               ) : null}
 
               <p
-                className="shrink-0 leading-[1.45] min-[1440px]:ml-2 min-[1440px]:leading-[1.5] min-[1600px]:ml-4 min-[1800px]:ml-6"
+                className="ml-6 shrink-0 leading-[1.45] min-[1440px]:ml-10 min-[1440px]:leading-[1.5] min-[1600px]:ml-14 min-[1800px]:ml-20"
                 style={verticalTextStyle}
               >
                 {c.priceInquiry ? (
@@ -337,7 +337,7 @@ export function CourseDetail({
                           {tr(c.altPrice.label)}
                         </span>
                         <br />
-                        <span className="text-[22px] tracking-[0.08em] text-cream min-[1440px]:text-[26px] min-[1440px]:tracking-[0.1em]">
+                        <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[30px] min-[1440px]:tracking-[0.1em]">
                           {c.altPrice.main}
                         </span>
                         <br />
