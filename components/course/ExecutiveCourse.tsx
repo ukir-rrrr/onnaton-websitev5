@@ -232,7 +232,17 @@ export function CourseDetail({
             ) : null}
             {c.subtitle ? (
               <p className="mx-auto mb-4 text-[15px] leading-[1.8] tracking-[0.06em] text-cream sm:text-[16px]">
-                {tr(c.subtitle)}
+                {isJa && c.subtitleMobileLines ? (
+                  <>
+                    <span className="md:hidden">
+                      <span className="block">{c.subtitleMobileLines[0]}</span>
+                      <span className="block">{c.subtitleMobileLines[1]}</span>
+                    </span>
+                    <span className="hidden md:inline">{tr(c.subtitle)}</span>
+                  </>
+                ) : (
+                  tr(c.subtitle)
+                )}
               </p>
             ) : null}
             {c.priceInquiry ? (

@@ -112,6 +112,13 @@ const phrases: Record<string, Localized> = {
       "特选石垣牛（A5）菲力牛排",
       "特选石垣牛（A5）菲力牛排",
     ),
+  "シャトーブリアンステーキ": L(
+      "シャトーブリアンステーキ",
+      "Chateaubriand steak",
+      "샤토브리앙 스테이크",
+      "菲力牛排",
+      "菲力牛排",
+    ),
   "高級ワイン「Rindo」などを元に作ったソースと共に": L(
       "高級ワイン「Rindo」などを元に作ったソースと共に",
       "With a sauce made from fine wines including “Rindo”",

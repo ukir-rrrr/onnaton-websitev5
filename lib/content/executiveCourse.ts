@@ -39,6 +39,8 @@ export interface CourseMenuData {
   nameTategakiRest?: string;
   /** Short line under the title (e.g. 増量コース) */
   subtitle?: string;
+  /** Phone-only line break (md+ / tategaki keep `subtitle`) */
+  subtitleMobileLines?: readonly [string, string];
   /** Prominent label near the course name (e.g. 人気) */
   badge?: string;
   /** Tategaki only: horizontal tail after vertical badge (e.g. No.1) */
@@ -162,6 +164,7 @@ export const hanaCourse: CourseMenuData = {
   id: "hana",
   name: "エグゼクティブ 華 -HANA-",
   subtitle: "エグゼクティブコースよりあぐー豚１００ｇ増量コース",
+  subtitleMobileLines: ["エグゼクティブコースより", "あぐー豚１００ｇ増量コース"],
   priceLabel: "コースお一人様",
   priceMain: "一二、五〇〇円",
   priceTaxNote: "（税込 一三、七五〇円）",
