@@ -181,6 +181,20 @@ body {
 }
 
 /* Course menu page — brush typography. Switch: lib/content/courseMenuFont.ts */
+[data-course-brush="hakushu-gyosho"] {
+  --font-brush-jp: var(--font-hakushu-gyosho), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-hakushu-gyosho), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
+[data-course-brush="tamanegi-kaisho-geki"] {
+  --font-brush-jp: var(--font-tamanegi-kaisho-geki), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+  --font-brush-display-jp: var(--font-tamanegi-kaisho-geki),
+    var(--font-noto-serif-jp), var(--font-yu-kyokasho);
+}
+
 [data-course-brush="kouzan-mouhitsu"] {
   --font-brush-jp: var(--font-kouzan-mouhitsu), var(--font-noto-serif-jp),
     var(--font-yu-kyokasho);
@@ -199,6 +213,13 @@ body {
   --font-brush-jp: var(--font-yuji-mai), var(--font-noto-serif-jp),
     var(--font-yu-kyokasho);
   --font-brush-display-jp: var(--font-yuji-mai), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho);
+}
+
+[data-course-brush="yuji-boku"] {
+  /* Self-hosted via @fontsource/yuji-boku (next/font/google hits a Turbopack bug). */
+  --font-brush-jp: "Yuji Boku", var(--font-noto-serif-jp), var(--font-yu-kyokasho);
+  --font-brush-display-jp: "Yuji Boku", var(--font-noto-serif-jp),
     var(--font-yu-kyokasho);
 }
 
@@ -243,6 +264,20 @@ main.font-brush-jp :is(h3, .font-display-jp) {
   font-family: var(--font-brush-display-jp);
   font-weight: 400;
   letter-spacing: 0.12em;
+}
+
+/* Kouzan glyphs are already open and wide. Extra tracking in vertical-rl
+   makes each column look stretched. */
+[data-course-brush="kouzan-mouhitsu"] main.font-brush-jp :is(h1, h2, h3, .font-display-jp, p, span),
+[data-course-brush="tamanegi-kaisho-geki"] main.font-brush-jp :is(h1, h2, h3, .font-display-jp, p, span),
+[data-course-brush="hakushu-gyosho"] main.font-brush-jp :is(h1, h2, h3, .font-display-jp, p, span) {
+  letter-spacing: 0.04em !important;
+}
+
+/* Latin course marks keep 佑字 粛 even when Japanese uses 白舟. */
+.course-latin-brush {
+  font-family: var(--font-yuji-syuku), var(--font-noto-serif-jp),
+    var(--font-yu-kyokasho) !important;
 }
 
 /* Native date inputs — iOS Safari uses different rendering than Chrome mobile emulation. */

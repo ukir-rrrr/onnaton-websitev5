@@ -20,6 +20,10 @@
       "yue": "紅涮湯",
       "zhTw": "紅涮湯"
     },
+    "（秘伝の熟成合わせ出汁）": {
+      "yue": "（秘傳熟成合煮湯底）",
+      "zhTw": "（秘傳熟成合煮湯底）"
+    },
     "沖縄県産ブランド黒毛和牛": {
       "yue": "沖繩縣產品牌黑毛和牛",
       "zhTw": "沖繩縣產品牌黑毛和牛"
@@ -112,21 +116,21 @@
       "yue": "Executive 套餐",
       "zhTw": "Executive 套餐"
     },
-    "エグゼクティブコース　華-hana-": {
-      "yue": "Executive 套餐 華-hana-",
-      "zhTw": "Executive 套餐 華-hana-"
+    "エグゼクティブコース　華-HANA-": {
+      "yue": "Executive 套餐 華-HANA-",
+      "zhTw": "Executive 套餐 華-HANA-"
     },
     "エグゼクティブコースよりあぐー豚１００ｇ増量コース": {
       "yue": "較 Executive 套餐阿古豬加 100g 套餐",
       "zhTw": "較 Executive 套餐阿古豬加量 100g 套餐"
     },
-    "エグゼクティブ　極-kiwami-": {
-      "yue": "Executive 極-kiwami-",
-      "zhTw": "Executive 極-kiwami-"
+    "エグゼクティブ　極-KIWAMI-": {
+      "yue": "Executive 極-KIWAMI-",
+      "zhTw": "Executive 極-KIWAMI-"
     },
-    "エグゼクティブ　煌-kou-": {
-      "yue": "Executive 煌-kou-",
-      "zhTw": "Executive 煌-kou-"
+    "エグゼクティブ　煌-KOU-": {
+      "yue": "Executive 煌-KOU-",
+      "zhTw": "Executive 煌-KOU-"
     },
     "エグゼクティブ極": {
       "yue": "Executive 極",
@@ -136,17 +140,17 @@
       "yue": "Executive S",
       "zhTw": "Executive S"
     },
-    "エグゼクティブ 華 -hana-": {
-      "yue": "Executive 華 -hana-",
-      "zhTw": "Executive 華 -hana-"
+    "エグゼクティブ 華 -HANA-": {
+      "yue": "Executive 華 -HANA-",
+      "zhTw": "Executive 華 -HANA-"
     },
-    "エグゼクティブ 極 -kiwami-": {
-      "yue": "Executive 極 -kiwami-",
-      "zhTw": "Executive 極 -kiwami-"
+    "エグゼクティブ 極 -KIWAMI-": {
+      "yue": "Executive 極 -KIWAMI-",
+      "zhTw": "Executive 極 -KIWAMI-"
     },
-    "エグゼクティブ 煌 -kou-": {
-      "yue": "Executive 煌 -kou-",
-      "zhTw": "Executive 煌 -kou-"
+    "エグゼクティブ 煌 -KOU-": {
+      "yue": "Executive 煌 -KOU-",
+      "zhTw": "Executive 煌 -KOU-"
     },
     "エグゼクティブ［極］": {
       "yue": "Executive「Omakase」特別版",
@@ -204,7 +208,7 @@
       "yue": "追加牛肉",
       "zhTw": "追加牛肉"
     },
-    "ご注文されたコースに入ってないお肉は追加できません": {
+    "ご注文されたコースに入っていないお肉は追加できません": {
       "yue": "未包含喺所點套餐入面嘅肉類無法追加。",
       "zhTw": "未包含在所點套餐中的肉品無法追加。"
     },

@@ -12,17 +12,26 @@ import {
   formatCoursePriceMain,
   formatCoursePriceTax,
 } from "@/lib/i18n/prices";
+import { courseBrushFontId } from "@/lib/content/courseMenuFont";
 
 /**
  * Mobile / tablet: horizontal (yokogaki) dish list.
  * xl+ (Japanese): paper-menu tategaki columns — centered now that photos are removed.
  *
  * Apply `writing-mode: vertical-rl` to each text leaf only, never on the flex row.
+ * Kouzan-style brush fonts are drawn for yokogaki; OpenType `vert` plus writing-mode
+ * stretches glyphs. Leave `vert` off for those faces.
  */
+const localYokogakiBrush =
+  courseBrushFontId === "kouzan-mouhitsu" ||
+  courseBrushFontId === "aoyagi-kouzan" ||
+  courseBrushFontId === "tamanegi-kaisho-geki" ||
+  courseBrushFontId === "hakushu-gyosho";
+
 const verticalTextStyle = {
   writingMode: "vertical-rl",
-  textOrientation: "mixed",
-  fontFeatureSettings: '"vert", "vpal"',
+  textOrientation: "upright",
+  fontFeatureSettings: localYokogakiBrush ? "normal" : '"vert", "vpal"',
   fontFamily: "var(--font-brush-jp)",
 } as const;
 
@@ -47,6 +56,72 @@ const verticalUprightDisplayStyle = {
   ...verticalDisplayStyle,
   textOrientation: "upright",
 } as const;
+
+/** Hyphens and ≒ stay sideways-as-drawn under `text-orientation: upright`.
+ *  Rotate those marks so they run with the column. */
+const sidewaysMarkRe = /^[‐–—−\-≒]$/;
+const latinCourseMarkRe = /(-(?:HANA|KIWAMI|KOU)-|\bwith\b)/;
+const romanTagExactRe = /^-(?:HANA|KIWAMI|KOU)-$/;
+
+/** One step below the course heading (yokogaki 26/30 → 22/26). */
+const romanTagYokoClass = "text-[22px] tracking-[0.16em] sm:text-[26px]";
+/** One step below the course heading (tategaki 30/36 → 26/30). */
+const romanTagTateClass =
+  "text-[26px] tracking-[0.24em] min-[1440px]:text-[30px] min-[1440px]:tracking-[0.32em]";
+
+function TategakiPlainText({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/([‐–—−\-≒])/).map((part, i) =>
+        sidewaysMarkRe.test(part) ? (
+          <span key={i} style={{ textOrientation: "sideways" }}>
+            {part}
+          </span>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
+      )}
+    </>
+  );
+}
+
+function CourseLatinText({
+  text,
+  tategaki = false,
+  shrinkTags = false,
+}: {
+  text: string;
+  tategaki?: boolean;
+  shrinkTags?: boolean;
+}) {
+  return (
+    <>
+      {text.split(latinCourseMarkRe).map((part, i) => {
+        if (!part) return null;
+        const isTag = romanTagExactRe.test(part);
+        const isLatin = isTag || part === "with";
+        if (isLatin) {
+          const sizeClass =
+            shrinkTags && isTag
+              ? tategaki
+                ? romanTagTateClass
+                : romanTagYokoClass
+              : "";
+          return (
+            <span key={i} className={`course-latin-brush ${sizeClass}`.trim()}>
+              {tategaki ? <TategakiPlainText text={part} /> : part}
+            </span>
+          );
+        }
+        return tategaki ? (
+          <TategakiPlainText key={i} text={part} />
+        ) : (
+          <span key={i}>{part}</span>
+        );
+      })}
+    </>
+  );
+}
 
 function CourseBadge({
   label,
@@ -141,10 +216,12 @@ export function CourseDetail({
         <div className={isJa ? "xl:hidden" : ""}>
           <header className="mb-8 border-b border-cream/10 pb-6 text-center sm:mb-10 sm:pb-8">
             <Heading className="font-serif-jp mb-3 text-[26px] font-normal tracking-[0.2em] text-cream sm:text-[30px]">
-              <span className="block">{trName(c.name)}</span>
+              <span className="block">
+                <CourseLatinText shrinkTags text={trName(c.name)} />
+              </span>
               {isJa && c.nameTategakiRest ? (
                 <span className="mt-2 block text-[20px] tracking-[0.12em] text-cream/90 sm:text-[22px]">
-                  {tr(c.nameTategakiRest)}
+                  <CourseLatinText text={tr(c.nameTategakiRest)} />
                 </span>
               ) : null}
             </Heading>
@@ -290,13 +367,20 @@ export function CourseDetail({
                     className="text-[30px] font-normal tracking-[0.32em] text-cream min-[1440px]:text-[36px] min-[1440px]:tracking-[0.4em]"
                     style={verticalDisplayStyle}
                   >
-                    {trName(c.nameTategakiLead ?? c.name)}
+                    <CourseLatinText
+                      tategaki
+                      shrinkTags
+                      text={trName(c.nameTategakiLead ?? c.name)}
+                    />
                   </Heading>
                   <p
                     className="text-[19px] tracking-[0.14em] min-[1440px]:text-[24px] min-[1440px]:tracking-[0.18em]"
                     style={verticalDisplayStyle}
                   >
-                    {tr(c.nameTategakiRest)}
+                    <CourseLatinText
+                      tategaki
+                      text={tr(c.nameTategakiRest)}
+                    />
                   </p>
                 </div>
               ) : (
@@ -308,7 +392,15 @@ export function CourseDetail({
                       : verticalDisplayStyle
                   }
                 >
-                  {c.nameTategakiLead ? trName(c.nameTategakiLead) : trName(c.name)}
+                  <CourseLatinText
+                    tategaki
+                    shrinkTags
+                    text={
+                      c.nameTategakiLead
+                        ? trName(c.nameTategakiLead)
+                        : trName(c.name)
+                    }
+                  />
                 </Heading>
               )}
 
@@ -337,7 +429,7 @@ export function CourseDetail({
                           {tr(c.altPrice.label)}
                         </span>
                         <br />
-                        <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[30px] min-[1440px]:tracking-[0.1em]">
+                        <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[20px] min-[1440px]:tracking-[0.1em]">
                           {c.altPrice.main}
                         </span>
                         <br />
@@ -355,7 +447,7 @@ export function CourseDetail({
                         <br />
                       </>
                     ) : null}
-                    <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[30px] min-[1440px]:tracking-[0.1em]">
+                    <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[20px] min-[1440px]:tracking-[0.1em]">
                       {c.priceMain}
                     </span>
                     <br />
@@ -384,12 +476,12 @@ export function CourseDetail({
                     style={verticalTextStyle}
                   >
                     <span className={dishNameTategakiClass}>
-                      {trName(dish.name)}
+                      <TategakiPlainText text={trName(dish.name)} />
                     </span>
                     {dish.note ? (
                       <span className={dishNameTategakiClass}>
                         {"　"}
-                        {tr(dish.note)}
+                        <TategakiPlainText text={tr(dish.note)} />
                       </span>
                     ) : null}
                   </p>

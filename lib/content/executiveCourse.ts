@@ -113,6 +113,7 @@ const chateaubriandSlides = [
 ] as const;
 
 const umiNote = "（海ぶどうが未入荷の際は代わりものをお出しします）";
+const beniNote = "（秘伝の熟成合わせ出汁）";
 const wagyuPrefix = "沖縄県産ブランド黒毛和牛";
 const g50 = "５０ｇ";
 const g100 = "１００ｇ";
@@ -142,7 +143,7 @@ export const executiveCourse: CourseMenuData = {
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
     { name: "久米島産海ぶどう", note: umiNote },
-    { name: "紅しゃぶスープ", inSet: true },
+    { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
@@ -159,7 +160,7 @@ export const executiveCourse: CourseMenuData = {
 
 export const hanaCourse: CourseMenuData = {
   id: "hana",
-  name: "エグゼクティブ 華 -hana-",
+  name: "エグゼクティブ 華 -HANA-",
   subtitle: "エグゼクティブコースよりあぐー豚１００ｇ増量コース",
   priceLabel: "コースお一人様",
   priceMain: "一二、五〇〇円",
@@ -178,7 +179,7 @@ export const hanaCourse: CourseMenuData = {
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
     { name: "久米島産海ぶどう", note: umiNote },
-    { name: "紅しゃぶスープ", inSet: true },
+    { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
@@ -195,7 +196,7 @@ export const hanaCourse: CourseMenuData = {
 
 export const kiwamiCourse: CourseMenuData = {
   id: "kiwami",
-  name: "エグゼクティブ 極 -kiwami-",
+  name: "エグゼクティブ 極 -KIWAMI-",
   badge: "初めての方におすすめコース",
   priceLabel: "コースお一人様",
   priceMain: "一四、八〇〇円",
@@ -214,7 +215,7 @@ export const kiwamiCourse: CourseMenuData = {
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
     { name: "久米島産海ぶどう", note: umiNote },
-    { name: "紅しゃぶスープ", inSet: true },
+    { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: g50,
@@ -243,7 +244,7 @@ export const kiwamiCourse: CourseMenuData = {
 
 export const kouCourse: CourseMenuData = {
   id: "kou",
-  name: "エグゼクティブ 煌 -kou-",
+  name: "エグゼクティブ 煌 -KOU-",
   badge: "ご常連様一番人気",
   priceLabel: "コースお一人様",
   priceMain: "一八、五〇〇円",
@@ -281,7 +282,7 @@ export const kouCourse: CourseMenuData = {
       inSet: true,
     },
     { name: "あぐー豚", note: approxG50, inSet: true },
-    { name: "紅しゃぶスープ", inSet: true },
+    { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     { name: "お野菜", inSet: true },
     { name: "手ごねのあぐーつくね", inSet: true },
     { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
@@ -331,7 +332,7 @@ export const chateaubriandCourse: CourseMenuData = {
       nameMobileLines: [wagyuPrefix, "山城牛（Ａ５ランク）"],
     },
     { name: "あぐー豚", note: approxG50 },
-    { name: "紅しゃぶスープ" },
+    { name: "紅しゃぶスープ", note: beniNote },
     { name: "お野菜" },
     { name: "手ごねのあぐーつくね" },
     { name: "目の前で焼き上げる焼きチーズリゾット" },

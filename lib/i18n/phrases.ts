@@ -39,6 +39,13 @@ const phrases: Record<string, Localized> = {
       "红涮高汤",
       "红涮高汤",
     ),
+  "（秘伝の熟成合わせ出汁）": L(
+      "（秘伝の熟成合わせ出汁）",
+      "(Secret aged blended dashi)",
+      "(비법 숙성 혼합 다시)",
+      "（秘传熟成合煮高汤）",
+      "（秘传熟成合煮高汤）",
+    ),
   "沖縄県産ブランド黒毛和牛": L(
       "沖縄県産ブランド黒毛和牛",
       "Okinawa-brand Japanese black wagyu",
@@ -140,12 +147,12 @@ const phrases: Record<string, Localized> = {
       "Executive 套餐",
       "Executive 套餐",
     ),
-  "エグゼクティブコース　華-hana-": L(
-      "エグゼクティブコース　華-hana-",
+  "エグゼクティブコース　華-HANA-": L(
+      "エグゼクティブコース　華-HANA-",
       "Executive Course Hana",
-      "이그제큐티브 코스 하나-hana-",
-      "Executive 套餐 华-hana-",
-      "Executive 套餐 华-hana-",
+      "이그제큐티브 코스 하나-HANA-",
+      "Executive 套餐 华-HANA-",
+      "Executive 套餐 华-HANA-",
     ),
   "エグゼクティブコースよりあぐー豚１００ｇ増量コース": L(
       "エグゼクティブコースよりあぐー豚１００ｇ増量コース",
@@ -154,19 +161,19 @@ const phrases: Record<string, Localized> = {
       "较 Executive 套餐阿古猪增 100g",
       "较 Executive 套餐阿古猪增 100g",
     ),
-  "エグゼクティブ　極-kiwami-": L(
-      "エグゼクティブ　極-kiwami-",
+  "エグゼクティブ　極-KIWAMI-": L(
+      "エグゼクティブ　極-KIWAMI-",
       "Executive Kiwami",
-      "이그제큐티브 극-kiwami-",
-      "Executive 极-kiwami-",
-      "Executive 极-kiwami-",
+      "이그제큐티브 극-KIWAMI-",
+      "Executive 极-KIWAMI-",
+      "Executive 极-KIWAMI-",
     ),
-  "エグゼクティブ　煌-kou-": L(
-      "エグゼクティブ　煌-kou-",
+  "エグゼクティブ　煌-KOU-": L(
+      "エグゼクティブ　煌-KOU-",
       "Executive Kou",
-      "이그제큐티브 황-kou-",
-      "Executive 煌-kou-",
-      "Executive 煌-kou-",
+      "이그제큐티브 황-KOU-",
+      "Executive 煌-KOU-",
+      "Executive 煌-KOU-",
     ),
   "エグゼクティブ極": L(
       "エグゼクティブ極",
@@ -182,26 +189,26 @@ const phrases: Record<string, Localized> = {
       "Executive S",
       "Executive S",
     ),
-  "エグゼクティブ 華 -hana-": L(
-      "エグゼクティブ 華 -hana-",
-      "Executive 華 -hana-",
-      "이그제큐티브 華 -hana-",
-      "Executive 華 -hana-",
-      "Executive 華 -hana-",
+  "エグゼクティブ 華 -HANA-": L(
+      "エグゼクティブ 華 -HANA-",
+      "Executive 華 -HANA-",
+      "이그제큐티브 華 -HANA-",
+      "Executive 華 -HANA-",
+      "Executive 華 -HANA-",
     ),
-  "エグゼクティブ 極 -kiwami-": L(
-      "エグゼクティブ 極 -kiwami-",
-      "Executive 極 -kiwami-",
-      "이그제큐티브 極 -kiwami-",
-      "Executive 極 -kiwami-",
-      "Executive 極 -kiwami-",
+  "エグゼクティブ 極 -KIWAMI-": L(
+      "エグゼクティブ 極 -KIWAMI-",
+      "Executive 極 -KIWAMI-",
+      "이그제큐티브 極 -KIWAMI-",
+      "Executive 極 -KIWAMI-",
+      "Executive 極 -KIWAMI-",
     ),
-  "エグゼクティブ 煌 -kou-": L(
-      "エグゼクティブ 煌 -kou-",
-      "Executive 煌 -kou-",
-      "이그제큐티브 煌 -kou-",
-      "Executive 煌 -kou-",
-      "Executive 煌 -kou-",
+  "エグゼクティブ 煌 -KOU-": L(
+      "エグゼクティブ 煌 -KOU-",
+      "Executive 煌 -KOU-",
+      "이그제큐티브 煌 -KOU-",
+      "Executive 煌 -KOU-",
+      "Executive 煌 -KOU-",
     ),
   "エグゼクティブ［極］": L(
       "エグゼクティブ［極］",
@@ -277,12 +284,12 @@ const phrases: Record<string, Localized> = {
     ),
   "追加あぐー豚": L("追加あぐー豚", "Extra Agu pork", "추가 아구 돼지", "追加阿古猪", "追加阿古猪"),
   "追加牛肉": L("追加牛肉", "Extra beef", "추가 소고기", "追加牛肉", "追加牛肉"),
-  "ご注文されたコースに入ってないお肉は追加できません": L(
+  "ご注文されたコースに入っていないお肉は追加できません": L(
       "ご注文されたコースに入っていないお肉は追加できません",
-      "Beef not included in your course cannot be added.",
+      "Meat not included in the course you ordered cannot be added.",
       "주문하신 코스에 없는 고기는 추가할 수 없습니다.",
-      "未包含在所点套餐中的牛肉无法追加。",
-      "未包含在所点套餐中的牛肉无法追加。",
+      "未包含喺所點套餐入面嘅肉類無法追加。",
+      "未包含在所點套餐中的肉品無法追加。",
     ),
   "ビール・サワー・梅酒": L(
       "ビール・サワー・梅酒",
