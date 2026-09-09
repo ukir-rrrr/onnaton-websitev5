@@ -107,8 +107,16 @@ function CourseLatinText({
                 ? romanTagTateClass
                 : romanTagYokoClass
               : "";
+          const wrapClass = tategaki
+            ? ""
+            : isTag
+              ? "inline-block whitespace-nowrap max-md:block"
+              : "inline-block whitespace-nowrap";
           return (
-            <span key={i} className={`course-latin-brush ${sizeClass}`.trim()}>
+            <span
+              key={i}
+              className={`course-latin-brush ${wrapClass} ${sizeClass}`.trim()}
+            >
               {tategaki ? <TategakiPlainText text={part} /> : part}
             </span>
           );
