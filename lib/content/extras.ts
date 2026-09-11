@@ -48,7 +48,7 @@ export const extraGroups: ExtraGroup[] = [
   },
   {
     heading: "追加牛肉",
-    note: "ご注文されたコースに入っていないお肉は追加できません",
+    note: "ご注文されたコースに入っていないお肉は\n追加できません",
     items: [],
     photos: [{ src: photos.tuika04, alt: "追加牛肉" }],
     sectionClassName: "mt-10 sm:mt-14 lg:mt-20",

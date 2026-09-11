@@ -14,7 +14,7 @@ export interface ExecutiveDish {
   /** Same column as name (e.g. １００ｇ, 補足文) */
   note?: string;
   /** Phone-only line breaks (md+ / tategaki keep `name` + `note`) */
-  nameMobileLines?: readonly [string, string];
+  nameMobileLines?: readonly string[];
   /** Marked with ※ — part of the "set" portion of the course. */
   inSet?: boolean;
 }
@@ -56,6 +56,8 @@ export interface CourseMenuData {
   priceInquiry?: boolean;
   /** Leftmost vertical note (e.g. chateaubriand rare-cut caveat). Phrase key. */
   leftNote?: string;
+  /** Phone-only line breaks for `leftNote` (md+ / tategaki keep `leftNote`). */
+  leftNoteMobile?: string;
   slides: readonly { src: string; alt: string }[];
   dishes: readonly ExecutiveDish[];
 }
@@ -114,9 +116,28 @@ const chateaubriandSlides = [
   { src: photos.course020, alt: "特選石垣牛" },
 ] as const;
 
-const umiNote = "（海ぶどうが未入荷の際は代わりものをお出しします）";
 const beniNote = "（秘伝の熟成合わせ出汁）";
-const wagyuPrefix = "沖縄県産ブランド黒毛和牛";
+const wagyuPrefix = "沖縄県産黒毛和牛";
+const risottoMobileLines = ["目の前で焼き上げる", "焼きチーズリゾット"] as const;
+const kinakoIceMobileLines = [
+  "沖縄県産黒蜜きな粉",
+  "バニラアイスクリーム",
+] as const;
+const wagyuIshigakiMobileLines = [
+  wagyuPrefix,
+  "特選石垣牛",
+  "（Ａ５ランク）",
+] as const;
+const chateaubriandSteakMobileLines = [
+  "特選石垣牛",
+  "（Ａ５ランク）",
+  "シャトーブリアン",
+  "ステーキ",
+] as const;
+
+function wagyuMobileLines(cut: string): readonly string[] {
+  return [wagyuPrefix, cut];
+}
 const g50 = "５０ｇ";
 const g100 = "１００ｇ";
 const g200 = "２００ｇ";
@@ -144,18 +165,22 @@ export const executiveCourse: CourseMenuData = {
   dishes: [
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
-    { name: "久米島産海ぶどう", note: umiNote },
+    { name: "久米島産海ぶどう" },
     { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
-      nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("もとぶ牛（Ａ５ランク）"),
       inSet: true,
     },
     { name: "あぐー豚", note: approxG100, inSet: true },
     { name: "お野菜", inSet: true },
     { name: "手ごねのあぐーつくね", inSet: true },
-    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
+    {
+      name: "目の前で焼き上げる焼きチーズリゾット",
+      nameMobileLines: risottoMobileLines,
+      inSet: true,
+    },
     { name: "バニラアイスクリーム" },
   ],
 };
@@ -181,18 +206,22 @@ export const hanaCourse: CourseMenuData = {
   dishes: [
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
-    { name: "久米島産海ぶどう", note: umiNote },
+    { name: "久米島産海ぶどう" },
     { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
-      nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("もとぶ牛（Ａ５ランク）"),
       inSet: true,
     },
     { name: "あぐー豚", note: approxG200, inSet: true },
     { name: "お野菜", inSet: true },
     { name: "手ごねのあぐーつくね", inSet: true },
-    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
+    {
+      name: "目の前で焼き上げる焼きチーズリゾット",
+      nameMobileLines: risottoMobileLines,
+      inSet: true,
+    },
     { name: "バニラアイス" },
   ],
 };
@@ -217,31 +246,38 @@ export const kiwamiCourse: CourseMenuData = {
   dishes: [
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
-    { name: "久米島産海ぶどう", note: umiNote },
+    { name: "久米島産海ぶどう" },
     { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: g50,
-      nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("もとぶ牛（Ａ５ランク）"),
       inSet: true,
     },
     {
       name: `${wagyuPrefix}　山城牛（Ａ５ランク）`,
       note: g50,
-      nameMobileLines: [wagyuPrefix, "山城牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("山城牛（Ａ５ランク）"),
       inSet: true,
     },
     {
       name: `${wagyuPrefix}　特選石垣牛（Ａ５ランク）`,
       note: g50,
-      nameMobileLines: [wagyuPrefix, "特選石垣牛（Ａ５ランク）"],
+      nameMobileLines: wagyuIshigakiMobileLines,
       inSet: true,
     },
     { name: "あぐー豚", note: g100, inSet: true },
     { name: "お野菜", inSet: true },
     { name: "手ごねのあぐーつくね", inSet: true },
-    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
-    { name: "沖縄県産黒蜜きな粉バニラアイスクリーム" },
+    {
+      name: "目の前で焼き上げる焼きチーズリゾット",
+      nameMobileLines: risottoMobileLines,
+      inSet: true,
+    },
+    {
+      name: "沖縄県産黒蜜きな粉バニラアイスクリーム",
+      nameMobileLines: kinakoIceMobileLines,
+    },
   ],
 };
 
@@ -265,31 +301,38 @@ export const kouCourse: CourseMenuData = {
   dishes: [
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
-    { name: "久米島産海ぶどう", note: umiNote },
+    { name: "久米島産海ぶどう" },
     {
       name: `${wagyuPrefix}　特選石垣牛（Ａ５ランク）`,
       note: approxG100,
-      nameMobileLines: [wagyuPrefix, "特選石垣牛（Ａ５ランク）"],
+      nameMobileLines: wagyuIshigakiMobileLines,
       inSet: true,
     },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG100,
-      nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("もとぶ牛（Ａ５ランク）"),
       inSet: true,
     },
     {
       name: `${wagyuPrefix}　山城牛（Ａ５ランク）`,
       note: approxG50,
-      nameMobileLines: [wagyuPrefix, "山城牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("山城牛（Ａ５ランク）"),
       inSet: true,
     },
     { name: "あぐー豚", note: approxG50, inSet: true },
     { name: "紅しゃぶスープ", note: beniNote, inSet: true },
     { name: "お野菜", inSet: true },
     { name: "手ごねのあぐーつくね", inSet: true },
-    { name: "目の前で焼き上げる焼きチーズリゾット", inSet: true },
-    { name: "沖縄県産黒蜜きな粉バニラアイスクリーム" },
+    {
+      name: "目の前で焼き上げる焼きチーズリゾット",
+      nameMobileLines: risottoMobileLines,
+      inSet: true,
+    },
+    {
+      name: "沖縄県産黒蜜きな粉バニラアイスクリーム",
+      nameMobileLines: kinakoIceMobileLines,
+    },
   ],
 };
 
@@ -301,6 +344,8 @@ export const chateaubriandCourse: CourseMenuData = {
   priceInquiry: true,
   leftNote:
     "シャトーブリアンは非常に希少な部位のため、ご用意できない場合がございます。\nその際は、最高級フィレ肉をご提供いたします。",
+  leftNoteMobile:
+    "シャトーブリアンは非常に希少な部位のため\nご用意できない場合がございます。\nその際は、最高級フィレ肉をご提供いたします。",
   priceMain: "",
   priceTaxNote: "",
   priceMainMobile: "",
@@ -309,37 +354,40 @@ export const chateaubriandCourse: CourseMenuData = {
   dishes: [
     { name: "沖縄県産もずく" },
     { name: "ミミガーの和え物" },
-    { name: "久米島産海ぶどう", note: umiNote },
+    { name: "久米島産海ぶどう" },
     {
       name: "特選石垣牛（Ａ５ランク）シャトーブリアンステーキ",
       note: approxG100,
-      nameMobileLines: [
-        "特選石垣牛（Ａ５ランク）",
-        "シャトーブリアンステーキ",
-      ],
+      nameMobileLines: chateaubriandSteakMobileLines,
     },
     { name: "高級ワイン「Rindo」などを元に作ったソースと共に" },
     {
       name: `${wagyuPrefix}　特選石垣牛（Ａ５ランク）`,
       note: approxG50,
-      nameMobileLines: [wagyuPrefix, "特選石垣牛（Ａ５ランク）"],
+      nameMobileLines: wagyuIshigakiMobileLines,
     },
     {
       name: `${wagyuPrefix}　もとぶ牛（Ａ５ランク）`,
       note: approxG50,
-      nameMobileLines: [wagyuPrefix, "もとぶ牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("もとぶ牛（Ａ５ランク）"),
     },
     {
       name: `${wagyuPrefix}　山城牛（Ａ５ランク）`,
       note: approxG50,
-      nameMobileLines: [wagyuPrefix, "山城牛（Ａ５ランク）"],
+      nameMobileLines: wagyuMobileLines("山城牛（Ａ５ランク）"),
     },
     { name: "あぐー豚", note: approxG50 },
     { name: "紅しゃぶスープ", note: beniNote },
     { name: "お野菜" },
     { name: "手ごねのあぐーつくね" },
-    { name: "目の前で焼き上げる焼きチーズリゾット" },
-    { name: "沖縄県産黒蜜きな粉バニラアイスクリーム" },
+    {
+      name: "目の前で焼き上げる焼きチーズリゾット",
+      nameMobileLines: risottoMobileLines,
+    },
+    {
+      name: "沖縄県産黒蜜きな粉バニラアイスクリーム",
+      nameMobileLines: kinakoIceMobileLines,
+    },
   ],
 };
 

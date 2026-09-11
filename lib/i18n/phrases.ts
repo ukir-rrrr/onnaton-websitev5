@@ -25,13 +25,6 @@ const phrases: Record<string, Localized> = {
       "久米岛海葡萄",
       "久米岛海葡萄",
     ),
-  "（海ぶどうが未入荷の際は代わりものをお出しします）": L(
-      "（海ぶどうが未入荷の際は代わりものをお出しします）",
-      "(If sea grapes are unavailable, a substitute will be served.)",
-      "(바다포도가 없을 때는 대체 요리를 냅니다.)",
-      "（海葡萄缺货时将提供替代料理。）",
-      "（海葡萄缺货时将提供替代料理。）",
-    ),
   "紅しゃぶスープ": L(
       "紅しゃぶスープ",
       "Beni-shabu soup",
@@ -46,13 +39,28 @@ const phrases: Record<string, Localized> = {
       "（秘传熟成合煮高汤）",
       "（秘传熟成合煮高汤）",
     ),
-  "沖縄県産ブランド黒毛和牛": L(
-      "沖縄県産ブランド黒毛和牛",
-      "Okinawa-brand Japanese black wagyu",
-      "오키나와산 브랜드 흑모와규",
-      "冲绳产品牌黑毛和牛",
-      "冲绳产品牌黑毛和牛",
+  "沖縄県産黒毛和牛": L(
+      "沖縄県産黒毛和牛",
+      "Okinawa Japanese black wagyu",
+      "오키나와산 흑모와규",
+      "冲绳产黑毛和牛",
+      "沖繩產黑毛和牛",
     ),
+  "沖縄県産": L(
+      "沖縄県産",
+      "Okinawa",
+      "오키나와산",
+      "冲绳产",
+      "沖繩產",
+    ),
+  "黒毛和牛": L(
+      "黒毛和牛",
+      "Japanese black wagyu",
+      "흑모와규",
+      "黑毛和牛",
+      "黑毛和牛",
+    ),
+  "もとぶ牛": L("もとぶ牛", "Motobu beef", "모토부 소", "本部牛", "本部牛"),
   "もとぶ牛（Ａ５ランク）": L(
       "もとぶ牛（Ａ５ランク）",
       "Motobu beef (A5)",
@@ -60,12 +68,21 @@ const phrases: Record<string, Localized> = {
       "本部牛（A5）",
       "本部牛（A5）",
     ),
+  "（Ａ５ランク）": L("（Ａ５ランク）", "(A5)", "(A5)", "（A5）", "（A5）"),
+  "山城牛": L("山城牛", "Yamashiro beef", "야마시로 소", "山城牛", "山城牛"),
   "山城牛（Ａ５ランク）": L(
       "山城牛（Ａ５ランク）",
       "Yamashiro beef (A5)",
       "야마시로 소 (A5)",
       "山城牛（A5）",
       "山城牛（A5）",
+    ),
+  "特選石垣牛": L(
+      "特選石垣牛",
+      "Premium Ishigaki beef",
+      "특선 이시가키 소",
+      "特选石垣牛",
+      "特選石垣牛",
     ),
   "特選石垣牛（Ａ５ランク）": L(
       "特選石垣牛（Ａ５ランク）",
@@ -90,6 +107,20 @@ const phrases: Record<string, Localized> = {
       "当面烤制的芝士烩饭",
       "当面烤制的芝士烩饭",
     ),
+  "目の前で焼き上げる": L(
+      "目の前で焼き上げる",
+      "Grilled before you",
+      "눈앞에서 구워 내는",
+      "当面烤制",
+      "當面烤製",
+    ),
+  "焼きチーズリゾット": L(
+      "焼きチーズリゾット",
+      "cheese risotto",
+      "치즈 리조토",
+      "芝士烩饭",
+      "芝士燴飯",
+    ),
   "バニラアイスクリーム": L(
       "バニラアイスクリーム",
       "Vanilla ice cream",
@@ -98,6 +129,13 @@ const phrases: Record<string, Localized> = {
       "香草冰淇淋",
     ),
   "バニラアイス": L("バニラアイス", "Vanilla ice cream", "바닐라 아이스크림", "香草冰淇淋", "香草冰淇淋"),
+  "沖縄県産黒蜜きな粉": L(
+      "沖縄県産黒蜜きな粉",
+      "Okinawa brown sugar syrup & kinako",
+      "오키나와산 흑당 키나코",
+      "冲绳黑糖黄豆粉",
+      "沖繩黑糖黃豆粉",
+    ),
   "沖縄県産黒蜜きな粉バニラアイスクリーム": L(
       "沖縄県産黒蜜きな粉バニラアイスクリーム",
       "Okinawa brown-sugar syrup & kinako vanilla ice cream",
@@ -119,6 +157,14 @@ const phrases: Record<string, Localized> = {
       "菲力牛排",
       "菲力牛排",
     ),
+  "シャトーブリアン": L(
+      "シャトーブリアン",
+      "Chateaubriand",
+      "샤토브리앙",
+      "菲力",
+      "菲力",
+    ),
+  "ステーキ": L("ステーキ", "steak", "스테이크", "牛排", "牛排"),
   "高級ワイン「Rindo」などを元に作ったソースと共に": L(
       "高級ワイン「Rindo」などを元に作ったソースと共に",
       "With a sauce made from fine wines including “Rindo”",
@@ -238,6 +284,13 @@ const phrases: Record<string, Localized> = {
       "夏多布里昂為極稀有部位，或未能供應。\n屆時將以最高級的菲力供應。",
       "夏多布里昂為極稀有部位，可能無法供應。\n屆時將提供最高級的菲力。",
     ),
+  "シャトーブリアンは非常に希少な部位のため\nご用意できない場合がございます。\nその際は、最高級フィレ肉をご提供いたします。": L(
+      "シャトーブリアンは非常に希少な部位のため\nご用意できない場合がございます。\nその際は、最高級フィレ肉をご提供いたします。",
+      "Chateaubriand is an extremely rare cut\nand may not always be available.\nIn that case, we will serve our finest fillet instead.",
+      "샤토브리앙은 매우 희소한 부위여서\n준비하지 못하는 경우가 있습니다.\n그 경우에는 최고급 안심을 제공해 드립니다.",
+      "夏多布里昂為極稀有部位\n或未能供應。\n屆時將以最高級的菲力供應。",
+      "夏多布里昂為極稀有部位\n可能無法供應。\n屆時將提供最高級的菲力。",
+    ),
   "（with シャトーブリアン）": L(
       "（with シャトーブリアン）",
       "(with chateaubriand)",
@@ -291,12 +344,12 @@ const phrases: Record<string, Localized> = {
     ),
   "追加あぐー豚": L("追加あぐー豚", "Extra Agu pork", "추가 아구 돼지", "追加阿古猪", "追加阿古猪"),
   "追加牛肉": L("追加牛肉", "Extra beef", "추가 소고기", "追加牛肉", "追加牛肉"),
-  "ご注文されたコースに入っていないお肉は追加できません": L(
-      "ご注文されたコースに入っていないお肉は追加できません",
-      "Meat not included in the course you ordered cannot be added.",
-      "주문하신 코스에 없는 고기는 추가할 수 없습니다.",
-      "未包含喺所點套餐入面嘅肉類無法追加。",
-      "未包含在所點套餐中的肉品無法追加。",
+  "ご注文されたコースに入っていないお肉は\n追加できません": L(
+      "ご注文されたコースに入っていないお肉は\n追加できません",
+      "Meat not included in the course you ordered\ncannot be added.",
+      "주문하신 코스에 없는 고기는\n추가할 수 없습니다.",
+      "未包含喺所點套餐入面嘅肉類\n無法追加。",
+      "未包含在所點套餐中的肉品\n無法追加。",
     ),
   "ビール・サワー・梅酒": L(
       "ビール・サワー・梅酒",

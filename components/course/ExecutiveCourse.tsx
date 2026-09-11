@@ -41,9 +41,15 @@ const verticalDisplayStyle = {
 } as const;
 
 const dishNameClass =
+  "text-[26px] leading-[1.7] tracking-[0.2em] text-cream sm:text-[30px]";
+const dishNoteClass =
   "text-[15px] leading-[1.7] tracking-[0.06em] text-cream sm:text-[16px]";
 
 const dishNameTategakiClass =
+  "text-[25px] font-normal text-cream min-[1440px]:text-[27px] min-[1536px]:text-[29px]";
+const dishNoteTategakiClass =
+  "text-[17px] font-normal text-cream min-[1440px]:text-[19px]";
+const dishSubtitleTategakiClass =
   "text-[17px] font-normal text-cream min-[1440px]:text-[19px] min-[1536px]:text-[21px]";
 
 const horizontalTextStyle = {
@@ -196,6 +202,29 @@ function SetNoteText({ text }: { text: string }) {
   return <>{text}</>;
 }
 
+function CourseFooterNoteLine({ text }: { text: string }) {
+  const body =
+    text.endsWith("します。") ? (
+      <>
+        {text.startsWith("※") ? (
+          <>
+            <span className="text-gold">※</span>
+            {text.slice(1, -4)}
+          </>
+        ) : (
+          text.slice(0, -4)
+        )}
+        <span className="whitespace-nowrap">します。</span>
+      </>
+    ) : text.startsWith("※") ? (
+      <SetNoteText text={text} />
+    ) : (
+      text
+    );
+
+  return <p className="break-keep text-pretty">{body}</p>;
+}
+
 export function CourseDetail({
   course,
   headingAs = "h2",
@@ -213,6 +242,12 @@ export function CourseDetail({
   const { t, tr, trName, isJa, locale } = useT();
   const Heading = headingAs;
   const hasSet = c.dishes.some((dish) => dish.inSet);
+  const tategakiColumnGapClass =
+    c.id === "chateaubriand"
+      ? "gap-4"
+      : c.id === "kiwami" || c.id === "kou"
+        ? "gap-6"
+        : "gap-8";
 
   return (
     <article
@@ -264,7 +299,7 @@ export function CourseDetail({
                     <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
                       {tr(c.altPrice.label)}
                     </p>
-                    <p className="font-serif-jp text-[22px] tracking-[0.08em] text-cream sm:text-[26px]">
+                    <p className="font-serif-jp text-[18px] tracking-[0.08em] text-cream sm:text-[22px]">
                       {isJa ? (
                         <>
                           <span className="md:hidden">{c.altPrice.mainMobile}</span>
@@ -291,7 +326,7 @@ export function CourseDetail({
                     {tr(c.priceLabel)}
                   </p>
                 ) : null}
-                <p className="font-serif-jp text-[22px] tracking-[0.08em] text-cream sm:text-[26px]">
+                <p className="font-serif-jp text-[18px] tracking-[0.08em] text-cream sm:text-[22px]">
                   {isJa ? (
                     <>
                       <span className="md:hidden">{c.priceMainMobile}</span>
@@ -316,8 +351,11 @@ export function CourseDetail({
           </header>
 
           {c.leftNote ? (
-            <p className="mx-auto mb-6 max-w-2xl text-center text-[13px] leading-[1.9] tracking-[0.04em] text-cream/80 sm:text-[14px]">
-              <MultilineText text={tr(c.leftNote)} keepAll={false} />
+            <p className="mx-auto mb-6 max-w-2xl text-center text-[14px] leading-[1.9] tracking-[0.04em] text-cream/80 sm:text-[15px]">
+              <MultilineText
+                text={tr(c.leftNoteMobile ?? c.leftNote!)}
+                keepAll={false}
+              />
             </p>
           ) : null}
 
@@ -330,29 +368,32 @@ export function CourseDetail({
                 <div className="flex items-baseline justify-center gap-1.5">
                   <span
                     aria-hidden
-                    className="w-4 shrink-0 text-right text-[13px] leading-[1.7] text-gold sm:text-[14px]"
+                    className="w-5 shrink-0 text-right text-[18px] leading-[1.7] text-gold sm:w-6 sm:text-[20px]"
                   >
                     {dish.inSet ? "※" : ""}
                   </span>
                   <div className="min-w-0 text-center">
                     {dish.nameMobileLines ? (
                       <>
-                        <p className="text-[15px] leading-[1.7] tracking-[0.06em] text-cream md:hidden sm:text-[16px]">
-                          <span className="block">{tr(dish.nameMobileLines[0])}</span>
-                          <span className="block">{tr(dish.nameMobileLines[1])}</span>
+                        <p className={`${dishNameClass} md:hidden`}>
+                          {dish.nameMobileLines.map((line, lineIndex) => (
+                            <span key={lineIndex} className="block">
+                              {tr(line)}
+                            </span>
+                          ))}
                         </p>
-                        <p className="hidden text-[15px] leading-[1.7] tracking-[0.06em] text-cream md:block sm:text-[16px]">
+                        <p className={`${dishNameClass} hidden md:block`}>
                           {trName(dish.name)}
                         </p>
                         {dish.note ? (
-                          <p className={`${dishNameClass} mt-1`}>{tr(dish.note)}</p>
+                          <p className={`${dishNoteClass} mt-1`}>{tr(dish.note)}</p>
                         ) : null}
                       </>
                     ) : (
                       <>
                         <p className={dishNameClass}>{trName(dish.name)}</p>
                         {dish.note ? (
-                          <p className={`${dishNameClass} mt-1`}>{tr(dish.note)}</p>
+                          <p className={`${dishNoteClass} mt-1`}>{tr(dish.note)}</p>
                         ) : null}
                       </>
                     )}
@@ -372,7 +413,9 @@ export function CourseDetail({
         {/* Desktop: tategaki columns (Japanese only) */}
         <div className={`hidden min-w-0 ${isJa ? "xl:block" : ""}`}>
           <div className="flex w-full justify-center">
-            <div className="font-serif-jp flex flex-row-reverse items-start gap-8 pt-8 text-cream min-[1440px]:pr-3 min-[1440px]:pt-10 min-[1600px]:pr-6 min-[1800px]:pr-10">
+            <div
+              className={`font-serif-jp flex flex-row-reverse items-start pt-8 text-cream min-[1440px]:pr-3 min-[1440px]:pt-10 min-[1600px]:pr-6 min-[1800px]:pr-10 ${tategakiColumnGapClass}`}
+            >
               {c.badge ? (
                 <div className="flex w-12 shrink-0 items-center justify-center bg-gold py-8 min-[1440px]:w-14 min-[1440px]:py-10 min-[1536px]:py-12">
                   <CourseBadgeTategaki label={c.badge} tail={c.badgeTail} />
@@ -427,7 +470,7 @@ export function CourseDetail({
                   className="shrink-0 leading-[1.85] tracking-[0.14em] text-cream min-[1440px]:leading-[2] min-[1440px]:tracking-[0.18em]"
                   style={verticalTextStyle}
                 >
-                  <span className={dishNameTategakiClass}>{tr(c.subtitle)}</span>
+                  <span className={dishSubtitleTategakiClass}>{tr(c.subtitle)}</span>
                 </p>
               ) : null}
 
@@ -497,7 +540,7 @@ export function CourseDetail({
                       <TategakiPlainText text={trName(dish.name)} />
                     </span>
                     {dish.note ? (
-                      <span className={dishNameTategakiClass}>
+                      <span className={dishNoteTategakiClass}>
                         {"　"}
                         <TategakiPlainText text={tr(dish.note)} />
                       </span>
@@ -543,9 +586,30 @@ export function CourseDetail({
           />
         </div>
         {showServiceFeeNote ? (
-          <p className="mx-auto mt-5 max-w-[36rem] text-center text-[13px] leading-[1.9] tracking-[0.08em] text-cream/85 sm:text-[14px]">
-            {t(copy.coursePage.serviceFee)}
-          </p>
+          <>
+            <div className="mx-auto mt-5 max-w-[36rem] space-y-1 text-center text-[13px] leading-[1.9] tracking-[0.08em] text-cream/85 sm:text-[14px] xl:hidden">
+              {t(copy.coursePage.serviceFee)
+                .split("\n")
+                .map((line, i) => (
+                  <CourseFooterNoteLine key={i} text={line} />
+                ))}
+              {t(copy.coursePage.umiSubstituteNote)
+                .split("\n")
+                .map((line, i) => (
+                  <CourseFooterNoteLine key={`umi-${i}`} text={line} />
+                ))}
+            </div>
+            <div className="mx-auto mt-5 hidden max-w-[36rem] space-y-1 text-center text-[13px] leading-[1.9] tracking-[0.08em] text-cream/85 sm:text-[14px] xl:block">
+              {t(copy.coursePage.serviceFeePc)
+                .split("\n")
+                .map((line, i) => (
+                  <CourseFooterNoteLine key={`pc-${i}`} text={line} />
+                ))}
+              <CourseFooterNoteLine
+                text={t(copy.coursePage.umiSubstituteNotePc)}
+              />
+            </div>
+          </>
         ) : null}
       </div>
 

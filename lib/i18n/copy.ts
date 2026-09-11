@@ -944,11 +944,32 @@ export const copy = {
   },
   coursePage: {
     serviceFee: L(
-      "※サービス料として5％を頂戴しております。現金でお支払いの場合はサービス料を免除いたします。",
-      "*A 5% service charge applies. The service charge is waived for cash payments.",
-      "※서비스 요금으로 5%를 받고 있습니다. 현금으로 결제하시는 경우 서비스 요금은 면제됩니다.",
-      "※本店收取 5% 服務費。以現金付款則豁免服務費。",
-      "※本店收取 5% 服務費。若以現金付款，則免收服務費。",
+      "※サービス料として5％を頂戴しております。\n現金でお支払いの場合は\nサービス料を免除いたします。",
+      "*A 5% service charge applies.\nThe service charge is waived for cash payments.",
+      "※서비스 요금으로 5%를 받고 있습니다.\n현금으로 결제하시는 경우 서비스 요금은 면제됩니다.",
+      "※本店收取 5% 服務費。\n以現金付款則豁免服務費。",
+      "※本店收取 5% 服務費。\n若以現金付款，則免收服務費。",
+    ),
+    serviceFeePc: L(
+      "※サービス料として5％を頂戴しております。\n現金でお支払いの場合はサービス料を免除いたします。",
+      "*A 5% service charge applies.\nThe service charge is waived for cash payments.",
+      "※서비스 요금으로 5%를 받고 있습니다.\n현금으로 결제하시는 경우 서비스 요금은 면제됩니다.",
+      "※本店收取 5% 服務費。\n以現金付款，則豁免服務費。",
+      "※本店收取 5% 服務費。\n若以現金付款，則免收服務費。",
+    ),
+    umiSubstituteNote: L(
+      "※海ぶどうが未入荷の際は\n代わりのものをお出しします。",
+      "*If sea grapes are unavailable, a substitute will be served.",
+      "※바다포도가 미입하 되었을 때는 대체 요리를 내어 드립니다.",
+      "※海葡萄缺貨時將提供替代料理。",
+      "※海葡萄缺貨時將提供替代料理。",
+    ),
+    umiSubstituteNotePc: L(
+      "※海ぶどうが未入荷の際は代わりのものをお出しします。",
+      "*If sea grapes are unavailable, a substitute will be served.",
+      "※바다포도가 미입하 되었을 때는 대체 요리를 내어 드립니다.",
+      "※海葡萄缺貨時將提供替代料理。",
+      "※海葡萄缺貨時將提供替代料理。",
     ),
     setNote: L(
       "※印のついた内容がセット内容です。",

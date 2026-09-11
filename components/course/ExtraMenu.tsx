@@ -7,6 +7,7 @@ import { ReserveButton } from "@/components/ui/ReserveButton";
 import { copy } from "@/lib/i18n/copy";
 import { useT } from "@/components/i18n/LocaleProvider";
 import { formatMenuPrice } from "@/lib/i18n/prices";
+import { MultilineText } from "@/components/i18n/MultilineText";
 
 export function ExtraMenu({ nextHref }: { nextHref?: string }) {
   const { t, tr, locale, isJa } = useT();
@@ -37,7 +38,7 @@ export function ExtraMenu({ nextHref }: { nextHref?: string }) {
               </h3>
               {group.note ? (
                 <p className="mb-6 text-[13px] leading-[1.8] tracking-[0.04em] text-cream/90">
-                  {tr(group.note)}
+                  <MultilineText text={tr(group.note)} keepAll={false} />
                 </p>
               ) : null}
               {group.items.length > 0 ? (
