@@ -372,7 +372,7 @@ export function CourseDetail({
         {/* Desktop: tategaki columns (Japanese only) */}
         <div className={`hidden min-w-0 ${isJa ? "xl:block" : ""}`}>
           <div className="flex w-full justify-center">
-            <div className="font-serif-jp flex flex-row-reverse items-start gap-2 pt-8 text-cream min-[1440px]:gap-3 min-[1440px]:pr-3 min-[1440px]:pt-10 min-[1600px]:gap-5 min-[1600px]:pr-6 min-[1800px]:gap-7 min-[1800px]:pr-10">
+            <div className="font-serif-jp flex flex-row-reverse items-start gap-8 pt-8 text-cream min-[1440px]:pr-3 min-[1440px]:pt-10 min-[1600px]:pr-6 min-[1800px]:pr-10">
               {c.badge ? (
                 <div className="flex w-12 shrink-0 items-center justify-center bg-gold py-8 min-[1440px]:w-14 min-[1440px]:py-10 min-[1536px]:py-12">
                   <CourseBadgeTategaki label={c.badge} tail={c.badgeTail} />
