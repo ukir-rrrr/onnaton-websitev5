@@ -447,7 +447,7 @@ export function CourseDetail({
                           {tr(c.altPrice.label)}
                         </span>
                         <br />
-                        <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[20px] min-[1440px]:tracking-[0.1em]">
+                        <span className="text-[26px] tracking-[0.08em] text-cream xl:text-[20px] xl:tracking-[0.1em]">
                           {c.altPrice.main}
                         </span>
                         <br />
@@ -465,7 +465,7 @@ export function CourseDetail({
                         <br />
                       </>
                     ) : null}
-                    <span className="text-[26px] tracking-[0.08em] text-cream min-[1440px]:text-[20px] min-[1440px]:tracking-[0.1em]">
+                    <span className="text-[26px] tracking-[0.08em] text-cream xl:text-[20px] xl:tracking-[0.1em]">
                       {c.priceMain}
                     </span>
                     <br />
