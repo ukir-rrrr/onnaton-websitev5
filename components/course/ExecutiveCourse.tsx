@@ -41,7 +41,7 @@ const verticalDisplayStyle = {
 } as const;
 
 const dishNameClass =
-  "text-[26px] leading-[1.7] tracking-[0.2em] text-cream sm:text-[30px]";
+  "text-[20px] leading-[1.7] tracking-[0.2em] text-cream sm:text-[30px]";
 const dishNoteClass =
   "text-[15px] leading-[1.7] tracking-[0.06em] text-cream sm:text-[16px]";
 
@@ -299,7 +299,7 @@ export function CourseDetail({
                     <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
                       {tr(c.altPrice.label)}
                     </p>
-                    <p className="font-serif-jp text-[18px] tracking-[0.08em] text-cream sm:text-[22px]">
+                    <p className="font-serif-jp text-[13px] tracking-[0.08em] text-cream sm:text-[22px]">
                       {isJa ? (
                         <>
                           <span className="md:hidden">{c.altPrice.mainMobile}</span>
@@ -326,7 +326,7 @@ export function CourseDetail({
                     {tr(c.priceLabel)}
                   </p>
                 ) : null}
-                <p className="font-serif-jp text-[18px] tracking-[0.08em] text-cream sm:text-[22px]">
+                <p className="font-serif-jp text-[13px] tracking-[0.08em] text-cream sm:text-[22px]">
                   {isJa ? (
                     <>
                       <span className="md:hidden">{c.priceMainMobile}</span>
