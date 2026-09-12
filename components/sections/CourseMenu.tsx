@@ -40,13 +40,6 @@ export function CourseMenu() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent"
           aria-hidden
         />
-        <motion.p
-          className="pointer-events-none absolute bottom-6 left-6 text-xs tracking-[0.35em] text-on-dark/85 transition-opacity duration-[380ms] ease-out sm:bottom-8 sm:left-10 sm:text-[12px] [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-0"
-          {...revealFadeUp(reduceMotion, 0.2, 16)}
-        >
-          COURSE MENU
-        </motion.p>
-
         <div
           className="pointer-events-none absolute inset-0 hidden bg-black/0 transition-colors duration-[380ms] ease-out group-hover:bg-black/50 [@media(hover:hover)_and_(pointer:fine)]:block"
           aria-hidden

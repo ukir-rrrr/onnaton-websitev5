@@ -78,7 +78,7 @@ export const copy = {
     about: L("恩納豚について", "About", "온나톤 소개", "关于恩纳豚", "关于恩纳豚"),
     kodawari: L("こだわり", "Our Craft", "특별함", "匠心", "匠心"),
     notices: L("お知らせ", "Notice", "공지", "公告", "公告"),
-    course: L("コース", "Courses", "코스", "套餐", "套餐"),
+    course: L("お品書き", "Menu", "메뉴", "菜單", "菜單"),
     seats: L("店内", "Interior", "매장", "店内", "店内"),
     access: L("アクセス", "Access", "오시는 길", "交通", "交通"),
     reserve: L("予約・お問い合わせ", "Reserve", "예약·문의", "预约·咨询", "预约·咨询"),
@@ -345,7 +345,7 @@ export const copy = {
     ),
   },
   courseTeaser: {
-    heading: L("コース・メニュー", "Course menu", "코스 메뉴", "套餐菜单", "套餐菜单"),
+    heading: L("お品書き", "Menu", "메뉴", "菜單", "菜單"),
     body: L(
       "当日の食材に合わせたコースをご用意しています",
       "Courses prepared with the day’s finest ingredients",
@@ -353,8 +353,8 @@ export const copy = {
       "根据当日食材准备套餐",
       "根据当日食材准备套餐",
     ),
-    cta: L("コースを見る", "View courses", "코스 보기", "查看套餐", "查看套餐"),
-    alt: L("コース・メニュー", "Course menu", "코스 메뉴", "套餐菜单", "套餐菜单"),
+    cta: L("お品書きを見る", "View menu", "메뉴 보기", "查看菜單", "查看菜單"),
+    alt: L("お品書き", "Menu", "메뉴", "菜單", "菜單"),
   },
   scenes: {
     heading: L("ご利用シーン", "Occasions", "이용 장면", "适用场景", "适用场景"),

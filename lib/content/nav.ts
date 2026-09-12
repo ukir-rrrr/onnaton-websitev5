@@ -7,7 +7,7 @@ export const navLinks: NavLink[] = [
   { href: "/", label: "トップ" },
   { href: "/#about-text", label: "恩納豚について" },
   { href: "/#kodawari", label: "こだわり" },
-  { href: "/course", label: "コース" },
+  { href: "/course", label: "お品書き" },
   { href: "/seats", label: "店内" },
   { href: "/#access", label: "アクセス" },
 ];
