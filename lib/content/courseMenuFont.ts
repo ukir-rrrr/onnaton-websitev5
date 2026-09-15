@@ -35,7 +35,7 @@ export type CourseBrushFontId =
   | "zen-kurenaido"
   | "yuji-syuku";
 
-/** 日本語コース。元の字体に戻す: `"yuji-syuku"` に書き換えるだけ。 */
+/** 翻訳向け brush 切替の参照用。日本語 `/course` は游教科書体（`font-serif-jp`）で表示。 */
 export const courseBrushFontId: CourseBrushFontId = "hakushu-gyosho";
 
 /** 翻訳コース（EN / KO / 粵 / 繁）。白舟は教育漢字のみのため使わない。 */

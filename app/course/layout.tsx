@@ -58,10 +58,13 @@ export default async function CourseLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
+  const brushId =
+    locale === "ja" ? undefined : courseBrushFontForLocale(locale);
+
   return (
     <div
       className={`${kouzanMouhitsu.variable} ${tamanegiKaishoGeki.variable} ${hakushuGyosho.variable} ${yujiSyuku.variable} ${yujiMai.variable} ${zenKurenaido.variable} ${hinaMincho.variable}`}
-      data-course-brush={courseBrushFontForLocale(locale)}
+      {...(brushId ? { "data-course-brush": brushId } : {})}
     >
       {children}
     </div>

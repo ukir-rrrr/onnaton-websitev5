@@ -94,5 +94,5 @@ export type PhotoKey = keyof typeof photos;
 /** Drop MP4 files into /public/videos and register paths here. */
 export const videos = {
   /** About / 恩納豚について — vertical portrait loop. */
-  onnatonAbout: "/videos/店のインスタ広告.mp4",
+  onnatonAbout: "/videos/instagram_ad_final.mp4",
 } as const;

@@ -121,14 +121,13 @@ const phrases: Record<string, Localized> = {
       "芝士烩饭",
       "芝士燴飯",
     ),
-  "バニラアイスクリーム": L(
-      "バニラアイスクリーム",
+  "アイスクリーム": L(
+      "アイスクリーム",
       "Vanilla ice cream",
       "바닐라 아이스크림",
       "香草冰淇淋",
       "香草冰淇淋",
     ),
-  "バニラアイス": L("バニラアイス", "Vanilla ice cream", "바닐라 아이스크림", "香草冰淇淋", "香草冰淇淋"),
   "沖縄県産黒蜜きな粉": L(
       "沖縄県産黒蜜きな粉",
       "Okinawa brown sugar syrup & kinako",
@@ -136,8 +135,8 @@ const phrases: Record<string, Localized> = {
       "冲绳黑糖黄豆粉",
       "沖繩黑糖黃豆粉",
     ),
-  "沖縄県産黒蜜きな粉バニラアイスクリーム": L(
-      "沖縄県産黒蜜きな粉バニラアイスクリーム",
+  "沖縄県産黒蜜きな粉アイスクリーム": L(
+      "沖縄県産黒蜜きな粉アイスクリーム",
       "Okinawa brown-sugar syrup & kinako vanilla ice cream",
       "오키나와산 흑밀·키나코 바닐라 아이스크림",
       "冲绳黑糖黄豆粉香草冰淇淋",
@@ -263,8 +262,8 @@ const phrases: Record<string, Localized> = {
       "Executive 煌 -KOU-",
       "Executive 煌 -KOU-",
     ),
-  "エグゼクティブ［極］": L(
-      "エグゼクティブ［極］",
+  "エグゼクティブ　極スペシャル": L(
+      "エグゼクティブ　極スペシャル",
       "Executive “Omakase” Edition",
       "이그제큐티브 “Omakase” 에디션",
       "Executive「Omakase」特別版",

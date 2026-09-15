@@ -9,6 +9,15 @@ import { useT } from "@/components/i18n/LocaleProvider";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+/** Concept photo overlay title (沖縄の恵みを…). */
+const conceptOverlayHeadingClass =
+  "font-serif-jp text-2xl font-bold text-on-dark sm:text-3xl xl:text-[42px]";
+
+const conceptImageAppealClassMobile =
+  "font-serif-jp text-[14px] leading-[1.85] tracking-[0.04em] text-on-dark [text-shadow:0_1px_4px_rgba(0,0,0,0.45)] sm:text-[15px] sm:leading-[1.9]";
+const conceptImageAppealClassDesktop =
+  "font-serif-jp text-[22px] leading-[1.85] tracking-[0.04em] text-on-dark [text-shadow:0_1px_4px_rgba(0,0,0,0.45)] sm:text-[23px] sm:leading-[1.9] xl:text-[24px]";
+
 export function About() {
   const { t, isJa } = useT();
   const reduceMotion = useReducedMotion() === true;
@@ -76,7 +85,7 @@ export function About() {
         </div>
       </div>
 
-      <div className="relative aspect-[4/2] min-h-[420px] w-full overflow-hidden sm:min-h-[520px]">
+      <div className="relative aspect-[4/2] min-h-[520px] w-full overflow-hidden sm:min-h-[560px] md:min-h-[520px]">
         <motion.div
           className="absolute inset-0"
           initial={reduceMotion ? false : { scale: 1.08 }}
@@ -103,9 +112,33 @@ export function About() {
           Concept
         </motion.span>
 
-        <div className="absolute inset-x-6 bottom-8 sm:inset-x-16 sm:bottom-16 xl:left-[120px] xl:right-auto xl:bottom-[120px] xl:max-w-[1100px]">
+        {isJa ? (
+          <motion.div
+            className="absolute left-5 top-[18%] z-10 hidden max-w-xl lg:left-11 lg:top-[26%] lg:block xl:left-[120px] xl:top-[28%] xl:max-w-2xl"
+            {...fadeUp(0.12)}
+          >
+            <p className={`mb-2.5 font-bold sm:mb-3 ${conceptImageAppealClassDesktop}`}>
+              {t(copy.about.conceptImageAppealLead)}
+            </p>
+            <p className={conceptImageAppealClassDesktop}>
+              <MultilineText text={t(copy.about.conceptImageAppealBody)} keepAll={false} />
+            </p>
+          </motion.div>
+        ) : null}
+
+        <div className="absolute inset-x-5 bottom-6 flex flex-col gap-5 sm:inset-x-16 sm:bottom-16 sm:gap-6 xl:left-[120px] xl:right-auto xl:bottom-[120px] xl:max-w-[1100px]">
+          {isJa ? (
+            <motion.div className="lg:hidden" {...fadeUp(0.12)}>
+              <p className={`mb-2 font-bold ${conceptImageAppealClassMobile}`}>
+                {t(copy.about.conceptImageAppealLead)}
+              </p>
+              <p className={conceptImageAppealClassMobile}>
+                <MultilineText text={t(copy.about.conceptImageAppealBody)} keepAll={false} />
+              </p>
+            </motion.div>
+          ) : null}
           <motion.p
-            className="font-serif-jp mb-3 text-2xl font-bold text-on-dark sm:mb-4 sm:text-3xl xl:text-[42px]"
+            className={`mb-3 sm:mb-4 ${conceptOverlayHeadingClass}`}
             {...fadeUp(0.2)}
           >
             <span className="sm:hidden">

@@ -100,6 +100,8 @@ export async function submitIntlReservation(
   const age0to5 = parseCount(values.age0to5, 0, 10);
   const age6to12 = parseCount(values.age6to12, 0, 10);
   const age13to19 = parseCount(values.age13to19, 0, 10);
+  const accommodation = values.accommodation;
+  const accommodationAddress = values.accommodationAddress;
   const referralSource = values.referralSource;
   const agreePolicy = values.agreePolicy;
 
@@ -109,6 +111,7 @@ export async function submitIntlReservation(
     !phoneCountry ||
     !phoneNationalInput ||
     !country ||
+    !accommodation ||
     !referralSource ||
     !date1 ||
     adults === null ||
@@ -122,7 +125,12 @@ export async function submitIntlReservation(
     return err(locale, copy.intlForm.errorRequired, formData);
   }
   if (!looksLikeEmail(email)) return err(locale, copy.intlForm.errorEmail, formData);
-  if (name.length > 80 || country.length > 80) {
+  if (
+    name.length > 80 ||
+    country.length > 80 ||
+    accommodation.length > 200 ||
+    accommodationAddress.length > 500
+  ) {
     return err(locale, copy.intlForm.errorRequired, formData);
   }
 
@@ -197,6 +205,8 @@ export async function submitIntlReservation(
     age13to19,
     children,
     referralSource,
+    accommodation,
+    accommodationAddress: accommodationAddress || null,
     notes: null,
     locale,
     agreedAt,
