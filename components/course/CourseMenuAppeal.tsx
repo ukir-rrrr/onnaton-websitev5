@@ -3,6 +3,24 @@ import { copy } from "@/lib/i18n/copy";
 import type { Locale } from "@/lib/i18n/config";
 import { t } from "@/lib/i18n/types";
 
+/** JA body1: 3 intentional lines on phones; original 2 lines from sm+. */
+function JaAppealBody1({ text }: { text: string }) {
+  const parts = text.split("\n");
+  const desktopText =
+    parts.length === 3 ? `${parts[0]}\n${parts[1]}${parts[2]}` : text;
+
+  return (
+    <>
+      <span className="sm:hidden">
+        <MultilineText text={text} keepLinesIntact />
+      </span>
+      <span className="hidden sm:inline">
+        <MultilineText text={desktopText} />
+      </span>
+    </>
+  );
+}
+
 function AppealBodyText({ locale, text }: { locale: Locale; text: string }) {
   if (locale === "ja") {
     return <MultilineText text={text} />;
@@ -37,7 +55,11 @@ export function CourseMenuAppeal({ locale }: { locale: Locale }) {
       <div className={`mx-auto flex flex-col gap-5 sm:gap-6 ${widthClass}`}>
         <p className={appealLineClass}>{t(locale, copy.coursePage.appealLead)}</p>
         <p className={appealLineClass}>
-          <AppealBodyText locale={locale} text={t(locale, copy.coursePage.appealBody1)} />
+          {locale === "ja" ? (
+            <JaAppealBody1 text={t(locale, copy.coursePage.appealBody1)} />
+          ) : (
+            <AppealBodyText locale={locale} text={t(locale, copy.coursePage.appealBody1)} />
+          )}
         </p>
         <p className={appealLineClass}>
           <AppealBodyText locale={locale} text={t(locale, copy.coursePage.appealBody2)} />
