@@ -17,6 +17,8 @@ export type IntlReservationInput = {
   age13to19: number;
   children: number;
   referralSource: string;
+  accommodation: string;
+  accommodationAddress: string | null;
   notes: string | null;
   locale: string | null;
   agreedAt: string;
@@ -64,6 +66,8 @@ export async function insertIntlReservation(
     age_13_19: input.age13to19,
     children: input.children,
     referral_source: input.referralSource,
+    accommodation: input.accommodation,
+    accommodation_address: input.accommodationAddress,
     notes: input.notes,
     locale: input.locale,
     agreed_at: input.agreedAt,

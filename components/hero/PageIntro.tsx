@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
+import { INTRO_LOGO_FADE_DURATION } from "@/lib/motion/diagonalWipe";
 
 export type IntroPhase = "logo" | "fadeOut" | "ready";
 
@@ -22,7 +23,10 @@ export function PageIntro({ phase, onFadeOutComplete }: PageIntroProps) {
           className="fixed inset-0 z-[120] flex items-center justify-center bg-white"
           initial={{ opacity: 1 }}
           animate={{ opacity: phase === "fadeOut" ? 0 : 1 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{
+            duration: INTRO_LOGO_FADE_DURATION,
+            ease: "linear",
+          }}
           onAnimationComplete={() => {
             if (phase === "fadeOut") onFadeOutComplete();
           }}

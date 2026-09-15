@@ -8,6 +8,7 @@ import {
   CLIP_COVER,
   CLIP_FULL,
   CLIP_OFF_RIGHT,
+  INTRO_LOGO_FADE_DURATION,
   INTRO_LOGO_HOLD_MS,
   WIPE_DURATION,
   WIPE_EASE,
@@ -75,7 +76,10 @@ export function Hero() {
   const showHeroMotion =
     effectivePhase === "fadeOut" || effectivePhase === "ready";
   const activeDot = incoming ?? current;
-  const showCopy = effectivePhase === "ready";
+  /** Hero copy fades in with the logo cross-fade, not after it finishes. */
+  const showHeroCopy =
+    effectivePhase === "fadeOut" || effectivePhase === "ready";
+  const copySyncWithIntro = effectivePhase === "fadeOut";
 
   return (
     <>
@@ -149,8 +153,12 @@ export function Hero() {
         <motion.div
           className="absolute bottom-6 right-6 z-20 flex items-center gap-2 sm:bottom-8 sm:right-8"
           initial={{ opacity: 0 }}
-          animate={{ opacity: showCopy ? 1 : 0 }}
-          transition={{ duration: 0.45, delay: showCopy ? 0.35 : 0 }}
+          animate={{ opacity: showHeroCopy ? 1 : 0 }}
+          transition={
+            copySyncWithIntro
+              ? { duration: INTRO_LOGO_FADE_DURATION, ease: "linear" }
+              : { duration: 0.45 }
+          }
           aria-label={`スライド ${activeDot + 1} / ${heroSlides.length}`}
         >
           {heroSlides.map((_, i) => (
@@ -169,14 +177,17 @@ export function Hero() {
           className="absolute inset-0 z-10 flex items-start overflow-y-auto overscroll-contain px-5 pb-12 pt-28 sm:items-end sm:overflow-visible sm:px-12 sm:pb-10 sm:pt-20 md:pb-12 xl:items-center xl:px-16 xl:pb-0 xl:pt-14"
           initial={false}
           animate={{
-            opacity: showCopy ? 1 : 0,
-            y: showCopy ? 0 : 56,
+            opacity: showHeroCopy ? 1 : 0,
+            y: 0,
           }}
-          transition={{
-            duration: 0.65,
-            delay: showCopy ? 0.12 : 0,
-            ease: [0.22, 1, 0.36, 1],
-          }}
+          transition={
+            copySyncWithIntro
+              ? { duration: INTRO_LOGO_FADE_DURATION, ease: "linear" }
+              : {
+                  duration: 0.65,
+                  ease: [0.22, 1, 0.36, 1],
+                }
+          }
         >
           <div
             className={`w-full ${locale === "en" ? "max-w-[42rem]" : "max-w-[36rem]"}`}

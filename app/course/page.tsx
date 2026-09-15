@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { CourseMenuAppeal } from "@/components/course/CourseMenuAppeal";
 import { CourseDetail } from "@/components/course/ExecutiveCourse";
 import { ExtraMenu } from "@/components/course/ExtraMenu";
 import { DrinkMenu } from "@/components/course/DrinkMenu";
@@ -17,7 +18,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function CoursePage() {
+export default async function CoursePage() {
+  const locale = await getLocale();
+  const mainFontClass = locale === "ja" ? "font-serif-jp" : "font-brush-jp";
+
   return (
     <div className="relative w-full overflow-x-clip bg-ink text-cream">
       <div className="relative">
@@ -25,7 +29,8 @@ export default function CoursePage() {
         <div className="h-20 bg-ink" aria-hidden />
       </div>
 
-      <main className="font-brush-jp">
+      <main className={mainFontClass}>
+        <CourseMenuAppeal locale={locale} />
         {courseMenus.map((course, i) => {
           const next = courseMenus[i + 1];
           return (
@@ -35,7 +40,8 @@ export default function CoursePage() {
               headingAs={i === 0 ? "h1" : "h2"}
               id={course.id}
               nextCourseHref={next ? `#${next.id}` : "#extras"}
-              showServiceFeeNote={i === courseMenus.length - 1}
+              showSubstituteNote={i === courseMenus.length - 1}
+              compactTop={i === 0}
             />
           );
         })}

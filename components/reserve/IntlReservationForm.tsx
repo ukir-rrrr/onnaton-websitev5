@@ -337,6 +337,46 @@ function IntlReservationFormInner({
               className={fieldClass}
             />
           </p>
+          <div className="sm:col-span-2">
+            <p className="mb-4 text-[13px] leading-[1.9] tracking-[0.04em] text-cream/88 sm:text-[14px]">
+              <MultilineText text={t(copy.intlForm.accommodationHint)} keepAll={false} />
+            </p>
+            <p className="mb-5">
+              <label htmlFor="intl-accommodation" className={labelClass}>
+                {t(copy.intlForm.accommodation)} *
+              </label>
+              <input
+                id="intl-accommodation"
+                name="accommodation"
+                type="text"
+                required
+                autoComplete="organization"
+                maxLength={200}
+                value={fields.accommodation}
+                onChange={(event) => setField("accommodation", event.target.value)}
+                placeholder={t(copy.intlForm.accommodationPh)}
+                className={fieldClass}
+              />
+            </p>
+            <p>
+              <label htmlFor="intl-accommodation-address" className={labelClass}>
+                {t(copy.intlForm.accommodationAddress)}
+              </label>
+              <input
+                id="intl-accommodation-address"
+                name="accommodation_address"
+                type="text"
+                autoComplete="street-address"
+                maxLength={500}
+                value={fields.accommodationAddress}
+                onChange={(event) =>
+                  setField("accommodationAddress", event.target.value)
+                }
+                placeholder={t(copy.intlForm.accommodationAddressPh)}
+                className={fieldClass}
+              />
+            </p>
+          </div>
         </div>
       </fieldset>
 

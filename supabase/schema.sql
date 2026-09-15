@@ -42,6 +42,8 @@ create table if not exists public.reservation_requests (
   age_13_19 smallint not null default 0 check (age_13_19 >= 0),
   children smallint not null default 0 check (children >= 0),
   referral_source text,
+  accommodation text,
+  accommodation_address text,
   notes text,
   locale text,
   agreed_at timestamptz not null,

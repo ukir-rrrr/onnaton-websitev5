@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, type CSSProperties } from "react";
 import {
   executiveCourse,
   type CourseMenuData,
@@ -12,33 +13,66 @@ import {
   formatCoursePriceMain,
   formatCoursePriceTax,
 } from "@/lib/i18n/prices";
-import { courseBrushFontId } from "@/lib/content/courseMenuFont";
+import {
+  courseBrushFontIdTranslated,
+  type CourseBrushFontId,
+} from "@/lib/content/courseMenuFont";
 
 /**
  * Mobile / tablet: horizontal (yokogaki) dish list.
  * xl+ (Japanese): paper-menu tategaki columns — centered now that photos are removed.
  *
  * Apply `writing-mode: vertical-rl` to each text leaf only, never on the flex row.
- * Kouzan-style brush fonts are drawn for yokogaki; OpenType `vert` plus writing-mode
- * stretches glyphs. Leave `vert` off for those faces.
+ * Japanese uses 游教科書体 (`vert` / `vpal`). Translated menus use brush faces;
+ * Kouzan-style fonts are drawn for yokogaki — leave `vert` off for those.
  */
-const localYokogakiBrush =
-  courseBrushFontId === "kouzan-mouhitsu" ||
-  courseBrushFontId === "aoyagi-kouzan" ||
-  courseBrushFontId === "tamanegi-kaisho-geki" ||
-  courseBrushFontId === "hakushu-gyosho";
+function isLocalYokogakiBrush(fontId: CourseBrushFontId): boolean {
+  return (
+    fontId === "kouzan-mouhitsu" ||
+    fontId === "aoyagi-kouzan" ||
+    fontId === "tamanegi-kaisho-geki" ||
+    fontId === "hakushu-gyosho"
+  );
+}
 
-const verticalTextStyle = {
-  writingMode: "vertical-rl",
-  textOrientation: "upright",
-  fontFeatureSettings: localYokogakiBrush ? "normal" : '"vert", "vpal"',
-  fontFamily: "var(--font-brush-jp)",
-} as const;
+function buildCourseTategakiStyles(isJa: boolean) {
+  if (isJa) {
+    const base: CSSProperties = {
+      writingMode: "vertical-rl",
+      textOrientation: "upright",
+      fontFeatureSettings: '"vert", "vpal"',
+      fontFamily: "var(--font-yu-kyokasho)",
+    };
+    return {
+      verticalTextStyle: base,
+      verticalDisplayStyle: base,
+      verticalUprightDisplayStyle: base,
+      badgeTailFontFamily: "var(--font-yu-kyokasho)",
+    };
+  }
 
-const verticalDisplayStyle = {
-  ...verticalTextStyle,
-  fontFamily: "var(--font-brush-display-jp)",
-} as const;
+  const fontId = courseBrushFontIdTranslated;
+  const localYokogakiBrush = isLocalYokogakiBrush(fontId);
+  const verticalTextStyle: CSSProperties = {
+    writingMode: "vertical-rl",
+    textOrientation: "upright",
+    fontFeatureSettings: localYokogakiBrush ? "normal" : '"vert", "vpal"',
+    fontFamily: "var(--font-brush-jp)",
+  };
+  const verticalDisplayStyle: CSSProperties = {
+    ...verticalTextStyle,
+    fontFamily: "var(--font-brush-display-jp)",
+  };
+  return {
+    verticalTextStyle,
+    verticalDisplayStyle,
+    verticalUprightDisplayStyle: {
+      ...verticalDisplayStyle,
+      textOrientation: "upright",
+    } as CSSProperties,
+    badgeTailFontFamily: "var(--font-brush-display-jp)",
+  };
+}
 
 const dishNameClass =
   "text-[20px] leading-[1.7] tracking-[0.2em] text-cream sm:text-[30px]";
@@ -57,23 +91,39 @@ const horizontalTextStyle = {
   textOrientation: "mixed",
 } as const;
 
-/** Upright Latin (e.g. "S") so it does not lie on its side in tategaki. */
-const verticalUprightDisplayStyle = {
-  ...verticalDisplayStyle,
-  textOrientation: "upright",
-} as const;
-
 /** Hyphens and ≒ stay sideways-as-drawn under `text-orientation: upright`.
  *  Rotate those marks so they run with the column. */
 const sidewaysMarkRe = /^[‐–—−\-≒]$/;
 const latinCourseMarkRe = /(-(?:HANA|KIWAMI|KOU)-|\bwith\b)/;
 const romanTagExactRe = /^-(?:HANA|KIWAMI|KOU)-$/;
 
-/** One step below the course heading (yokogaki 26/30 → 22/26). */
-const romanTagYokoClass = "text-[22px] tracking-[0.16em] sm:text-[26px]";
+/** Intl yokogaki course heading +2 sizes (30/34 → tags 26/30). */
+const romanTagYokoClass = "text-[26px] tracking-[0.16em] sm:text-[30px]";
+/** Japanese yokogaki course heading +2 sizes (30/34 → tags 26/30). */
+const romanTagYokoClassJa = "text-[26px] tracking-[0.16em] sm:text-[30px]";
 /** One step below the course heading (tategaki 30/36 → 26/30). */
 const romanTagTateClass =
   "text-[26px] tracking-[0.24em] min-[1440px]:text-[30px] min-[1440px]:tracking-[0.32em]";
+/** Japanese tategaki course heading +2 sizes (34/40 → tags 30/36). */
+const romanTagTateClassJa =
+  "text-[30px] tracking-[0.24em] min-[1440px]:text-[36px] min-[1440px]:tracking-[0.32em]";
+
+const courseNameHeadingYokoClassJa =
+  "font-serif-jp mb-3 text-[30px] font-normal tracking-[0.2em] text-cream sm:text-[34px]";
+const courseNameHeadingYokoClass =
+  "font-serif-jp mb-3 text-[30px] font-normal tracking-[0.2em] text-cream sm:text-[34px]";
+const courseNameRestYokoClassJa =
+  "mt-2 block text-[26px] tracking-[0.12em] text-cream/90 sm:text-[28px]";
+const courseNameTategakiLeadClassJa =
+  "text-[34px] font-normal tracking-[0.32em] text-cream min-[1440px]:text-[40px] min-[1440px]:tracking-[0.4em]";
+const courseNameTategakiRestClassJa =
+  "text-[25px] tracking-[0.14em] min-[1440px]:text-[30px] min-[1440px]:tracking-[0.18em]";
+
+/** セット／コースの税抜き金額（横書き・縦書き）。 */
+const priceMainYokoClass =
+  "font-serif-jp text-[11px] tracking-[0.08em] text-cream sm:text-[20px]";
+const priceMainTategakiClass =
+  "text-[24px] tracking-[0.08em] text-cream xl:text-[18px] xl:tracking-[0.1em]";
 
 function TategakiPlainText({ text }: { text: string }) {
   return (
@@ -100,6 +150,7 @@ function CourseLatinText({
   tategaki?: boolean;
   shrinkTags?: boolean;
 }) {
+  const { isJa } = useT();
   return (
     <>
       {text.split(latinCourseMarkRe).map((part, i) => {
@@ -110,18 +161,23 @@ function CourseLatinText({
           const sizeClass =
             shrinkTags && isTag
               ? tategaki
-                ? romanTagTateClass
-                : romanTagYokoClass
+                ? isJa
+                  ? romanTagTateClassJa
+                  : romanTagTateClass
+                : isJa
+                  ? romanTagYokoClassJa
+                  : romanTagYokoClass
               : "";
           const wrapClass = tategaki
             ? ""
             : isTag
               ? "inline-block whitespace-nowrap max-md:block"
               : "inline-block whitespace-nowrap";
+          const latinClass = isJa ? "" : "course-latin-brush";
           return (
             <span
               key={i}
-              className={`course-latin-brush ${wrapClass} ${sizeClass}`.trim()}
+              className={`${latinClass} ${wrapClass} ${sizeClass}`.trim()}
             >
               {tategaki ? <TategakiPlainText text={part} /> : part}
             </span>
@@ -161,9 +217,11 @@ function CourseBadge({
 function CourseBadgeTategaki({
   label,
   tail,
+  tategakiStyles,
 }: {
   label: string;
   tail?: string;
+  tategakiStyles: ReturnType<typeof buildCourseTategakiStyles>;
 }) {
   const { tr } = useT();
   const textClass =
@@ -171,7 +229,7 @@ function CourseBadgeTategaki({
 
   return (
     <div className="flex flex-col items-center gap-2 min-[1440px]:gap-2.5">
-      <p className={textClass} style={verticalDisplayStyle}>
+      <p className={textClass} style={tategakiStyles.verticalDisplayStyle}>
         {tr(label)}
       </p>
       {tail ? (
@@ -179,7 +237,7 @@ function CourseBadgeTategaki({
           className={`${textClass} whitespace-nowrap tracking-[0.04em]`}
           style={{
             ...horizontalTextStyle,
-            fontFamily: "var(--font-brush-display-jp)",
+            fontFamily: tategakiStyles.badgeTailFontFamily,
           }}
         >
           {tail}
@@ -230,16 +288,28 @@ export function CourseDetail({
   headingAs = "h2",
   id,
   nextCourseHref,
-  showServiceFeeNote = false,
+  showSubstituteNote = false,
+  compactTop = false,
 }: {
   course: CourseMenuData;
   headingAs?: "h1" | "h2";
   id?: string;
   nextCourseHref?: string;
-  showServiceFeeNote?: boolean;
+  showSubstituteNote?: boolean;
+  /** Less top padding when page appeal sits above the first course (JA). */
+  compactTop?: boolean;
 }) {
   const c = course;
   const { t, tr, trName, isJa, locale } = useT();
+  const tategakiStyles = useMemo(
+    () => buildCourseTategakiStyles(isJa),
+    [isJa],
+  );
+  const {
+    verticalTextStyle,
+    verticalDisplayStyle,
+    verticalUprightDisplayStyle,
+  } = tategakiStyles;
   const Heading = headingAs;
   const hasSet = c.dishes.some((dish) => dish.inSet);
   const tategakiColumnGapClass =
@@ -249,21 +319,29 @@ export function CourseDetail({
         ? "gap-6"
         : "gap-8";
 
+  const articlePadClass = compactTop
+    ? "pt-8 pb-14 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-28"
+    : "py-14 sm:py-20 lg:py-28";
+
   return (
     <article
       id={id}
-      className="scroll-mt-24 w-full overflow-x-clip overflow-y-clip border-b border-cream/8 bg-ink py-14 sm:py-20 lg:py-28"
+      className={`scroll-mt-24 w-full overflow-x-clip overflow-y-clip border-b border-cream/8 bg-ink ${articlePadClass}`}
     >
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-12 xl:max-w-none xl:px-4 min-[1600px]:px-8">
         {/* Mobile / tablet: yokogaki */}
         <div className={isJa ? "xl:hidden" : ""}>
           <header className="mb-8 border-b border-cream/10 pb-6 text-center sm:mb-10 sm:pb-8">
-            <Heading className="font-serif-jp mb-3 text-[26px] font-normal tracking-[0.2em] text-cream sm:text-[30px]">
+            <Heading
+              className={
+                isJa ? courseNameHeadingYokoClassJa : courseNameHeadingYokoClass
+              }
+            >
               <span className="block">
                 <CourseLatinText shrinkTags text={trName(c.name)} />
               </span>
               {isJa && c.nameTategakiRest ? (
-                <span className="mt-2 block text-[20px] tracking-[0.12em] text-cream/90 sm:text-[22px]">
+                <span className={courseNameRestYokoClassJa}>
                   <CourseLatinText text={tr(c.nameTategakiRest)} />
                 </span>
               ) : null}
@@ -299,7 +377,7 @@ export function CourseDetail({
                     <p className="mb-1 text-[13px] tracking-[0.12em] text-cream/90">
                       {tr(c.altPrice.label)}
                     </p>
-                    <p className="font-serif-jp text-[13px] tracking-[0.08em] text-cream sm:text-[22px]">
+                    <p className={priceMainYokoClass}>
                       {isJa ? (
                         <>
                           <span className="md:hidden">{c.altPrice.mainMobile}</span>
@@ -326,7 +404,7 @@ export function CourseDetail({
                     {tr(c.priceLabel)}
                   </p>
                 ) : null}
-                <p className="font-serif-jp text-[13px] tracking-[0.08em] text-cream sm:text-[22px]">
+                <p className={priceMainYokoClass}>
                   {isJa ? (
                     <>
                       <span className="md:hidden">{c.priceMainMobile}</span>
@@ -418,14 +496,18 @@ export function CourseDetail({
             >
               {c.badge ? (
                 <div className="flex w-12 shrink-0 items-center justify-center bg-gold py-8 min-[1440px]:w-14 min-[1440px]:py-10 min-[1536px]:py-12">
-                  <CourseBadgeTategaki label={c.badge} tail={c.badgeTail} />
+                  <CourseBadgeTategaki
+                    label={c.badge}
+                    tail={c.badgeTail}
+                    tategakiStyles={tategakiStyles}
+                  />
                 </div>
               ) : null}
 
               {c.nameTategakiRest ? (
                 <div className="flex shrink-0 flex-row-reverse items-start gap-0.5 min-[1440px]:gap-1">
                   <Heading
-                    className="text-[30px] font-normal tracking-[0.32em] text-cream min-[1440px]:text-[36px] min-[1440px]:tracking-[0.4em]"
+                    className={courseNameTategakiLeadClassJa}
                     style={verticalDisplayStyle}
                   >
                     <CourseLatinText
@@ -435,7 +517,7 @@ export function CourseDetail({
                     />
                   </Heading>
                   <p
-                    className="text-[19px] tracking-[0.14em] min-[1440px]:text-[24px] min-[1440px]:tracking-[0.18em]"
+                    className={courseNameTategakiRestClassJa}
                     style={verticalDisplayStyle}
                   >
                     <CourseLatinText
@@ -446,7 +528,7 @@ export function CourseDetail({
                 </div>
               ) : (
                 <Heading
-                  className="shrink-0 text-[30px] font-normal tracking-[0.32em] text-cream min-[1440px]:text-[36px] min-[1440px]:tracking-[0.4em]"
+                  className={`shrink-0 ${courseNameTategakiLeadClassJa}`}
                   style={
                     c.id === "executive"
                       ? verticalUprightDisplayStyle
@@ -490,7 +572,7 @@ export function CourseDetail({
                           {tr(c.altPrice.label)}
                         </span>
                         <br />
-                        <span className="text-[26px] tracking-[0.08em] text-cream xl:text-[20px] xl:tracking-[0.1em]">
+                        <span className={priceMainTategakiClass}>
                           {c.altPrice.main}
                         </span>
                         <br />
@@ -508,9 +590,7 @@ export function CourseDetail({
                         <br />
                       </>
                     ) : null}
-                    <span className="text-[26px] tracking-[0.08em] text-cream xl:text-[20px] xl:tracking-[0.1em]">
-                      {c.priceMain}
-                    </span>
+                    <span className={priceMainTategakiClass}>{c.priceMain}</span>
                     <br />
                     <span className="text-[13px] tracking-[0.1em] text-cream/95 min-[1440px]:text-[15px] min-[1440px]:tracking-[0.12em]">
                       {c.priceTaxNote}
@@ -585,14 +665,9 @@ export function CourseDetail({
             className="min-h-11 w-full max-w-sm px-8 py-3.5 text-[14px] tracking-[0.14em] hover:bg-wipe hover:text-cream sm:w-auto sm:min-w-[280px]"
           />
         </div>
-        {showServiceFeeNote ? (
+        {showSubstituteNote ? (
           <>
             <div className="mx-auto mt-5 max-w-[36rem] space-y-1 text-center text-[13px] leading-[1.9] tracking-[0.08em] text-cream/85 sm:text-[14px] xl:hidden">
-              {t(copy.coursePage.serviceFee)
-                .split("\n")
-                .map((line, i) => (
-                  <CourseFooterNoteLine key={i} text={line} />
-                ))}
               {t(copy.coursePage.umiSubstituteNote)
                 .split("\n")
                 .map((line, i) => (
@@ -600,11 +675,6 @@ export function CourseDetail({
                 ))}
             </div>
             <div className="mx-auto mt-5 hidden max-w-[36rem] space-y-1 text-center text-[13px] leading-[1.9] tracking-[0.08em] text-cream/85 sm:text-[14px] xl:block">
-              {t(copy.coursePage.serviceFeePc)
-                .split("\n")
-                .map((line, i) => (
-                  <CourseFooterNoteLine key={`pc-${i}`} text={line} />
-                ))}
               <CourseFooterNoteLine
                 text={t(copy.coursePage.umiSubstituteNotePc)}
               />

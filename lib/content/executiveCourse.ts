@@ -121,7 +121,7 @@ const wagyuPrefix = "沖縄県産黒毛和牛";
 const risottoMobileLines = ["目の前で焼き上げる", "焼きチーズリゾット"] as const;
 const kinakoIceMobileLines = [
   "沖縄県産黒蜜きな粉",
-  "バニラアイスクリーム",
+  "アイスクリーム",
 ] as const;
 const wagyuIshigakiMobileLines = [
   wagyuPrefix,
@@ -181,7 +181,7 @@ export const executiveCourse: CourseMenuData = {
       nameMobileLines: risottoMobileLines,
       inSet: true,
     },
-    { name: "バニラアイスクリーム" },
+    { name: "アイスクリーム" },
   ],
 };
 
@@ -222,7 +222,7 @@ export const hanaCourse: CourseMenuData = {
       nameMobileLines: risottoMobileLines,
       inSet: true,
     },
-    { name: "バニラアイス" },
+    { name: "アイスクリーム" },
   ],
 };
 
@@ -275,7 +275,7 @@ export const kiwamiCourse: CourseMenuData = {
       inSet: true,
     },
     {
-      name: "沖縄県産黒蜜きな粉バニラアイスクリーム",
+      name: "沖縄県産黒蜜きな粉アイスクリーム",
       nameMobileLines: kinakoIceMobileLines,
     },
   ],
@@ -330,7 +330,7 @@ export const kouCourse: CourseMenuData = {
       inSet: true,
     },
     {
-      name: "沖縄県産黒蜜きな粉バニラアイスクリーム",
+      name: "沖縄県産黒蜜きな粉アイスクリーム",
       nameMobileLines: kinakoIceMobileLines,
     },
   ],
@@ -338,7 +338,7 @@ export const kouCourse: CourseMenuData = {
 
 export const chateaubriandCourse: CourseMenuData = {
   id: "chateaubriand",
-  name: "エグゼクティブ［極］",
+  name: "エグゼクティブ　極スペシャル",
   nameTategakiRest: "with シャトーブリアン",
   badge: "ご常連様二番人気",
   priceInquiry: true,
@@ -385,7 +385,7 @@ export const chateaubriandCourse: CourseMenuData = {
       nameMobileLines: risottoMobileLines,
     },
     {
-      name: "沖縄県産黒蜜きな粉バニラアイスクリーム",
+      name: "沖縄県産黒蜜きな粉アイスクリーム",
       nameMobileLines: kinakoIceMobileLines,
     },
   ],
