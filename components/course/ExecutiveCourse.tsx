@@ -121,7 +121,7 @@ const courseNameTategakiRestClassJa =
 
 /** セット／コースの税抜き金額（横書き・縦書き）。 */
 const priceMainYokoClass =
-  "font-serif-jp text-[11px] tracking-[0.08em] text-cream sm:text-[20px]";
+  "font-serif-jp text-[13px] tracking-[0.08em] text-cream sm:text-[20px]";
 const priceMainTategakiClass =
   "text-[24px] tracking-[0.08em] text-cream xl:text-[18px] xl:tracking-[0.1em]";
 

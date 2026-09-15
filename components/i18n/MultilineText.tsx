@@ -4,6 +4,8 @@ type MultilineTextProps = {
   text: string;
   /** Prevent mid-word wraps in Japanese (default: true). */
   keepAll?: boolean;
+  /** Keep each `\n` line on one row at all viewports (default: false). */
+  keepLinesIntact?: boolean;
   /** Keep the last `\n`-split line on one row (sm+ only; wraps on phones). */
   nowrapLastLine?: boolean;
   /** Keep the last `\n`-split line on one row at every viewport. */
@@ -14,12 +16,15 @@ type MultilineTextProps = {
 export function MultilineText({
   text,
   keepAll = true,
+  keepLinesIntact = false,
   nowrapLastLine = false,
   alwaysNowrapLastLine = false,
 }: MultilineTextProps) {
   const lines = text.split("\n");
   const keepClass = keepAll
-    ? "max-sm:break-words sm:break-keep"
+    ? keepLinesIntact
+      ? "break-keep"
+      : "max-sm:break-words sm:break-keep"
     : "break-words";
 
   if (lines.length === 1) {

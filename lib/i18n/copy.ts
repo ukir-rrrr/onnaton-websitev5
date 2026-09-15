@@ -1007,7 +1007,7 @@ export const copy = {
       "「這個內容，這個價格。」",
     ),
     appealBody1: L(
-      "東京なら2倍以上する内容を、\n個人店だからこそ実現できる価格で。",
+      "東京なら2倍以上する内容を、\n個人店だからこそ\n実現できる価格で。",
       "In Tokyo, this would cost more than twice as much, at a price only a small independent restaurant can offer.",
       "도쿄라면 두 배가 넘는 구성을,\n개인 식당만이 실현할 수 있는 가격으로.",
       "喺東京至少要兩倍以上嘅內容，\n個人店先至做到嘅價錢。",
