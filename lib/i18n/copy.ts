@@ -1014,7 +1014,7 @@ export const copy = {
       "在東京至少要兩倍以上的內容，\n只有個人店才能實現的價格。",
     ),
     appealBody2: L(
-      "沖縄県産ブランド黒毛和牛とあぐー豚をはじめ、\n食材の質にもボリュームにも妥協していません。",
+      "沖縄県産ブランド黒毛和牛と\nあぐー豚をはじめ、\n食材の質にもボリュームにも\n妥協していません。",
       "From Okinawa-brand wagyu and Agu pork onward, we compromise on neither ingredient quality nor portion size.",
       "오키나와산 브랜드 흑毛와규와 아구 돼지고기를 비롯해,\n식재료의 질과 양 모두 타협하지 않습니다.",
       "沖繩品牌黑毛和牛同阿古豬等等，\n食材質素同份量都絕不妥协。",
