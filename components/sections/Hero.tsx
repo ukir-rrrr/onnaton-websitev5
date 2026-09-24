@@ -8,8 +8,10 @@ import {
   CLIP_COVER,
   CLIP_FULL,
   CLIP_OFF_RIGHT,
+  INTRO_HERO_REVEAL_DURATION,
   INTRO_LOGO_FADE_DURATION,
   INTRO_LOGO_HOLD_MS,
+  INTRO_WHITE_HOLD_MS,
   WIPE_DURATION,
   WIPE_EASE,
 } from "@/lib/motion/diagonalWipe";
@@ -34,12 +36,28 @@ export function Hero() {
     currentRef.current = current;
   }, [current]);
 
-  // ① logo hold → ② fade out (cross-fade to hero)
+  // Intro timeline (ms): logo hold → logo fade → white hold → hero reveal
   useEffect(() => {
-    if (reduceMotion || phase !== "logo") return;
-    const id = window.setTimeout(() => setPhase("fadeOut"), INTRO_LOGO_HOLD_MS);
-    return () => window.clearTimeout(id);
-  }, [phase, reduceMotion]);
+    if (reduceMotion) return;
+
+    const toMs = (seconds: number) => Math.round(seconds * 1000);
+    const atFadeLogo = INTRO_LOGO_HOLD_MS;
+    const atFadeWhite =
+      INTRO_LOGO_HOLD_MS +
+      toMs(INTRO_LOGO_FADE_DURATION) +
+      INTRO_WHITE_HOLD_MS;
+    const atReady = atFadeWhite + toMs(INTRO_HERO_REVEAL_DURATION);
+
+    const fadeLogoTimer = window.setTimeout(() => setPhase("fadeLogo"), atFadeLogo);
+    const fadeWhiteTimer = window.setTimeout(() => setPhase("fadeWhite"), atFadeWhite);
+    const readyTimer = window.setTimeout(() => setPhase("ready"), atReady);
+
+    return () => {
+      window.clearTimeout(fadeLogoTimer);
+      window.clearTimeout(fadeWhiteTimer);
+      window.clearTimeout(readyTimer);
+    };
+  }, [reduceMotion]);
 
   // Block scroll during intro without hiding the scrollbar (avoids layout jump)
   useEffect(() => {
@@ -73,22 +91,17 @@ export function Hero() {
     };
   }, [effectivePhase]);
 
-  const showHeroMotion =
-    effectivePhase === "fadeOut" || effectivePhase === "ready";
+  const showMain =
+    effectivePhase === "fadeWhite" || effectivePhase === "ready";
+  const syncIntroReveal = effectivePhase === "fadeWhite";
+  const introRevealTransition = {
+    opacity: { duration: INTRO_HERO_REVEAL_DURATION, ease: "linear" as const },
+  };
   const activeDot = incoming ?? current;
-  /** Hero copy fades in with the logo cross-fade, not after it finishes. */
-  const showHeroCopy =
-    effectivePhase === "fadeOut" || effectivePhase === "ready";
-  const copySyncWithIntro = effectivePhase === "fadeOut";
 
   return (
     <>
-      {effectivePhase !== "ready" && (
-        <PageIntro
-          phase={effectivePhase}
-          onFadeOutComplete={() => setPhase("ready")}
-        />
-      )}
+      {effectivePhase !== "ready" && <PageIntro phase={effectivePhase} />}
 
       <section
         id="top"
@@ -97,8 +110,18 @@ export function Hero() {
         <motion.div
           className="absolute inset-0"
           initial={false}
-          animate={{ scale: showHeroMotion ? 1 : 1.08 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          animate={{
+            opacity: showMain ? 1 : 0,
+            scale: showMain ? 1 : 1.08,
+          }}
+          transition={
+            syncIntroReveal
+              ? {
+                  ...introRevealTransition,
+                  scale: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+                }
+              : { duration: 0.01 }
+          }
         >
           <div className="absolute inset-0">
             <Image
@@ -142,23 +165,24 @@ export function Hero() {
           </AnimatePresence>
         </motion.div>
 
-        {/* PC: left-rail + light bottom wash */}
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/35 via-black/15 to-transparent sm:block" />
-        <div className="absolute inset-0 hidden bg-gradient-to-b from-black/0 via-transparent to-black/35 sm:block" />
-        {/* Mobile: darker full scrim so copy stays readable on bright meat */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/75 sm:hidden" />
-        {/* Mobile: extra shade over the lower text band */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/55 via-black/25 to-transparent sm:hidden" />
+        <motion.div
+          className="pointer-events-none absolute inset-0"
+          initial={false}
+          animate={{ opacity: showMain ? 1 : 0 }}
+          transition={syncIntroReveal ? introRevealTransition : { duration: 0.01 }}
+          aria-hidden
+        >
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-black/35 via-black/15 to-transparent sm:block" />
+          <div className="absolute inset-0 hidden bg-gradient-to-b from-black/0 via-transparent to-black/35 sm:block" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/75 sm:hidden" />
+          <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/55 via-black/25 to-transparent sm:hidden" />
+        </motion.div>
 
         <motion.div
           className="absolute bottom-6 right-6 z-20 flex items-center gap-2 sm:bottom-8 sm:right-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: showHeroCopy ? 1 : 0 }}
-          transition={
-            copySyncWithIntro
-              ? { duration: INTRO_LOGO_FADE_DURATION, ease: "linear" }
-              : { duration: 0.45 }
-          }
+          initial={false}
+          animate={{ opacity: showMain ? 1 : 0 }}
+          transition={syncIntroReveal ? introRevealTransition : { duration: 0.01 }}
           aria-label={`スライド ${activeDot + 1} / ${heroSlides.length}`}
         >
           {heroSlides.map((_, i) => (
@@ -177,16 +201,11 @@ export function Hero() {
           className="absolute inset-0 z-10 flex items-start overflow-y-auto overscroll-contain px-5 pb-12 pt-28 sm:items-end sm:overflow-visible sm:px-12 sm:pb-10 sm:pt-20 md:pb-12 xl:items-center xl:px-16 xl:pb-0 xl:pt-14"
           initial={false}
           animate={{
-            opacity: showHeroCopy ? 1 : 0,
+            opacity: showMain ? 1 : 0,
             y: 0,
           }}
           transition={
-            copySyncWithIntro
-              ? { duration: INTRO_LOGO_FADE_DURATION, ease: "linear" }
-              : {
-                  duration: 0.65,
-                  ease: [0.22, 1, 0.36, 1],
-                }
+            syncIntroReveal ? introRevealTransition : { duration: 0.01 }
           }
         >
           <div

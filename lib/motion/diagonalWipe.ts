@@ -22,5 +22,11 @@ export const WIPE_DURATION = 0.7;
 /** Static logo (家紋) hold before it cross-fades to the hero image. */
 export const INTRO_LOGO_HOLD_MS = 1500;
 
-/** Logo plate opacity 1 → 0; even cross-fade to the hero (linear in PageIntro). */
-export const INTRO_LOGO_FADE_DURATION = 1.15;
+/** Logo image fades out while the white plate stays opaque. */
+export const INTRO_LOGO_FADE_DURATION = 0.85;
+
+/** Full white screen after the logo is gone, before the hero appears. */
+export const INTRO_WHITE_HOLD_MS = 350;
+
+/** White plate fades out while the hero fades in (no logo–photo cross-fade). */
+export const INTRO_HERO_REVEAL_DURATION = 1.0;

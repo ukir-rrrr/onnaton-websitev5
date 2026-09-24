@@ -44,6 +44,8 @@ create table if not exists public.reservation_requests (
   referral_source text,
   accommodation text,
   accommodation_address text,
+  okinawa_arrival_date date,
+  okinawa_return_date date,
   notes text,
   locale text,
   agreed_at timestamptz not null,

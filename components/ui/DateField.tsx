@@ -37,6 +37,8 @@ type DateFieldProps = {
   /** @deprecated Native lang is unused with the custom picker. */
   lang?: string;
   overrides?: DateOverrideLists;
+  /** When false, any day within min/max is selectable (trip dates). Default true. */
+  bookableDatesOnly?: boolean;
 };
 
 function initialView(value: string, min: string) {
@@ -57,6 +59,7 @@ export function DateField({
   disabled,
   className,
   overrides = emptyDateOverrideLists,
+  bookableDatesOnly = true,
 }: DateFieldProps) {
   const locale = useLocale();
   const labels = datePickerLabels(locale);
@@ -66,7 +69,11 @@ export function DateField({
   const [open, setOpen] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [view, setView] = useState(() => initialView(value, min));
-  const isDisabled = useMemo(() => makeIsClosedDate(overrides), [overrides]);
+  const isClosedDate = useMemo(() => makeIsClosedDate(overrides), [overrides]);
+  const isDisabled = useMemo(
+    () => (bookableDatesOnly ? isClosedDate : () => false),
+    [bookableDatesOnly, isClosedDate],
+  );
 
   const displayValue = useMemo(
     () => (value ? formatPickerDisplayDate(locale, value) : ""),

@@ -27,6 +27,8 @@ export const reservationGuestIds = [
 const closedWeekdays = new Set([2, 3]);
 
 export const reservationMaxAdvanceDays = 30;
+/** Intl form: how far ahead guests may enter trip dates. */
+export const intlTripDateMaxAheadDays = 730;
 /** How far ahead the owner can mark extra open / closed days. */
 export const reservationOverrideHorizonDays = 60;
 
@@ -118,6 +120,19 @@ export function minBookableDate(now = new Date()): string {
 
 export function maxBookableDate(now = new Date()): string {
   return addCalendarDays(tokyoTodayYmd(now), reservationMaxAdvanceDays);
+}
+
+export function minIntlTripDate(now = new Date()): string {
+  return tokyoTodayYmd(now);
+}
+
+export function maxIntlTripDate(now = new Date()): string {
+  return addCalendarDays(tokyoTodayYmd(now), intlTripDateMaxAheadDays);
+}
+
+export function isIntlTripDate(ymd: string, now = new Date()): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return false;
+  return ymd >= minIntlTripDate(now) && ymd <= maxIntlTripDate(now);
 }
 
 export function maxOverrideDate(now = new Date()): string {

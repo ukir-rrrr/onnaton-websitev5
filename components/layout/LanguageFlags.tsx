@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
+import { ChevronDown, Globe } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/app/actions/locale";
 import { type Locale } from "@/lib/i18n/config";
@@ -56,9 +57,11 @@ export function LanguageFlags({ className = "", onHero = false }: LanguageFlagsP
     });
   };
 
-  const buttonIdle = onHero
-    ? "text-on-dark hover:bg-on-dark/10 hover:text-gold"
-    : "text-cream hover:bg-cream/6 hover:text-gold-ink";
+  const buttonFrame = onHero
+    ? "border-on-dark/80 text-on-dark hover:border-gold hover:text-gold"
+    : "border-cream/45 text-cream hover:border-gold-ink hover:text-gold-ink";
+
+  const buttonOpen = onHero ? "border-gold text-gold" : "border-gold-ink text-gold-ink";
 
   return (
     <div ref={rootRef} className={`relative ${className}`}>
@@ -69,12 +72,21 @@ export function LanguageFlags({ className = "", onHero = false }: LanguageFlagsP
         aria-haspopup="listbox"
         aria-label={t(copy.lang.menuButton)}
         disabled={pending}
-        className={`font-serif-jp flex min-h-11 items-center gap-1 rounded px-2 py-1.5 text-[14px] tracking-[0.06em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:gap-1.5 sm:px-3.5 sm:text-[16px] ${buttonIdle} ${
-          open ? (onHero ? "text-gold" : "text-gold-ink") : ""
+        className={`font-serif-jp flex min-h-11 items-center gap-2 border px-3 py-2 text-[14px] tracking-[0.04em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:gap-2.5 sm:px-4 sm:text-[15px] ${buttonFrame} ${
+          open ? buttonOpen : ""
         } ${pending ? "pointer-events-none opacity-60" : ""}`}
       >
-        <span className="hidden sm:inline">Language</span>
-        <span className="sm:hidden">Lang</span>
+        <Globe
+          className="size-[15px] shrink-0 sm:size-[16px]"
+          strokeWidth={1.35}
+          aria-hidden
+        />
+        <span>Language</span>
+        <ChevronDown
+          className={`size-[14px] shrink-0 opacity-90 transition-transform sm:size-[15px] ${open ? "rotate-180" : ""}`}
+          strokeWidth={1.75}
+          aria-hidden
+        />
       </button>
 
       {open ? (
