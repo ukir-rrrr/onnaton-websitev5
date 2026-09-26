@@ -7,6 +7,7 @@ import {
 } from "@/app/actions/intl-reservation";
 import {
   defaultIntlReservationFormValues,
+  INTL_OKINAWA_TRIP_DATES_ENABLED,
   type IntlReservationFormValues,
   type IntlReservationState,
 } from "@/lib/reserve/intl-form";
@@ -14,7 +15,9 @@ import {
   emptyDateOverrideLists,
   isClosedDate,
   maxBookableDate,
+  maxIntlTripDate,
   minBookableDate,
+  minIntlTripDate,
   toDateOverrides,
   type DateOverrideLists,
 } from "@/lib/content/reservation";
@@ -84,6 +87,14 @@ function IntlReservationFormInner({
 
   const minDate = useMemo(() => minBookableDate(), []);
   const maxDate = useMemo(() => maxBookableDate(), []);
+  const minTripDate = useMemo(
+    () => (INTL_OKINAWA_TRIP_DATES_ENABLED ? minIntlTripDate() : ""),
+    [],
+  );
+  const maxTripDate = useMemo(
+    () => (INTL_OKINAWA_TRIP_DATES_ENABLED ? maxIntlTripDate() : ""),
+    [],
+  );
   const dateHints = useMemo(() => closedDateHints(fields, overrides), [fields, overrides]);
 
   const setField = <K extends keyof IntlReservationFormValues>(
@@ -231,6 +242,51 @@ function IntlReservationFormInner({
           </p>
         </div>
       </fieldset>
+
+      {INTL_OKINAWA_TRIP_DATES_ENABLED ? (
+        <fieldset className="min-w-0 w-full max-w-full">
+          <legend className="font-serif-jp mb-3 text-[18px] tracking-[0.12em] text-cream sm:text-[20px]">
+            {t(copy.intlForm.trip)}
+          </legend>
+          {locale !== "ja" ? (
+            <p className="mb-5 text-[12px] tracking-[0.06em] text-cream/65 sm:text-[13px]">
+              {t(copy.intlForm.dateFormat)}
+            </p>
+          ) : null}
+          <div className="grid min-w-0 gap-5 sm:grid-cols-2">
+            <p>
+              <label htmlFor="intl-okinawa-arrival" className={labelClass}>
+                {t(copy.intlForm.okinawaArrival)} *
+              </label>
+              <DateField
+                id="intl-okinawa-arrival"
+                name="okinawa_arrival_date"
+                required
+                min={minTripDate}
+                max={maxTripDate}
+                bookableDatesOnly={false}
+                value={fields.okinawaArrivalDate}
+                onChange={(event) => setField("okinawaArrivalDate", event.target.value)}
+              />
+            </p>
+            <p>
+              <label htmlFor="intl-okinawa-return" className={labelClass}>
+                {t(copy.intlForm.okinawaReturn)} *
+              </label>
+              <DateField
+                id="intl-okinawa-return"
+                name="okinawa_return_date"
+                required
+                min={minTripDate}
+                max={maxTripDate}
+                bookableDatesOnly={false}
+                value={fields.okinawaReturnDate}
+                onChange={(event) => setField("okinawaReturnDate", event.target.value)}
+              />
+            </p>
+          </div>
+        </fieldset>
+      ) : null}
 
       <fieldset className="min-w-0 w-full max-w-full">
         <legend className="font-serif-jp mb-3 text-[18px] tracking-[0.12em] text-cream sm:text-[20px]">

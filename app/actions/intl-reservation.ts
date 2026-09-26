@@ -2,11 +2,16 @@
 
 import { notifyOwnerIntlReservation } from "@/lib/email/ownerNotification";
 import { sendCustomerAutoReply } from "@/lib/email/customerAutoReply";
-import { isBookableDate, toDateOverrides } from "@/lib/content/reservation";
+import {
+  isBookableDate,
+  isIntlTripDate,
+  toDateOverrides,
+} from "@/lib/content/reservation";
 import { getReservationDateOverrideLists } from "@/lib/supabase/date-overrides";
 import { findCountryDialCode } from "@/lib/content/countryCodes";
 import { isReferralSourceId } from "@/lib/content/referralSources";
 import {
+  INTL_OKINAWA_TRIP_DATES_ENABLED,
   type IntlReservationState,
   valuesFromIntlFormData,
 } from "@/lib/reserve/intl-form";
@@ -93,6 +98,8 @@ export async function submitIntlReservation(
   const phoneCountry = values.phoneCountry;
   const phoneNationalInput = values.phoneNational;
   const country = values.country;
+  const okinawaArrivalDate = values.okinawaArrivalDate;
+  const okinawaReturnDate = values.okinawaReturnDate;
   const date1 = values.datePreference1;
   const date2 = parseOptionalDate(values.datePreference2);
   const date3 = parseOptionalDate(values.datePreference3);
@@ -111,6 +118,8 @@ export async function submitIntlReservation(
     !phoneCountry ||
     !phoneNationalInput ||
     !country ||
+    (INTL_OKINAWA_TRIP_DATES_ENABLED &&
+      (!okinawaArrivalDate || !okinawaReturnDate)) ||
     !accommodation ||
     !referralSource ||
     !date1 ||
@@ -125,6 +134,15 @@ export async function submitIntlReservation(
     return err(locale, copy.intlForm.errorRequired, formData);
   }
   if (!looksLikeEmail(email)) return err(locale, copy.intlForm.errorEmail, formData);
+  if (INTL_OKINAWA_TRIP_DATES_ENABLED) {
+    if (
+      !isIntlTripDate(okinawaArrivalDate) ||
+      !isIntlTripDate(okinawaReturnDate) ||
+      okinawaArrivalDate > okinawaReturnDate
+    ) {
+      return err(locale, copy.intlForm.errorTripDates, formData);
+    }
+  }
   if (
     name.length > 80 ||
     country.length > 80 ||
@@ -196,6 +214,8 @@ export async function submitIntlReservation(
     phoneCountryCode: dialInfo.dial,
     phoneNational,
     country,
+    okinawaArrivalDate: INTL_OKINAWA_TRIP_DATES_ENABLED ? okinawaArrivalDate : null,
+    okinawaReturnDate: INTL_OKINAWA_TRIP_DATES_ENABLED ? okinawaReturnDate : null,
     datePreference1: date1,
     datePreference2: date2,
     datePreference3: date3,

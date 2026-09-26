@@ -8,6 +8,8 @@ export type IntlReservationInput = {
   phoneCountryCode: string;
   phoneNational: string;
   country: string;
+  okinawaArrivalDate: string | null;
+  okinawaReturnDate: string | null;
   datePreference1: string;
   datePreference2: string | null;
   datePreference3: string | null;
@@ -57,6 +59,8 @@ export async function insertIntlReservation(
     phone_country_code: input.phoneCountryCode,
     phone_national: input.phoneNational,
     country: input.country,
+    okinawa_arrival_date: input.okinawaArrivalDate,
+    okinawa_return_date: input.okinawaReturnDate,
     date_preference_1: input.datePreference1,
     date_preference_2: input.datePreference2,
     date_preference_3: input.datePreference3,
