@@ -45,8 +45,12 @@ export async function notifyOwnerIntlReservation(
     `メール: ${input.email}`,
     `電話番号: ${input.phoneCountryCode} ${input.phoneNational} （${findCountryDialCode(input.phoneCountry)?.name ?? input.phoneCountry}）`,
     `国・地域: ${input.country}`,
-    `沖縄到着日: ${input.okinawaArrivalDate}`,
-    `帰国日: ${input.okinawaReturnDate}`,
+    ...(input.okinawaArrivalDate && input.okinawaReturnDate
+      ? [
+          `沖縄到着日: ${input.okinawaArrivalDate}`,
+          `帰国日: ${input.okinawaReturnDate}`,
+        ]
+      : []),
     `当店を知ったきっかけ: ${referralLabel}`,
     `locale: ${input.locale ?? "—"}`,
     "",

@@ -11,6 +11,7 @@ import { getReservationDateOverrideLists } from "@/lib/supabase/date-overrides";
 import { findCountryDialCode } from "@/lib/content/countryCodes";
 import { isReferralSourceId } from "@/lib/content/referralSources";
 import {
+  INTL_OKINAWA_TRIP_DATES_ENABLED,
   type IntlReservationState,
   valuesFromIntlFormData,
 } from "@/lib/reserve/intl-form";
@@ -117,8 +118,8 @@ export async function submitIntlReservation(
     !phoneCountry ||
     !phoneNationalInput ||
     !country ||
-    !okinawaArrivalDate ||
-    !okinawaReturnDate ||
+    (INTL_OKINAWA_TRIP_DATES_ENABLED &&
+      (!okinawaArrivalDate || !okinawaReturnDate)) ||
     !accommodation ||
     !referralSource ||
     !date1 ||
@@ -133,12 +134,14 @@ export async function submitIntlReservation(
     return err(locale, copy.intlForm.errorRequired, formData);
   }
   if (!looksLikeEmail(email)) return err(locale, copy.intlForm.errorEmail, formData);
-  if (
-    !isIntlTripDate(okinawaArrivalDate) ||
-    !isIntlTripDate(okinawaReturnDate) ||
-    okinawaArrivalDate > okinawaReturnDate
-  ) {
-    return err(locale, copy.intlForm.errorTripDates, formData);
+  if (INTL_OKINAWA_TRIP_DATES_ENABLED) {
+    if (
+      !isIntlTripDate(okinawaArrivalDate) ||
+      !isIntlTripDate(okinawaReturnDate) ||
+      okinawaArrivalDate > okinawaReturnDate
+    ) {
+      return err(locale, copy.intlForm.errorTripDates, formData);
+    }
   }
   if (
     name.length > 80 ||
@@ -211,8 +214,8 @@ export async function submitIntlReservation(
     phoneCountryCode: dialInfo.dial,
     phoneNational,
     country,
-    okinawaArrivalDate,
-    okinawaReturnDate,
+    okinawaArrivalDate: INTL_OKINAWA_TRIP_DATES_ENABLED ? okinawaArrivalDate : null,
+    okinawaReturnDate: INTL_OKINAWA_TRIP_DATES_ENABLED ? okinawaReturnDate : null,
     datePreference1: date1,
     datePreference2: date2,
     datePreference3: date3,

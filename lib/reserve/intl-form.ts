@@ -1,3 +1,6 @@
+/** Temporary: hide Okinawa arrival/return until requirements are finalized. */
+export const INTL_OKINAWA_TRIP_DATES_ENABLED = false;
+
 export type IntlReservationFormValues = {
   name: string;
   email: string;

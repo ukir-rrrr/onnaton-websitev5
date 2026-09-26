@@ -8,8 +8,8 @@ export type IntlReservationInput = {
   phoneCountryCode: string;
   phoneNational: string;
   country: string;
-  okinawaArrivalDate: string;
-  okinawaReturnDate: string;
+  okinawaArrivalDate: string | null;
+  okinawaReturnDate: string | null;
   datePreference1: string;
   datePreference2: string | null;
   datePreference3: string | null;
