@@ -45,12 +45,12 @@ export async function notifyOwnerIntlReservation(
     `メール: ${input.email}`,
     `電話番号: ${input.phoneCountryCode} ${input.phoneNational} （${findCountryDialCode(input.phoneCountry)?.name ?? input.phoneCountry}）`,
     `国・地域: ${input.country}`,
-    ...(input.okinawaArrivalDate && input.okinawaReturnDate
-      ? [
-          `沖縄到着日: ${input.okinawaArrivalDate}`,
-          `帰国日: ${input.okinawaReturnDate}`,
-        ]
-      : []),
+    ...(input.okinawaLongTermStay
+      ? ["沖縄滞在: 沖縄在住・長期滞在（到着日・帰国日なし）"]
+      : [
+          `沖縄到着日: ${input.okinawaArrivalDate ?? "—"}`,
+          `帰国日: ${input.okinawaReturnDate ?? "—"}`,
+        ]),
     `当店を知ったきっかけ: ${referralLabel}`,
     `locale: ${input.locale ?? "—"}`,
     "",

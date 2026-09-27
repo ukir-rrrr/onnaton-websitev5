@@ -166,6 +166,7 @@ export const zhTwCopyValues: Record<string, string> = {
   "intlForm.trip": "沖繩停留",
   "intlForm.okinawaArrival": "抵達沖繩日期",
   "intlForm.okinawaReturn": "回國日期",
+  "intlForm.okinawaLongTermStay": "我居住在沖繩，或目前正在沖繩長期停留",
   "intlForm.date1": "第一希望日期",
   "intlForm.date2": "第二希望（選填）",
   "intlForm.date3": "第三希望（選填）",

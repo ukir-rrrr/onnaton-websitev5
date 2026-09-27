@@ -1,6 +1,3 @@
-/** Temporary: hide Okinawa arrival/return until requirements are finalized. */
-export const INTL_OKINAWA_TRIP_DATES_ENABLED = false;
-
 export type IntlReservationFormValues = {
   name: string;
   email: string;
@@ -9,6 +6,8 @@ export type IntlReservationFormValues = {
   country: string;
   okinawaArrivalDate: string;
   okinawaReturnDate: string;
+  /** Resident / long-term stay: trip dates may be left blank. */
+  okinawaLongTermStay: boolean;
   datePreference1: string;
   datePreference2: string;
   datePreference3: string;
@@ -37,6 +36,7 @@ export const defaultIntlReservationFormValues: IntlReservationFormValues = {
   country: "",
   okinawaArrivalDate: "",
   okinawaReturnDate: "",
+  okinawaLongTermStay: false,
   datePreference1: "",
   datePreference2: "",
   datePreference3: "",
@@ -64,6 +64,7 @@ export function valuesFromIntlFormData(formData: FormData): IntlReservationFormV
     country: str("country"),
     okinawaArrivalDate: str("okinawa_arrival_date"),
     okinawaReturnDate: str("okinawa_return_date"),
+    okinawaLongTermStay: formData.get("okinawa_long_term_stay") === "on",
     datePreference1: str("date_preference_1"),
     datePreference2: str("date_preference_2"),
     datePreference3: str("date_preference_3"),
