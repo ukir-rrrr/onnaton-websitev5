@@ -11,7 +11,6 @@ import { getReservationDateOverrideLists } from "@/lib/supabase/date-overrides";
 import { findCountryDialCode } from "@/lib/content/countryCodes";
 import { isReferralSourceId } from "@/lib/content/referralSources";
 import {
-  INTL_OKINAWA_TRIP_DATES_ENABLED,
   type IntlReservationState,
   valuesFromIntlFormData,
 } from "@/lib/reserve/intl-form";
@@ -98,8 +97,9 @@ export async function submitIntlReservation(
   const phoneCountry = values.phoneCountry;
   const phoneNationalInput = values.phoneNational;
   const country = values.country;
-  const okinawaArrivalDate = values.okinawaArrivalDate;
-  const okinawaReturnDate = values.okinawaReturnDate;
+  const okinawaLongTermStay = values.okinawaLongTermStay;
+  const okinawaArrivalDate = okinawaLongTermStay ? "" : values.okinawaArrivalDate;
+  const okinawaReturnDate = okinawaLongTermStay ? "" : values.okinawaReturnDate;
   const date1 = values.datePreference1;
   const date2 = parseOptionalDate(values.datePreference2);
   const date3 = parseOptionalDate(values.datePreference3);
@@ -118,8 +118,7 @@ export async function submitIntlReservation(
     !phoneCountry ||
     !phoneNationalInput ||
     !country ||
-    (INTL_OKINAWA_TRIP_DATES_ENABLED &&
-      (!okinawaArrivalDate || !okinawaReturnDate)) ||
+    (!okinawaLongTermStay && (!okinawaArrivalDate || !okinawaReturnDate)) ||
     !accommodation ||
     !referralSource ||
     !date1 ||
@@ -134,7 +133,7 @@ export async function submitIntlReservation(
     return err(locale, copy.intlForm.errorRequired, formData);
   }
   if (!looksLikeEmail(email)) return err(locale, copy.intlForm.errorEmail, formData);
-  if (INTL_OKINAWA_TRIP_DATES_ENABLED) {
+  if (!okinawaLongTermStay) {
     if (
       !isIntlTripDate(okinawaArrivalDate) ||
       !isIntlTripDate(okinawaReturnDate) ||
@@ -214,8 +213,9 @@ export async function submitIntlReservation(
     phoneCountryCode: dialInfo.dial,
     phoneNational,
     country,
-    okinawaArrivalDate: INTL_OKINAWA_TRIP_DATES_ENABLED ? okinawaArrivalDate : null,
-    okinawaReturnDate: INTL_OKINAWA_TRIP_DATES_ENABLED ? okinawaReturnDate : null,
+    okinawaArrivalDate: okinawaArrivalDate || null,
+    okinawaReturnDate: okinawaReturnDate || null,
+    okinawaLongTermStay,
     datePreference1: date1,
     datePreference2: date2,
     datePreference3: date3,

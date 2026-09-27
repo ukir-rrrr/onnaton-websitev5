@@ -830,6 +830,13 @@ export const copy = {
       "回国日期",
       "回國日期",
     ),
+    okinawaLongTermStay: L(
+      "沖縄在住、または沖縄に長期滞在しています",
+      "I live in Okinawa or am staying here long-term",
+      "오키나와에 거주 중이거나 장기 체류 중입니다",
+      "我住喺沖繩，或者目前喺沖繩長期逗留",
+      "我居住在沖繩，或目前正在沖繩長期停留",
+    ),
     date1: L("第1希望日", "1st choice date", "1순위 희망일", "第一希望日期", "第一希望日期"),
     date2: L("第2希望日（任意）", "2nd choice (optional)", "2순위 (선택)", "第二希望（可选）", "第二希望（可选）"),
     date3: L("第3希望日（任意）", "3rd choice (optional)", "3순위 (선택)", "第三希望（可选）", "第三希望（可选）"),

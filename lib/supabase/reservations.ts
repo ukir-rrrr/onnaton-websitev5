@@ -10,6 +10,7 @@ export type IntlReservationInput = {
   country: string;
   okinawaArrivalDate: string | null;
   okinawaReturnDate: string | null;
+  okinawaLongTermStay: boolean;
   datePreference1: string;
   datePreference2: string | null;
   datePreference3: string | null;
@@ -61,6 +62,7 @@ export async function insertIntlReservation(
     country: input.country,
     okinawa_arrival_date: input.okinawaArrivalDate,
     okinawa_return_date: input.okinawaReturnDate,
+    okinawa_long_term_stay: input.okinawaLongTermStay,
     date_preference_1: input.datePreference1,
     date_preference_2: input.datePreference2,
     date_preference_3: input.datePreference3,
