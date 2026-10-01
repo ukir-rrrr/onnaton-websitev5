@@ -162,7 +162,6 @@ export const zhTwCopyValues: Record<string, string> = {
   "intlForm.visit": "希望到店",
   "intlForm.name": "姓名",
   "intlForm.email": "電子郵件",
-  "intlForm.country": "國家/地區",
   "intlForm.trip": "沖繩停留",
   "intlForm.okinawaArrival": "抵達沖繩日期",
   "intlForm.okinawaReturn": "回國日期",

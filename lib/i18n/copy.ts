@@ -808,7 +808,6 @@ export const copy = {
       "請選擇國家代碼",
       "請選擇國碼",
     ),
-    country: L("国・地域", "Country / region", "국가·지역", "国家/地区", "国家/地区"),
     trip: L(
       "沖縄滞在",
       "Your stay in Okinawa",

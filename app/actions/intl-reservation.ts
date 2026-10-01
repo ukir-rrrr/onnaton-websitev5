@@ -96,7 +96,6 @@ export async function submitIntlReservation(
   const email = values.email;
   const phoneCountry = values.phoneCountry;
   const phoneNationalInput = values.phoneNational;
-  const country = values.country;
   const okinawaLongTermStay = values.okinawaLongTermStay;
   const okinawaArrivalDate = okinawaLongTermStay ? "" : values.okinawaArrivalDate;
   const okinawaReturnDate = okinawaLongTermStay ? "" : values.okinawaReturnDate;
@@ -117,7 +116,6 @@ export async function submitIntlReservation(
     !email ||
     !phoneCountry ||
     !phoneNationalInput ||
-    !country ||
     (!okinawaLongTermStay && (!okinawaArrivalDate || !okinawaReturnDate)) ||
     !accommodation ||
     !referralSource ||
@@ -144,7 +142,6 @@ export async function submitIntlReservation(
   }
   if (
     name.length > 80 ||
-    country.length > 80 ||
     accommodation.length > 200 ||
     accommodationAddress.length > 500
   ) {
@@ -153,6 +150,8 @@ export async function submitIntlReservation(
 
   const dialInfo = findCountryDialCode(phoneCountry);
   if (!dialInfo) return err(locale, copy.intlForm.errorPhone, formData);
+  // Denormalized snapshot for DB/email; derived from validated phone country id.
+  const country = dialInfo.name;
   if (!/^[0-9\s()-]+$/.test(phoneNationalInput)) {
     return err(locale, copy.intlForm.errorPhone, formData);
   }
