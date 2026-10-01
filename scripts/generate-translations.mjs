@@ -615,7 +615,6 @@ const copyT = {
   "intlForm.visit": { yue: "希望到店", zhTw: "希望到店" },
   "intlForm.name": { yue: "姓名", zhTw: "姓名" },
   "intlForm.email": { yue: "電郵", zhTw: "電子郵件" },
-  "intlForm.country": { yue: "國家/地區", zhTw: "國家/地區" },
   "intlForm.date1": { yue: "第一希望日期", zhTw: "第一希望日期" },
   "intlForm.date2": { yue: "第二希望（選填）", zhTw: "第二希望（選填）" },
   "intlForm.date3": { yue: "第三希望（選填）", zhTw: "第三希望（選填）" },

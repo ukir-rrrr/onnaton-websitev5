@@ -3,7 +3,6 @@ export type IntlReservationFormValues = {
   email: string;
   phoneCountry: string;
   phoneNational: string;
-  country: string;
   okinawaArrivalDate: string;
   okinawaReturnDate: string;
   /** Resident / long-term stay: trip dates may be left blank. */
@@ -33,7 +32,6 @@ export const defaultIntlReservationFormValues: IntlReservationFormValues = {
   email: "",
   phoneCountry: "",
   phoneNational: "",
-  country: "",
   okinawaArrivalDate: "",
   okinawaReturnDate: "",
   okinawaLongTermStay: false,
@@ -61,7 +59,6 @@ export function valuesFromIntlFormData(formData: FormData): IntlReservationFormV
     email: str("email"),
     phoneCountry: str("phone_country"),
     phoneNational: str("phone_national"),
-    country: str("country"),
     okinawaArrivalDate: str("okinawa_arrival_date"),
     okinawaReturnDate: str("okinawa_return_date"),
     okinawaLongTermStay: formData.get("okinawa_long_term_stay") === "on",

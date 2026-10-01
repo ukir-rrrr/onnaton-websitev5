@@ -444,22 +444,6 @@ function IntlReservationFormInner({
       <fieldset>
         <legend className="sr-only">{t(copy.intlForm.details)}</legend>
         <p className="mb-5">
-          <label htmlFor="intl-country" className={labelClass}>
-            {t(copy.intlForm.country)} *
-          </label>
-          <input
-            id="intl-country"
-            name="country"
-            type="text"
-            required
-            autoComplete="country-name"
-            maxLength={80}
-            value={fields.country}
-            onChange={(event) => setField("country", event.target.value)}
-            className={fieldClass}
-          />
-        </p>
-        <p className="mb-5">
           <label htmlFor="intl-referral" className={labelClass}>
             {t(copy.intlForm.referralLabel)} *
           </label>

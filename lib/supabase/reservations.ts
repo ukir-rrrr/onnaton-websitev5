@@ -7,6 +7,7 @@ export type IntlReservationInput = {
   phoneCountry: string;
   phoneCountryCode: string;
   phoneNational: string;
+  /** English label from `phoneCountry` dial-code id at submit time (not user free text). */
   country: string;
   okinawaArrivalDate: string | null;
   okinawaReturnDate: string | null;
