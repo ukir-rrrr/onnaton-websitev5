@@ -43,7 +43,7 @@ export function PageIntro({ phase }: PageIntroProps) {
             {phase !== "fadeWhite" ? <PetalFall /> : null}
             <div className="relative z-10 flex size-full items-center justify-center">
               <Image
-                src="/images/onnaton-logo.jpg"
+                src="/images/onnaton-logo.png"
                 alt="恩納豚 ONNATON"
                 width={200}
                 height={200}
