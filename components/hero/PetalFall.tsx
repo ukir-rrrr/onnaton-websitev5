@@ -36,14 +36,40 @@ const ALPHA_MAX = 0.95;
 
 const MAX_DPR = 2;
 
-/** Add paths here when `public/images/petals/petal{1,2,3}.png` exist (avoids 404 until then). */
-const PETAL_IMAGE_SRCS: string[] = [];
+type PetalTheme = "orchid" | "momiji";
 
-/** Fallback petal tints — pale-to-deep blue (owner's reference) with a soft shadow on the white intro plate. */
-const FALLBACK_TINTS = [
+/** Theme per month (Japan time), Jan → Dec. `null` = no petals that month. */
+const MONTHLY_THEME: (PetalTheme | null)[] = [
+  "orchid", "orchid", "orchid", // 1–3月: 青い胡蝶蘭
+  "orchid", "orchid", "orchid", // 4–6月: 未定（いったん胡蝶蘭）
+  "orchid", "orchid", "orchid", // 7–9月: 未定（いったん胡蝶蘭）
+  "momiji", "momiji", "momiji", // 10–12月: 紅葉
+];
+
+/** Per-theme size multiplier — momiji has deep notches + padding, so it needs more width to look as large. */
+const THEME_SIZE_SCALE: Record<PetalTheme, number> = {
+  orchid: 1,
+  momiji: 1.4,
+};
+
+/** Add paths here when transparent PNGs exist under `public/images/petals/` (avoids 404 until then). */
+const PETAL_IMAGE_SRCS: Record<PetalTheme, string[]> = {
+  orchid: [],
+  momiji: [],
+};
+
+/** Orchid tints — pale-to-deep blue (owner's reference) with a soft shadow on the white intro plate. */
+const ORCHID_TINTS = [
   { inner: "#dce9fd", outer: "#6f9ef0", edge: "rgba(70,120,210,0.5)" },
   { inner: "#eef4ff", outer: "#8fb4f3", edge: "rgba(90,135,215,0.45)" },
   { inner: "#c9dcfb", outer: "#5a8de6", edge: "rgba(60,105,200,0.5)" },
+];
+
+/** Momiji tints — red, vermilion and amber leaves. */
+const MOMIJI_TINTS = [
+  { inner: "#ee8a4a", outer: "#c42b1e", edge: "rgba(120,25,15,0.5)" },
+  { inner: "#f6b552", outer: "#de5a26", edge: "rgba(140,55,20,0.45)" },
+  { inner: "#f8d67a", outer: "#e0952c", edge: "rgba(150,90,25,0.45)" },
 ];
 
 type Sprite = { source: CanvasImageSource; aspect: number };
@@ -86,8 +112,17 @@ function createPetal(progress: number, isMobile: boolean): Petal {
   };
 }
 
+/** Month (1–12) in Japan time, regardless of the visitor's timezone. */
+function currentMonthJst(): number {
+  return Number(
+    new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Tokyo", month: "numeric" }).format(
+      new Date(),
+    ),
+  );
+}
+
 /** Pre-render one petal (rounded tip, narrow base) so each frame is a cheap drawImage. */
-function createFallbackSprite(tint: (typeof FALLBACK_TINTS)[number]): Sprite {
+function createOrchidSprite(tint: (typeof ORCHID_TINTS)[number]): Sprite {
   const w = 64;
   const h = 80;
   const pad = 6;
@@ -120,7 +155,85 @@ function createFallbackSprite(tint: (typeof FALLBACK_TINTS)[number]): Sprite {
   return { source: canvas, aspect: canvas.height / canvas.width };
 }
 
-/** Phalaenopsis petals drifting down over the intro plate (canvas, no per-petal DOM). */
+/** Lobe tips of a Japanese maple leaf: [angle from straight up (deg), length ratio]. */
+const MOMIJI_TIPS: [number, number][] = [
+  [-125, 0.55],
+  [-82, 0.82],
+  [-40, 0.96],
+  [0, 1],
+  [40, 0.96],
+  [82, 0.82],
+  [125, 0.55],
+];
+
+/** Pre-render one seven-lobed maple leaf with veins and a short stem. */
+function createMomijiSprite(tint: (typeof MOMIJI_TINTS)[number]): Sprite {
+  const size = 80;
+  const pad = 6;
+  const canvas = document.createElement("canvas");
+  canvas.width = size + pad * 2;
+  canvas.height = size + pad * 2;
+  const ctx = canvas.getContext("2d");
+  if (ctx) {
+    const cx = pad + size / 2;
+    const cy = pad + size * 0.56;
+    const radius = size * 0.46;
+    const point = (deg: number, ratio: number): [number, number] => {
+      const rad = (deg * Math.PI) / 180;
+      return [cx + Math.sin(rad) * radius * ratio, cy - Math.cos(rad) * radius * ratio];
+    };
+
+    ctx.beginPath();
+    ctx.moveTo(...point(180, 0.12));
+    ctx.lineTo(...point(-150, 0.25));
+    MOMIJI_TIPS.forEach(([deg, len], i) => {
+      // Broad lobe body that tapers to a sharp tip, then back down to the notch between lobes
+      ctx.bezierCurveTo(
+        ...point(deg - 20, len * 0.6),
+        ...point(deg - 6, len * 0.82),
+        ...point(deg, len),
+      );
+      const next = MOMIJI_TIPS[i + 1];
+      const notch = next ? point((deg + next[0]) / 2, 0.45) : point(150, 0.25);
+      ctx.bezierCurveTo(...point(deg + 6, len * 0.82), ...point(deg + 20, len * 0.6), ...notch);
+    });
+    ctx.closePath();
+
+    const gradient = ctx.createRadialGradient(cx, cy - radius * 0.1, 2, cx, cy, radius);
+    gradient.addColorStop(0, tint.inner);
+    gradient.addColorStop(1, tint.outer);
+    ctx.shadowColor = "rgba(110,40,20,0.22)";
+    ctx.shadowBlur = 4;
+    ctx.shadowOffsetY = 1;
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    ctx.shadowColor = "transparent";
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = tint.edge;
+    ctx.stroke();
+
+    // Veins from the center to each tip, plus the stem
+    ctx.beginPath();
+    for (const [deg, len] of MOMIJI_TIPS) {
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(...point(deg, len * 0.85));
+    }
+    ctx.moveTo(cx, cy);
+    ctx.quadraticCurveTo(cx + 2, cy + radius * 0.4, cx + 5, cy + radius * 0.75);
+    ctx.lineWidth = 1.2;
+    ctx.lineCap = "round";
+    ctx.stroke();
+  }
+  return { source: canvas, aspect: canvas.height / canvas.width };
+}
+
+const THEME_SPRITES: Record<PetalTheme, () => Sprite[]> = {
+  orchid: () => ORCHID_TINTS.map(createOrchidSprite),
+  momiji: () => MOMIJI_TINTS.map(createMomijiSprite),
+};
+
+/** Seasonal petals (blue orchid / momiji) drifting down over the intro plate (canvas, no per-petal DOM). */
 export function PetalFall() {
   const reduceMotion = useReducedMotion() === true;
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -131,11 +244,16 @@ export function PetalFall() {
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    let disposed = false;
-    let sprites: Sprite[] = FALLBACK_TINTS.map(createFallbackSprite);
+    const theme = MONTHLY_THEME[currentMonthJst() - 1];
+    if (!theme) return;
 
-    if (PETAL_IMAGE_SRCS.length > 0) {
-      const images = PETAL_IMAGE_SRCS.map((src) => {
+    let disposed = false;
+    let sprites: Sprite[] = THEME_SPRITES[theme]();
+    const sizeScale = THEME_SIZE_SCALE[theme];
+
+    const imageSrcs = PETAL_IMAGE_SRCS[theme];
+    if (imageSrcs.length > 0) {
+      const images = imageSrcs.map((src) => {
         const img = new window.Image();
         img.decoding = "async";
         img.src = src;
@@ -201,8 +319,9 @@ export function PetalFall() {
         }
 
         const sprite = sprites[petal.variant % sprites.length];
-        const drawH = petal.size * sprite.aspect;
-        const margin = Math.max(petal.size, drawH);
+        const drawW = petal.size * sizeScale;
+        const drawH = drawW * sprite.aspect;
+        const margin = Math.max(drawW, drawH);
         const travelY = height + margin * 2;
         const driftX = travelY * DRIFT_RATIO;
         const x =
@@ -218,7 +337,7 @@ export function PetalFall() {
         ctx.translate(x, y);
         ctx.rotate(petal.rotation);
         ctx.scale(flip, 1);
-        ctx.drawImage(sprite.source, -petal.size / 2, -drawH / 2, petal.size, drawH);
+        ctx.drawImage(sprite.source, -drawW / 2, -drawH / 2, drawW, drawH);
       }
 
       ctx.globalAlpha = 1;
