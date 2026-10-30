@@ -32,40 +32,26 @@ export function PageIntro({ phase }: PageIntroProps) {
           }}
         >
           <motion.div
+            className="absolute inset-0"
             initial={false}
-            animate={{
-              opacity: phase === "logo" ? 1 : 0,
-            }}
+            animate={{ opacity: phase === "logo" ? 1 : 0 }}
             transition={{
               duration: INTRO_LOGO_FADE_DURATION,
               ease: "linear",
             }}
           >
-            <Image
-              src="/images/onnaton-logo.jpg"
-              alt="恩納豚 ONNATON"
-              width={200}
-              height={200}
-              priority
-              className="h-auto w-[200px] object-contain sm:w-[240px] lg:w-[260px]"
-            />
+            {phase !== "fadeWhite" ? <PetalFall /> : null}
+            <div className="relative z-10 flex size-full items-center justify-center">
+              <Image
+                src="/images/onnaton-logo.jpg"
+                alt="恩納豚 ONNATON"
+                width={200}
+                height={200}
+                priority
+                className="h-auto w-[200px] object-contain sm:w-[240px] lg:w-[260px]"
+              />
+            </div>
           </motion.div>
-
-          {/* Petals fade with the logo; unmounted before the white fade so rAF stops. */}
-          {phase !== "fadeWhite" ? (
-            <motion.div
-              className="pointer-events-none absolute inset-0"
-              aria-hidden
-              initial={false}
-              animate={{ opacity: phase === "logo" ? 1 : 0 }}
-              transition={{
-                duration: INTRO_LOGO_FADE_DURATION,
-                ease: "linear",
-              }}
-            >
-              <PetalFall />
-            </motion.div>
-          ) : null}
         </motion.div>
       ) : null}
     </AnimatePresence>

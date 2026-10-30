@@ -36,12 +36,8 @@ const ALPHA_MAX = 0.95;
 
 const MAX_DPR = 2;
 
-/** Transparent PNGs; until they exist, canvas-drawn petals are used instead. */
-const PETAL_IMAGE_SRCS = [
-  "/images/petals/petal1.png",
-  "/images/petals/petal2.png",
-  "/images/petals/petal3.png",
-];
+/** Add paths here when `public/images/petals/petal{1,2,3}.png` exist (avoids 404 until then). */
+const PETAL_IMAGE_SRCS: string[] = [];
 
 /** Fallback petal tints — pale-to-deep blue (owner's reference) with a soft shadow on the white intro plate. */
 const FALLBACK_TINTS = [
@@ -138,25 +134,26 @@ export function PetalFall() {
     let disposed = false;
     let sprites: Sprite[] = FALLBACK_TINTS.map(createFallbackSprite);
 
-    // Load PNGs in the background; swap in only if they decode (404 → keep fallback).
-    const images = PETAL_IMAGE_SRCS.map((src) => {
-      const img = new window.Image();
-      img.decoding = "async";
-      img.src = src;
-      return img;
-    });
-    void Promise.allSettled(images.map((img) => img.decode())).then((results) => {
-      if (disposed) return;
-      const loaded = images.filter(
-        (img, i) => results[i].status === "fulfilled" && img.naturalWidth > 0,
-      );
-      if (loaded.length > 0) {
-        sprites = loaded.map((img) => ({
-          source: img,
-          aspect: img.naturalHeight / img.naturalWidth,
-        }));
-      }
-    });
+    if (PETAL_IMAGE_SRCS.length > 0) {
+      const images = PETAL_IMAGE_SRCS.map((src) => {
+        const img = new window.Image();
+        img.decoding = "async";
+        img.src = src;
+        return img;
+      });
+      void Promise.allSettled(images.map((img) => img.decode())).then((results) => {
+        if (disposed) return;
+        const loaded = images.filter(
+          (img, i) => results[i].status === "fulfilled" && img.naturalWidth > 0,
+        );
+        if (loaded.length > 0) {
+          sprites = loaded.map((img) => ({
+            source: img,
+            aspect: img.naturalHeight / img.naturalWidth,
+          }));
+        }
+      });
+    }
 
     let width = 0;
     let height = 0;
@@ -224,6 +221,7 @@ export function PetalFall() {
         ctx.drawImage(sprite.source, -petal.size / 2, -drawH / 2, petal.size, drawH);
       }
 
+      ctx.globalAlpha = 1;
       rafId = window.requestAnimationFrame(frame);
     };
 

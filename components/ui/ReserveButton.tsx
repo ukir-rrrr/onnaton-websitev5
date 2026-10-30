@@ -128,7 +128,7 @@ export function ReserveButton({
                 {t(copy.intlForm.policyHeading)}
               </h2>
 
-              <ul className="mx-auto max-w-md list-disc space-y-2 pl-5 text-left text-[14px] leading-[1.9] tracking-[0.02em] text-black sm:text-[15px]">
+              <ul className="mx-auto max-w-md list-disc space-y-2 pl-5 text-left text-[14px] leading-[1.9] tracking-[0.02em] text-cream sm:text-[15px]">
                 {policy.bullets.map((item) => (
                   <li key={item}>
                     <MultilineText text={item} keepAll={false} />
@@ -136,7 +136,7 @@ export function ReserveButton({
                 ))}
               </ul>
               {policy.notes.length > 0 ? (
-                <div className="mx-auto mt-3 max-w-md space-y-1 text-left text-[14px] leading-[1.8] text-black">
+                <div className="mx-auto mt-3 max-w-md space-y-1 text-left text-[14px] leading-[1.8] text-cream">
                   {policy.notes.map((note) => (
                     <p key={note}>
                       <MultilineText text={note} keepAll={false} />
@@ -145,7 +145,7 @@ export function ReserveButton({
                 </div>
               ) : null}
 
-              <label className="mx-auto mt-6 flex min-h-11 max-w-md cursor-pointer items-start gap-3 border-y border-cream/12 py-4 text-left text-[14px] leading-[1.8] text-black sm:text-[15px]">
+              <label className="mx-auto mt-6 flex min-h-11 max-w-md cursor-pointer items-start gap-3 border-y border-cream/12 py-4 text-left text-[14px] leading-[1.8] text-cream sm:text-[15px]">
                 <input
                   type="checkbox"
                   checked={agreed}
@@ -171,10 +171,10 @@ export function ReserveButton({
                     — — —
                   </p>
                 )}
-                <p className="mb-2 text-[14px] leading-[1.8] tracking-[0.04em] text-black">
+                <p className="mb-2 text-[14px] leading-[1.8] tracking-[0.04em] text-cream">
                   {t(copy.reserve.hours)}
                 </p>
-                <p className="mb-6 text-[13px] leading-[1.8] tracking-[0.04em] text-black">
+                <p className="mb-6 text-[13px] leading-[1.8] tracking-[0.04em] text-cream">
                   <span className="sm:hidden">
                     <MultilineText text={t(copy.reserve.hoursNoteMobile)} keepAll={false} />
                   </span>

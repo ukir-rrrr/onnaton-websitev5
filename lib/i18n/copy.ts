@@ -123,7 +123,7 @@ export const copy = {
       "受理 13:30–21:00（仅电话预约）",
       "受理 13:30–21:00（仅电话预约）",
     ),
-    /** JA phone modal only (shown under `hours`). PC (sm+). JA: 4 short lines so 13px text fits the modal width. */
+    /** JA phone modal only (shown under `hours`). PC (sm+). JA: 4 short lines for 14–15px modal body. */
     hoursNote: L(
       "営業時間中は接客状況により、\nお電話に出られない場合がございます。\n恐れ入りますが、不在の場合は\n接客時間を避けて改めてご連絡ください。",
       "During business hours we may be unable to answer depending on service.\nIf we miss your call, we are sorry—please call again outside busy service times.",
