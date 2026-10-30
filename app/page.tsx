@@ -17,10 +17,10 @@ export default function Home() {
     <div className="relative w-full overflow-x-clip overflow-y-visible bg-ink text-cream">
       <Header />
       <Hero />
+      <SiteNotices />
       <About />
       <Kodawari />
       <ReservationBanner />
-      <SiteNotices />
       <CourseMenu />
       <Scenes />
       <Interior />
