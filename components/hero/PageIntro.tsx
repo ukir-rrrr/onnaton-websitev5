@@ -6,6 +6,7 @@ import {
   INTRO_HERO_REVEAL_DURATION,
   INTRO_LOGO_FADE_DURATION,
 } from "@/lib/motion/diagonalWipe";
+import { PetalFall } from "@/components/hero/PetalFall";
 
 export type IntroPhase = "logo" | "fadeLogo" | "fadeWhite" | "ready";
 
@@ -49,6 +50,22 @@ export function PageIntro({ phase }: PageIntroProps) {
               className="h-auto w-[200px] object-contain sm:w-[240px] lg:w-[260px]"
             />
           </motion.div>
+
+          {/* Petals fade with the logo; unmounted before the white fade so rAF stops. */}
+          {phase !== "fadeWhite" ? (
+            <motion.div
+              className="pointer-events-none absolute inset-0"
+              aria-hidden
+              initial={false}
+              animate={{ opacity: phase === "logo" ? 1 : 0 }}
+              transition={{
+                duration: INTRO_LOGO_FADE_DURATION,
+                ease: "linear",
+              }}
+            >
+              <PetalFall />
+            </motion.div>
+          ) : null}
         </motion.div>
       ) : null}
     </AnimatePresence>
