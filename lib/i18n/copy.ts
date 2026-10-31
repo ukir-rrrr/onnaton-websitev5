@@ -123,17 +123,17 @@ export const copy = {
       "受理 13:30–21:00（仅电话预约）",
       "受理 13:30–21:00（仅电话预约）",
     ),
-    /** JA phone modal only (shown under `hours`). PC (sm+) 2 lines. */
+    /** JA phone modal only (shown under `hours`). PC (sm+). JA: 4 short lines for 14–15px modal body. */
     hoursNote: L(
-      "営業時間中は接客状況により、お電話に出られない場合がございます。\n恐れ入りますが、不在の場合は接客時間を避けて改めてご連絡ください。",
+      "営業時間中は接客状況により、\nお電話に出られない場合がございます。\n恐れ入りますが、不在の場合は\n接客時間を避けて改めてご連絡ください。",
       "During business hours we may be unable to answer depending on service.\nIf we miss your call, we are sorry—please call again outside busy service times.",
       "영업시간 중에는 접객 상황에 따라 전화를 받지 못할 수 있습니다.\n부재 시에는 죄송하지만 접객 시간을 피해 다시 연락해 주세요.",
       "營業時間內或因接待狀況未能接聽電話。\n如未能接聽，敬請避開接待時段再次來電。",
       "營業時間內或因接待狀況未能接聽電話。\n如未能接聽，敬請避開接待時段再次來電。",
     ),
-    /** JA phone modal only — phone (sm 未満) break inside the 2nd sentence (after 避けて). */
+    /** JA phone modal only — phone (sm 未満). JA: same 4 lines as `hoursNote`. */
     hoursNoteMobile: L(
-      "営業時間中は接客状況により、お電話に出られない場合がございます。\n恐れ入りますが、不在の場合は接客時間を避けて\n改めてご連絡ください。",
+      "営業時間中は接客状況により、\nお電話に出られない場合がございます。\n恐れ入りますが、不在の場合は\n接客時間を避けて改めてご連絡ください。",
       "During business hours we may be unable to answer depending on service.\nIf we miss your call, we are sorry—please call again outside busy service times.",
       "영업시간 중에는 접객 상황에 따라 전화를 받지 못할 수 있습니다.\n부재 시에는 죄송하지만 접객 시간을 피해 다시 연락해 주세요.",
       "營業時間內或因接待狀況未能接聽電話。\n如未能接聽，敬請避開接待時段再次來電。",
@@ -761,7 +761,7 @@ export const copy = {
       "預約前請先確認",
     ),
     policyItems: L(
-      "当店は完全予約制です。\nご予約は、ご希望日の1か月前から承っております。1か月より先の日程のご予約は受け付けておりません。\nご予約はコース料理のみ承っております。\nコースは18:00より一斉スタートとなります。21:00閉店です。\nサービス料として5％を頂戴しております。現金でお支払いの場合はサービス料を免除いたします。\nお出汁は最初は少し辛めですが、お肉やお野菜を入れていくことで、驚くほど甘くまろやかな味わいへと変化します。お子様でも召し上がれるほどまろやかになりますが、辛いものが極度に苦手な方はご遠慮ください。\nお出汁の変更はできません。\nお出汁のレシピの都合上、アレルギー対応は行っておりません。\n宗教上の理由により牛肉を召し上がれないお客様には、あぐー豚のみのコースをご用意できる場合がございます。ご希望の場合は、お電話の際にお問い合わせください。\n未就学児のお子様はご入店いただけません。\nタトゥーは見えないように隠していただきますようお願いいたします。\n※ワンポイント程度の小さなタトゥーは問題ございません。",
+      "当店は完全予約制、コース料理専門店です。\nご予約は、ご希望日の1か月前から承っております。1か月より先の日程のご予約は受け付けておりません。\nコースは18:00より一斉スタートとなります。21:00閉店です。\nサービス料として5％を頂戴しております。現金でお支払いの場合はサービス料を免除いたします。\nお出汁は最初は少し辛めですが、お肉やお野菜を入れていくことで、驚くほど甘くまろやかな味わいへと変化します。お子様でも召し上がれるほどまろやかになりますが、辛いものが極度に苦手な方はご遠慮ください。\nお出汁の変更はできません。\nお出汁のレシピの都合上、アレルギー対応は行っておりません。\n宗教上の理由により牛肉を召し上がれないお客様には、あぐー豚のみのコースをご用意できる場合がございます。ご希望の場合は、お電話の際にお問い合わせください。\n未就学児のお子様はご入店いただけません。\nタトゥーは見えないように隠していただきますようお願いいたします。\n※ワンポイント程度の小さなタトゥーは問題ございません。",
       "We are a reservation-only restaurant.\nReservations are accepted from one month before your preferred visit date. We do not accept reservations for dates more than one month in advance.\nReservations are accepted for course menus only.\nAll courses start at 6:00 PM. The restaurant closes at 9:00 PM.\nA 5% service charge applies. The service charge is waived for cash payments.\nOur dashi broth is slightly spicy at first, but as meat and vegetables are added, it becomes surprisingly sweet and mild. It becomes mild enough for children to enjoy, but if you are extremely sensitive to spicy food, please refrain from making a reservation.\nThe dashi broth cannot be changed.\nDue to the ingredients and recipe used for our dashi broth, we are unable to accommodate food allergies.\nFor guests who cannot eat beef for religious reasons, we may be able to offer a course featuring only Agu pork. If you would like this option, please inquire by replying to the confirmation email we send after your reservation request.\nPreschool-age children are not permitted to enter the restaurant.\nPlease keep tattoos covered while inside the restaurant.\n*Small tattoos are permitted.",
       "저희 매장은 완전 예약제로 운영됩니다.\n예약은 방문 희망일 1개월 전부터 가능합니다. 1개월을 초과한 날짜의 예약은 받지 않습니다.\n예약은 코스 요리만 가능합니다.\n모든 코스는 오후 6시에 일괄 시작하며, 오후 9시에 영업을 종료합니다.\n5%의 서비스 요금이 부과됩니다. 현금 결제 시 서비스 요금은 면제됩니다.\n육수는 처음에는 약간 매콤하지만, 고기와 채소를 넣어 드실수록 놀라울 정도로 달고 부드러운 맛으로 변합니다. 어린이도 먹을 수 있을 정도로 순해지지만, 매운맛을 극도로 어려워하시는 분은 예약을 삼가 주시기 바랍니다.\n육수는 변경할 수 없습니다.\n육수의 레시피와 사용 재료 특성상 알레르기 개별 대응은 어렵습니다.\n종교적인 이유로 소고기를 드실 수 없는 경우, 아구 돼지고기만으로 구성된 코스를 제공해 드릴 수 있습니다. 원하시는 경우, 예약 요청 후 저희가 보내드리는 확인 이메일에 회신하여 문의해 주세요.\n미취학 아동은 입장하실 수 없습니다.\n문신은 보이지 않도록 가려 주시기 바랍니다.\n※작은 크기의 문신은 괜찮습니다.",
       "本店只接受預約客人。\n預約由到訪日期前一個月起開始接受。恕不接受超過一個月後的預約。\n預約只限套餐。\n所有套餐統一於下午6時開始，本店於晚上9時關門。\n另收 5% 服務費。如以現金付款，服務費將會免除。\n湯底一開始會帶少許辣味，但加入肉類及蔬菜後，味道會變得令人驚喜地香甜柔和，甚至小朋友亦能享用。不過，如您非常不喜歡辣味，敬請不要預約。\n湯底恕不能更改。\n由於湯底的配方及所使用的食材，本店未能提供食物敏感或過敏方面的個別處理。\n如因宗教原因未能進食牛肉，我們或可提供只包括阿古豬的套餐。如有需要，請在提交預約申請後，回覆本店發出的確認電郵向我們查詢。\n學齡前兒童恕不招待。\n敬請將紋身遮蓋，避免外露。\n※細小的紋身則沒有問題。",

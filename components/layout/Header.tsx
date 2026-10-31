@@ -12,9 +12,9 @@ import { useT } from "@/components/i18n/LocaleProvider";
 /** Home-page section id → matching nav href */
 const SECTION_TO_NAV: { id: string; href: string }[] = [
   { id: "top", href: "/" },
+  { id: "notices", href: "/#notices" },
   { id: "about-text", href: "/#about-text" },
   { id: "kodawari", href: "/#kodawari" },
-  { id: "notices", href: "/#notices" },
   { id: "course", href: "/course" },
   { id: "interior", href: "/seats" },
   { id: "access", href: "/#access" },
@@ -54,9 +54,9 @@ export function Header() {
   const reserveHref = isJa ? "/#reserve" : "/reserve/intl";
   const navLinks = [
     { href: "/", label: t(copy.nav.top) },
+    { href: "/#notices", label: t(copy.nav.notices) },
     { href: "/#about-text", label: t(copy.nav.about) },
     { href: "/#kodawari", label: t(copy.nav.kodawari) },
-    { href: "/#notices", label: t(copy.nav.notices) },
     { href: "/course", label: t(copy.nav.course) },
     { href: "/seats", label: t(copy.nav.seats) },
     { href: "/#access", label: t(copy.nav.access) },

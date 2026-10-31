@@ -27,5 +27,12 @@
   ],
   "images": {
     "binding": "IMAGES"
+  },
+  // Worker Previews (`npx wrangler preview`) — API bindings must be repeated here.
+  // https://developers.cloudflare.com/workers/previews/configuration/
+  "previews": {
+    "images": {
+      "binding": "IMAGES"
+    }
   }
 }
