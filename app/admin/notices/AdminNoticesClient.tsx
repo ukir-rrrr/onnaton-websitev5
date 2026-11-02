@@ -38,12 +38,12 @@ export function AdminNoticesClient({ notices, formKey }: AdminNoticesClientProps
       <div className="rounded border border-[#a68c6e]/35 bg-white/40 px-4 py-3">
         <p className={`${adminMutedClass} leading-relaxed`}>
           <span className="font-medium text-[#2a2520]">編集のしかた：</span>
-          お知らせ1〜3は固定枠です。開くと 保存済みの内容が表示されます。文言を変えて「保存する」を押すと上書き更新されます。本文があるものはトップに出ます。消すときは本文を空にするか、表示期限を過ぎてください。
+          お知らせ1〜3は固定枠です。開くと 保存済みの内容が表示されます。文言を変えて「保存する」を押すと上書き更新されます。本文があるものはトップと、日本語の予約前確認に出ます。消すときは本文を空にするか、表示期限を過ぎてください。
         </p>
       </div>
 
       <p className={adminMutedClass}>
-        本文があるものだけトップページに出ます。表示期限は日本標準時の日付です。
+        本文があるものだけ、トップページと日本語の予約前確認に出ます。表示期限は日本標準時の日付です。
       </p>
 
       <form key={formKey} action={saveAction} className="space-y-8">

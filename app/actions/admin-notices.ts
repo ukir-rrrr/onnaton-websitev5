@@ -119,6 +119,7 @@ export async function saveNotices(
     return { ok: false, error: result.error ?? "保存に失敗しました" };
   }
 
+  revalidatePath("/", "layout");
   revalidatePath("/");
   revalidatePath("/admin/notices");
 

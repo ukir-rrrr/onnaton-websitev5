@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getSiteSlug, getSupabaseAdmin } from "./server";
 
 export interface SiteNotice {
@@ -46,7 +47,7 @@ async function getSiteId(siteSlug: string): Promise<string | null> {
 }
 
 /** Active notices for the current site (JST date for expiry). */
-export async function getActiveNotices(
+export const getActiveNotices = cache(async function getActiveNotices(
   siteSlug = getSiteSlug(),
 ): Promise<SiteNotice[]> {
   const supabase = getSupabaseAdmin();
@@ -73,7 +74,7 @@ export async function getActiveNotices(
       bodyEn: row.body_en,
       bodyJa: row.body_ja,
     }));
-}
+});
 
 /** All notice slots for admin (includes disabled / empty). */
 export type AdminNoticesLoadResult =

@@ -6,6 +6,8 @@ import { htmlLang } from "@/lib/i18n/config";
 import { copy } from "@/lib/i18n/copy";
 import { t } from "@/lib/i18n/types";
 import { LocaleProvider } from "@/components/i18n/LocaleProvider";
+import { NoticesProvider } from "@/components/notices/NoticesProvider";
+import { getActiveNotices } from "@/lib/supabase/notices";
 
 /**
  * Noto Serif JP — vertical-rl (tategaki) fallback and non-Windows fallback
@@ -37,7 +39,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale();
+  const [locale, notices] = await Promise.all([getLocale(), getActiveNotices()]);
   return (
     <html
       lang={htmlLang[locale]}
@@ -46,7 +48,9 @@ export default async function RootLayout({
       <body>
         <div className="washi-backdrop" aria-hidden />
         <div className="relative z-[1] min-h-full">
-          <LocaleProvider locale={locale}>{children}</LocaleProvider>
+          <LocaleProvider locale={locale}>
+            <NoticesProvider notices={notices}>{children}</NoticesProvider>
+          </LocaleProvider>
         </div>
       </body>
     </html>
