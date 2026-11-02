@@ -9,6 +9,8 @@ import { ReserveButton } from "@/components/ui/ReserveButton";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { copy } from "@/lib/i18n/copy";
 import { useT } from "@/components/i18n/LocaleProvider";
+import { CancellationPolicyLink } from "@/components/cancellation/CancellationPolicyLink";
+import { cancellationUi } from "@/lib/content/cancellationPolicy";
 import { revealFadeUp, revealScale, staggerContainer, staggerItem } from "@/lib/motion/presets";
 
 /**
@@ -144,6 +146,12 @@ export function Reserve() {
               >
                 {t(copy.children.more)} →
               </a>
+              <p className="mt-4 text-balance break-words text-[13px] leading-[1.9] tracking-[0.04em] text-on-dark/80 sm:text-[14px]">
+                {t(cancellationUi.notice)}
+              </p>
+              <CancellationPolicyLink className="mt-1 inline-flex min-h-11 items-center text-[13px] font-medium tracking-[0.06em] text-gold underline decoration-gold/60 underline-offset-[5px] transition-colors hover:decoration-gold sm:text-[14px]">
+                {t(cancellationUi.link)} →
+              </CancellationPolicyLink>
             </div>
           </Reveal>
 

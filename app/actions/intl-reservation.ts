@@ -18,6 +18,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config";
 import { copy } from "@/lib/i18n/copy";
 import { t, type Localized } from "@/lib/i18n/types";
 import { insertIntlReservation } from "@/lib/supabase/reservations";
+import { resolveCancellationPolicyVersion } from "@/lib/content/cancellationPolicy";
 import { getClientIp } from "@/lib/security/client-ip";
 import {
   checkQuota,
@@ -229,6 +230,11 @@ export async function submitIntlReservation(
     notes: null,
     locale,
     agreedAt,
+    // The single consent checkbox covers both the notes and the cancellation policy.
+    cancellationPolicyAgreedAt: agreedAt,
+    cancellationPolicyVersion: resolveCancellationPolicyVersion(
+      str(formData, "cancellationPolicyVersion"),
+    ),
   };
 
   const saved = await insertIntlReservation(payload);

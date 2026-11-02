@@ -26,6 +26,7 @@ import { MultilineText } from "@/components/i18n/MultilineText";
 import { DateField } from "@/components/ui/DateField";
 import { copy } from "@/lib/i18n/copy";
 import { useT } from "@/components/i18n/LocaleProvider";
+import { CANCELLATION_POLICY_VERSION } from "@/lib/content/cancellationPolicy";
 
 const initialState: IntlReservationState = { ok: false };
 
@@ -135,6 +136,11 @@ function IntlReservationFormInner({
   return (
     <form action={formAction} className="relative flex w-full min-w-0 max-w-full flex-col gap-10 overflow-x-clip">
       <input type="hidden" name="locale" value={locale} />
+      <input
+        type="hidden"
+        name="cancellationPolicyVersion"
+        value={CANCELLATION_POLICY_VERSION}
+      />
       <div className="hidden" aria-hidden="true">
         <input name="website" tabIndex={-1} autoComplete="off" />
       </div>

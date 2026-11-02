@@ -10,6 +10,7 @@ import { MultilineText } from "@/components/i18n/MultilineText";
 import { splitReservationPolicy } from "@/lib/content/reservationPolicy";
 import { modalBackdrop, modalPanel } from "@/lib/motion/presets";
 import { useNotices } from "@/components/notices/NoticesProvider";
+import { CancellationNotice } from "@/components/cancellation/CancellationPolicyLink";
 
 interface ReserveButtonProps {
   variant?: "solid" | "outline";
@@ -150,6 +151,8 @@ export function ReserveButton({
                   ))}
                 </div>
               ) : null}
+
+              <CancellationNotice className="mx-auto mt-4 max-w-md" />
 
               {jaNotices.length > 0 ? (
                 <div className="mx-auto mt-5 max-w-md text-left">

@@ -66,6 +66,7 @@ export async function notifyOwnerIntlReservation(
       : "宿泊先住所: （未入力）",
     "",
     `同意日時: ${input.agreedAt}`,
+    `キャンセルポリシー: 同意済み（版 ${input.cancellationPolicyVersion} / 同意日時 ${input.cancellationPolicyAgreedAt}）`,
     "",
     "※ お客様には受付確認の自動返信メールを送信済みです。",
   ].join("\n");

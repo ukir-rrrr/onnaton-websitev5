@@ -50,6 +50,8 @@ create table if not exists public.reservation_requests (
   notes text,
   locale text,
   agreed_at timestamptz not null,
+  cancellation_policy_agreed_at timestamptz,
+  cancellation_policy_version text,
   created_at timestamptz not null default now()
 );
 
