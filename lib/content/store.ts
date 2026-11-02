@@ -17,6 +17,8 @@ export const siteConfig = {
   formalNameMobile: "沖縄しゃぶしゃぶ恩納豚 那覇｜\nあぐー豚×特選石垣牛",
   reservationPhoneDisplay: "090-3650-0710",
   reservationPhoneHref: "tel:09036500710",
+  /** 海外のお客様のキャンセル・変更連絡先（予約通知の受信先 / Reply-To と同じ Gmail）。 */
+  contactEmail: "onnaton.reserve@gmail.com",
   instagramUrl: "https://www.instagram.com/onnaton_okinawa/",
   instagramHandle: "@onnaton_okinawa",
   mapEmbedSrc:

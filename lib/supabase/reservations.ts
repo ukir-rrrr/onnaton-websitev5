@@ -26,7 +26,19 @@ export type IntlReservationInput = {
   notes: string | null;
   locale: string | null;
   agreedAt: string;
+  /** キャンセルポリシーへの同意日時（ISO） */
+  cancellationPolicyAgreedAt: string;
+  /** 同意したキャンセルポリシーの版（`CANCELLATION_POLICY_VERSION`） */
+  cancellationPolicyVersion: string;
 };
+
+/** PGRST204 / 42703 for the new consent columns only (other errors are not retried). */
+function isMissingColumnError(error: { code?: string; message?: string }): boolean {
+  return (
+    (error.code === "PGRST204" || error.code === "42703") &&
+    /cancellation_policy_/.test(error.message ?? "")
+  );
+}
 
 async function getSiteId(siteSlug: string): Promise<string | null> {
   const supabase = getSupabaseAdmin();
@@ -51,7 +63,7 @@ export async function insertIntlReservation(
   const siteId = await getSiteId(siteSlug);
   if (!siteId) return { ok: false, error: "Site not found" };
 
-  const { error } = await supabase.from("reservation_requests").insert({
+  const row = {
     site_id: siteId,
     reference: input.reference,
     status: "pending",
@@ -78,7 +90,24 @@ export async function insertIntlReservation(
     notes: input.notes,
     locale: input.locale,
     agreed_at: input.agreedAt,
-  });
+  };
+  const consentColumns = {
+    cancellation_policy_agreed_at: input.cancellationPolicyAgreedAt,
+    cancellation_policy_version: input.cancellationPolicyVersion,
+  };
+
+  let { error } = await supabase
+    .from("reservation_requests")
+    .insert({ ...row, ...consentColumns });
+
+  // Migration 20261102 not applied yet: keep accepting reservations without the
+  // consent columns (consent is still in the owner email and `agreed_at`).
+  if (error && isMissingColumnError(error)) {
+    console.error(
+      "[reservation/intl] cancellation_policy_* columns missing; apply migration 20261102_cancellation_policy_consent.sql",
+    );
+    ({ error } = await supabase.from("reservation_requests").insert(row));
+  }
 
   if (error) {
     console.error("[reservation/intl]", error);

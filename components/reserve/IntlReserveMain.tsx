@@ -6,6 +6,7 @@ import { MultilineText } from "@/components/i18n/MultilineText";
 import { ReserveButton } from "@/components/ui/ReserveButton";
 import { copy } from "@/lib/i18n/copy";
 import { useT } from "@/components/i18n/LocaleProvider";
+import { CancellationNotice } from "@/components/cancellation/CancellationPolicyLink";
 import type { ReservationPolicy } from "@/lib/content/reservationPolicy";
 import type { DateOverrideLists } from "@/lib/content/reservation";
 
@@ -41,6 +42,11 @@ export function IntlReserveMain({
           <ReserveButton
             variant="solid"
             className="min-h-11 w-full max-w-sm px-8 py-3.5 text-[14px] sm:min-w-[280px] sm:w-auto sm:px-12"
+          />
+
+          <CancellationNotice
+            align="center"
+            className="mx-auto mt-8 max-w-md border-t border-cream/12 pt-6"
           />
         </div>
 
@@ -98,6 +104,7 @@ export function IntlReserveMain({
             ))}
           </div>
         ) : null}
+        <CancellationNotice className="mx-auto mt-4 max-w-2xl" />
       </div>
 
       <div className="min-w-0 overflow-x-clip border border-cream/10 bg-ink-raised px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">

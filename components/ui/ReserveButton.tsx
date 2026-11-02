@@ -9,6 +9,8 @@ import { useT } from "@/components/i18n/LocaleProvider";
 import { MultilineText } from "@/components/i18n/MultilineText";
 import { splitReservationPolicy } from "@/lib/content/reservationPolicy";
 import { modalBackdrop, modalPanel } from "@/lib/motion/presets";
+import { useNotices } from "@/components/notices/NoticesProvider";
+import { CancellationNotice } from "@/components/cancellation/CancellationPolicyLink";
 
 interface ReserveButtonProps {
   variant?: "solid" | "outline";
@@ -29,6 +31,7 @@ export function ReserveButton({
   courseId,
 }: ReserveButtonProps) {
   const { t, isJa } = useT();
+  const notices = useNotices();
   const label = children ?? (isJa ? t(copy.reserve.call) : t(copy.reserve.online));
   const titleId = useId();
   const [open, setOpen] = useState(false);
@@ -75,6 +78,10 @@ export function ReserveButton({
   }
 
   const policy = splitReservationPolicy(t(copy.intlForm.policyItems));
+  const jaNotices = notices.flatMap((notice) => {
+    const text = notice.bodyJa.trim() || notice.bodyEn.trim();
+    return text ? [{ sortOrder: notice.sortOrder, text }] : [];
+  });
 
   const openModal = (event: React.MouseEvent) => {
     // Always gate behind the policy modal — never dial directly (incl. mobile).
@@ -142,6 +149,26 @@ export function ReserveButton({
                       <MultilineText text={note} keepAll={false} />
                     </p>
                   ))}
+                </div>
+              ) : null}
+
+              <CancellationNotice className="mx-auto mt-4 max-w-md" />
+
+              {jaNotices.length > 0 ? (
+                <div className="mx-auto mt-5 max-w-md text-left">
+                  <p className="mb-2 text-center text-xs tracking-[0.28em] text-gold-ink sm:text-[12px]">
+                    {t(copy.siteNotices.heading)}
+                  </p>
+                  <ul className="space-y-2">
+                    {jaNotices.map((notice) => (
+                      <li
+                        key={notice.sortOrder}
+                        className="border border-gold/35 bg-white/40 px-4 py-3 text-[14px] leading-[1.8] tracking-[0.02em] text-cream sm:text-[15px]"
+                      >
+                        <MultilineText text={notice.text} keepAll={false} />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ) : null}
 
