@@ -10,7 +10,7 @@ import {
 
 /**
  * キャンセルポリシー本文。専用ページとモーダルで共用（hooks なし）。
- * 連絡先は日本語＝電話（tel:）、海外向け4言語＝メール（mailto:）。
+ * 連絡先は海外向け4言語のみメール（mailto:）を表示。日本語は本文の案内のみ。
  */
 export function CancellationPolicyContent({
   locale,
@@ -90,29 +90,23 @@ export function CancellationPolicyContent({
         ))}
       </div>
 
-      <div className="mt-8 border border-gold/35 bg-ink px-5 py-5 text-center sm:mt-10">
-        <p className="mb-2 text-[11px] tracking-[0.2em] text-gold-ink sm:text-[12px]">
-          {t(locale, isJa ? cancellationUi.contactPhone : cancellationUi.contactEmail)}
-        </p>
-        {isJa ? (
-          <a
-            href={siteConfig.reservationPhoneHref}
-            className="font-serif-jp inline-flex min-h-11 items-center justify-center text-[24px] font-medium tracking-[0.08em] text-cream underline decoration-gold-ink/50 underline-offset-[6px] transition-colors hover:text-gold-ink sm:text-[28px]"
-          >
-            {siteConfig.reservationPhoneDisplay}
-          </a>
-        ) : (
+      {/* 日本語は本文の「お電話にてご連絡ください」のみ（番号は出さない）。海外向けはメール連絡先を表示。 */}
+      {isJa ? null : (
+        <div className="mt-8 border border-gold/35 bg-ink px-5 py-5 text-center sm:mt-10">
+          <p className="mb-2 text-[11px] tracking-[0.2em] text-gold-ink sm:text-[12px]">
+            {t(locale, cancellationUi.contactEmail)}
+          </p>
           <a
             href={`mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(cancellationMailSubject)}`}
             className="inline-flex min-h-11 items-center justify-center break-all text-[16px] font-medium tracking-[0.04em] text-cream underline decoration-gold-ink/50 underline-offset-[6px] transition-colors hover:text-gold-ink sm:text-[18px]"
           >
             {siteConfig.contactEmail}
           </a>
-        )}
-        <p className="mt-1 text-[12px] leading-[1.7] text-cream/65">
-          {t(locale, isJa ? cancellationUi.contactPhoneHint : cancellationUi.contactEmailHint)}
-        </p>
-      </div>
+          <p className="mt-1 text-[12px] leading-[1.7] text-cream/65">
+            {t(locale, cancellationUi.contactEmailHint)}
+          </p>
+        </div>
+      )}
 
       <p className="mt-8 text-pretty break-words text-[14px] leading-[1.95] tracking-[0.02em] text-cream/92 sm:text-[15px]">
         {doc.closing}

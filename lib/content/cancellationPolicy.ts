@@ -252,26 +252,12 @@ export const cancellationUi = {
   ),
   close: L("閉じる", "Close", "닫기", "關閉", "關閉"),
   back: L("戻る", "Back", "돌아가기", "返回", "返回"),
-  contactPhone: L(
-    "キャンセル・変更のご連絡（お電話）",
-    "Contact for cancellations / changes (phone)",
-    "취소·변경 연락처 (전화)",
-    "取消／更改預約聯絡方式（電話）",
-    "取消／變更預約聯絡方式（電話）",
-  ),
   contactEmail: L(
     "キャンセル・変更のご連絡（メール）",
     "Contact for cancellations / changes (email)",
     "취소·변경 연락처 (이메일)",
     "取消／更改預約聯絡方式（電子郵件）",
     "取消／變更預約聯絡方式（電子郵件）",
-  ),
-  contactPhoneHint: L(
-    "タップするとお電話がつながります",
-    "Tap to call",
-    "탭하면 전화가 연결됩니다",
-    "按此致電",
-    "點擊即可撥打",
   ),
   contactEmailHint: L(
     "タップするとメールを作成できます",
